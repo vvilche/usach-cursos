@@ -14,6 +14,13 @@
   .sub{color:var(--mut);font-size:13.5px;margin:0;}
   .badge{display:inline-block;background:#eefaf1;color:var(--acc2);border:1px solid #c8ecd4;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin:10px 6px 0 0;}
   a{color:var(--acc);text-decoration:none;} a:hover{text-decoration:underline;}
+
+.deck{margin-top:12px;}
+.deck summary{cursor:pointer;display:inline-block;background:var(--acc2);color:#fff;padding:9px 18px;border-radius:8px;font-weight:700;font-size:13px;list-style:none;user-select:none;}
+.deck summary::-webkit-details-marker{display:none;}
+.deck summary:hover{opacity:.9;}
+.deck iframe{display:block;width:100%;height:560px;border:1px solid var(--line);border-radius:10px;margin-top:12px;background:#fff;}
+
   .ppt{display:inline-block;margin-left:10px;font-size:12px;font-weight:700;color:var(--acc);}
   .prog{margin-top:36px;}.progtext{font-size:13.5px;color:var(--mut);margin:6px 0;max-width:860px;}
   .nivel{margin:34px 0 6px;padding:10px 16px;background:#0f172a;color:#fff;border-radius:10px;font-size:14px;letter-spacing:.02em;}
@@ -56,7 +63,7 @@
 
 <div class="clase">
   <h3>1 · De ChatGPT al agente autónomo</h3>
-  <div class="fecha">Jue 24 sep 2026</div><a class="ppt" href="auditoria-01.html">Ver presentación →</a>
+  <div class="fecha">Jue 24 sep 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-01.html" title="Clase 01"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> distinguir IA conversacional de agéntica y correr tu primer agente que ejecuta una tarea de verdad.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + objetivo</span>
@@ -78,7 +85,7 @@
 
 <div class="clase">
   <h3>2 · Agente lector de documentos</h3>
-  <div class="fecha">Jue 01 oct 2026</div><a class="ppt" href="auditoria-02.html">Ver presentación →</a>
+  <div class="fecha">Jue 01 oct 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-02.html" title="Clase 02"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> hacer que tu agente lea un PDF (un balance) y extraiga cifras estructuradas sin inventarlas.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -99,7 +106,7 @@
 
 <div class="clase">
   <h3>3 · RAG: la memoria del agente</h3>
-  <div class="fecha">Jue 08 oct 2026</div><a class="ppt" href="auditoria-03.html">Ver presentación →</a>
+  <div class="fecha">Jue 08 oct 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-03.html" title="Clase 03"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> por qué el agente necesita recuperación (y no meter todo al prompt) y armas un mini-RAG con embeddings + índice.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -122,7 +129,7 @@
 
 <div class="clase">
   <h3>4 · HITO L1 — Agente lector de balances</h3>
-  <div class="fecha">Jue 15 oct 2026</div><a class="ppt" href="auditoria-04.html">Ver presentación →</a>
+  <div class="fecha">Jue 15 oct 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-04.html" title="Clase 04"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> integrar extracción + RAG en un agente que lee un balance y responde con fuente.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -144,7 +151,7 @@
 
 <div class="clase">
   <h3>5 · El problema real: conciliación SII vs ERP</h3>
-  <div class="fecha">Jue 22 oct 2026</div><a class="ppt" href="auditoria-05.html">Ver presentación →</a>
+  <div class="fecha">Jue 22 oct 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-05.html" title="Clase 05"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> entender el dolor real del auditor (conciliar facturas vs registro) y dónde viven los datos del SII.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -167,7 +174,7 @@
 
 <div class="clase">
   <h3>6 · Bajar datos del SII (ingestor, sin LLM)</h3>
-  <div class="fecha">Jue 29 oct 2026</div><a class="ppt" href="auditoria-06.html">Ver presentación →</a>
+  <div class="fecha">Jue 29 oct 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-06.html" title="Clase 06"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> construir un ingestor en Python que baja normativa del SII de forma determinista (cero tokens de LLM).</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -189,7 +196,7 @@
 
 <div class="clase">
   <h3>7 · Detección de fraude + Ley 21.595</h3>
-  <div class="fecha">Jue 05 nov 2026</div><a class="ppt" href="auditoria-07.html">Ver presentación →</a>
+  <div class="fecha">Jue 05 nov 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-07.html" title="Clase 07"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> construir reglas de detección de facturas truchas y alertas automáticas.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -210,7 +217,7 @@
 
 <div class="clase">
   <h3>8 · HITO L2 — Auditoría en vivo a 1.000 transacciones</h3>
-  <div class="fecha">Jue 19 nov 2026</div><a class="ppt" href="auditoria-08.html">Ver presentación →</a>
+  <div class="fecha">Jue 19 nov 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-08.html" title="Clase 08"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> tu agente concilia 1.000 facturas SII vs ERP en segundos y marca discrepancias.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -232,7 +239,7 @@
 
 <div class="clase">
   <h3>9 · Cero alucinación: spec-first (spec-kit)</h3>
-  <div class="fecha">Jue 26 nov 2026</div><a class="ppt" href="auditoria-09.html">Ver presentación →</a>
+  <div class="fecha">Jue 26 nov 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-09.html" title="Clase 09"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> escribir una especificación rígida de QUÉ debe hacer el agente antes de codificar.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -253,7 +260,7 @@
 
 <div class="clase">
   <h3>10 · Guardrails: Zod + Graft</h3>
-  <div class="fecha">Jue 03 dic 2026</div><a class="ppt" href="auditoria-10.html">Ver presentación →</a>
+  <div class="fecha">Jue 03 dic 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-10.html" title="Clase 10"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> blindar el agente con validación de datos (Zod) y mapeo del ERP (Graft).</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -275,7 +282,7 @@
 
 <div class="clase">
   <h3>11 · HITO L3 — Blindaje al centavo + evaluación</h3>
-  <div class="fecha">Jue 10 dic 2026</div><a class="ppt" href="auditoria-11.html">Ver presentación →</a>
+  <div class="fecha">Jue 10 dic 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-11.html" title="Clase 11"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> tu agente cuadra al centavo sin alucinar y sabes MEDIRLO con un set de evaluación.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -298,7 +305,7 @@
 
 <div class="clase">
   <h3>12 · Hackathon: el Swarm multi-agente</h3>
-  <div class="fecha">Jue 17 dic 2026</div><a class="ppt" href="auditoria-12.html">Ver presentación →</a>
+  <div class="fecha">Jue 17 dic 2026</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-12.html" title="Clase 12"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> orquestar varios agentes (extractor, conciliador, caza-fraudes) que colaboran.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + consignas</span>
@@ -319,7 +326,7 @@
 
 <div class="clase">
   <h3>13 · Demo final / Executive Pitch</h3>
-  <div class="fecha">Jue 07 ene 2027</div><a class="ppt" href="auditoria-13.html">Ver presentación →</a>
+  <div class="fecha">Jue 07 ene 2027</div><details class="deck"><summary>▶ Ver presentación</summary><iframe loading="lazy" src="auditoria-13.html" title="Clase 13"></iframe></details>
   <div class="obj"><b>Al salir sabes:</b> presentar tu sistema agéntico de auditoría como si fuera a un directorio.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + orden del panel</span>
