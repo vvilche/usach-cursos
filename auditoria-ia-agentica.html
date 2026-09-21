@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hackeando la Auditoría con IA Agéntica — Plan de clases 2S 2026</title>
+<style>
+  :root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#2563eb;--acc2:#0a7a3d;--warn:#b45309;}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 22px 90px;}
+  header{border-bottom:2px solid var(--acc2);padding-bottom:16px;margin-bottom:8px;}
+  h1{font-size:24px;margin:0 0 4px;letter-spacing:-.02em;}
+  .sub{color:var(--mut);font-size:13.5px;margin:0;}
+  .badge{display:inline-block;background:#eefaf1;color:var(--acc2);border:1px solid #c8ecd4;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin:10px 6px 0 0;}
+  a{color:var(--acc);text-decoration:none;} a:hover{text-decoration:underline;}
+  .nivel{margin:34px 0 6px;padding:10px 16px;background:#0f172a;color:#fff;border-radius:10px;font-size:14px;letter-spacing:.02em;}
+  .nivel small{color:#94a3b8;font-weight:400;}
+  .clase{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;border-left:4px solid var(--acc2);}
+  .clase h3{margin:0 0 2px;font-size:16px;}
+  .clase .fecha{color:var(--acc2);font-weight:600;font-size:13px;}
+  .obj{color:var(--mut);font-size:13.5px;margin:8px 0;} .obj b{color:var(--ink);}
+  .bloques{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0;}
+  .bloque{background:#f1f5f9;border:1px solid var(--line);border-radius:8px;padding:6px 10px;font-size:12px;}
+  .bloque .min{font-weight:700;color:var(--acc);}
+  .bloque.tarea{background:#eff6ff;border-color:#c7d2fe;} .bloque.testeo{background:#fff7ed;border-color:#fed7aa;}
+  h4{margin:12px 0 4px;font-size:12px;text-transform:uppercase;letter-spacing:.06em;color:var(--mut);}
+  .tarea p,.testeo p{margin:0;font-size:13.5px;color:var(--mut);} .testeo p b{color:var(--warn);}
+  .links{margin-top:10px;font-size:12.5px;}
+  .links b{color:var(--mut);}
+  .links a{display:inline-block;margin:2px 6px 2px 0;}
+  .links a::before{content:"↗ ";}
+  footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Hackeando la Auditoría con Inteligencia Artificial Agéntica</h1>
+  <p class="sub">De las Planillas Excel a los Agentes Autónomos que Controlan Empresas · Electivo IV (361462-5) · FAE USACH · Jueves 14:35–17:30 · sala EF207 · 13 clases · 160 min/clase</p>
+  <span class="badge">13 clases · 24 sep 2026 → 7 ene 2027</span>
+  <span class="badge">100% práctico · aprender &gt; notas</span>
+  <span class="badge">Objetivo: sistema agéntico propio de auditoría</span>
+</header>
+
+<p style="color:var(--mut);max-width:860px;margin:14px 0 0;">Cada clase está desglosada en <b>tareas</b> (lo que hacen con las manos) y <b>testeos</b> (la demostración de que aprendieron, no una nota). Debajo de cada clase van los <b>links para aprender</b> cada herramienta y concepto. Los 4 niveles vienen del programa oficial.</p>
+
+<div class="nivel">LEVEL 1 · Clases 1–4 — Unboxing Agentic AI <small>de la IA conversacional a agentes que ejecutan tareas</small></div>
+
+<div class="clase">
+  <h3>1 · De ChatGPT al agente autónomo</h3>
+  <div class="fecha">Jue 24 sep 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> distinguir IA conversacional de agéntica y correr tu primer agente que ejecuta una tarea de verdad.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura + objetivo</span>
+    <span class="bloque"><span class="min">25'</span> Concepto: loop pensar→actuar→observar</span>
+    <span class="bloque tarea"><span class="min">70'</span> TAREA: montar entorno y correr un agente que lee un archivo</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre + avance</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>En parejas: crear venv, instalar el stack y correr un agente mínimo (CrewAI o eve) que recibe un CSV y ejecuta una acción (contar filas, sumar una columna). No redactar correos — ejecutar una tarea.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> el agente corre en pantalla y la pareja explica las 3 fases del loop (qué pensó, qué hizo, qué observó).</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.anthropic.com/research/building-effective-agents">Building Effective Agents (Anthropic)</a>
+    <a href="https://github.com/vercel/eve">eve — framework de agentes (Vercel)</a>
+    <a href="https://docs.crewai.com">CrewAI docs</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>2 · Agente lector de documentos</h3>
+  <div class="fecha">Jue 01 oct 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> hacer que tu agente lea un PDF (un balance) y extraiga cifras estructuradas sin inventarlas.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">25'</span> Concepto: extracción determinista</span>
+    <span class="bloque tarea"><span class="min">70'</span> TAREA: extraer activos/pasivos/patrimonio de un balance PDF</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>El agente abre un balance real (PDF), extrae las cuentas principales y las entrega en una tabla. Regla: extracción determinista; el LLM solo formatea, no inventa cifras.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> la tabla extraída <b>cuadra</b> contra el PDF original (activo = pasivo + patrimonio). Si no cuadra, es error de extracción, no del PDF.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://pymupdf.readthedocs.io">PyMuPDF (extraer texto de PDF)</a>
+    <a href="https://docs.crewai.com">CrewAI — tools</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>3 · RAG: la memoria del agente</h3>
+  <div class="fecha">Jue 08 oct 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> por qué el agente necesita recuperación (y no meter todo al prompt) y armas un mini-RAG con embeddings + índice.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">30'</span> Concepto: embeddings + búsqueda vectorial + chunking</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: mini-RAG (fastembed + FAISS) sobre 10 documentos</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Chunkear 10 documentos, embeber con fastembed, indexar en FAISS y consultar: el agente responde usando solo el contexto recuperado.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> el agente responde y <b>muestra la fuente</b> (qué chunk usó). Pregunta trampa: si no está en el corpus, debe decir "no está", no inventar.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.pinecone.io/learn/retrieval-augmented-generation/">Qué es RAG</a>
+    <a href="https://www.pinecone.io/learn/vector-embeddings/">Vector embeddings</a>
+    <a href="https://github.com/qdrant/fastembed">fastembed</a>
+    <a href="https://github.com/facebookresearch/faiss">FAISS</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>4 · HITO L1 — Agente lector de balances</h3>
+  <div class="fecha">Jue 15 oct 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> integrar extracción + RAG en un agente que lee un balance y responde con fuente.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque tarea"><span class="min">90'</span> TAREA: integrar extracción + RAG en un agente</span>
+    <span class="bloque testeo"><span class="min">35'</span> TESTEO: demo por pareja</span>
+    <span class="bloque"><span class="min">25'</span> Cierre + entrega L1</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Integrar las clases 1–3 en un solo agente: lee un balance, lo indexa y responde preguntas citando la fuente.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> demo de 2 min por pareja + prueba de fuego: una pregunta cuya respuesta <b>no está</b> en el balance → el agente debe declararlo.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.anthropic.com/research/building-effective-agents">Cómo hacer un agente confiable</a>
+    <a href="https://www.pinecone.io/learn/grounded-rag/">RAG con grounding (citas)</a>
+  </div>
+</div>
+
+<div class="nivel">LEVEL 2 · Clases 5–8 — El Caza-Fraudes Digital <small>conciliación SII vs ERP y alertas Ley 21.595</small></div>
+
+<div class="clase">
+  <h3>5 · El problema real: conciliación SII vs ERP</h3>
+  <div class="fecha">Jue 22 oct 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> entender el dolor real del auditor (conciliar facturas vs registro) y dónde viven los datos del SII.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">30'</span> Concepto: factura electrónica + conciliación + Ley 21.595</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: explorar fuentes y armar dataset de facturas</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Recorrer el mapa de fuentes contables chilenas (SII, CMF, LeyChile) y armar un dataset de facturas electrónicas de ejemplo listo para conciliar.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> la pareja explica dónde vive cada dato del SII y por qué conciliar 1.000 facturas a mano es un trabajo de 8 horas que un agente hace en segundos.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.sii.cl">SII (factura electrónica)</a>
+    <a href="https://www.bcn.cl/leychile/navegar?idNorma=1195119">Ley 21.595 — Delitos Económicos</a>
+    <a href="https://www.cmfchile.cl">CMF (regulación financiera)</a>
+    <a href="mapa-fuentes-contables.html">Mapa de fuentes contables de Chile</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>6 · Bajar datos del SII (ingestor, sin LLM)</h3>
+  <div class="fecha">Jue 29 oct 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> construir un ingestor en Python que baja normativa del SII de forma determinista (cero tokens de LLM).</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">25'</span> Concepto: ingesta determinista vs resumir con IA</span>
+    <span class="bloque tarea"><span class="min">70'</span> TAREA: correr el ingestor de ejemplo (LeyChile XML + SII)</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Correr el ingestor de ejemplo: bajar una ley vía API XML de LeyChile y una circular del SII, extraer texto limpio y deduplicar por hash.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> cada pareja trae una fuente real bajada y muestra el texto limpio + confirma que la ingesta es Python puro (sin gastar tokens de LLM).</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.leychile.cl">LeyChile (API de normas)</a>
+    <a href="https://www.sii.cl/normativa_legislacion/circulares/2025/indcir2025.htm">Circulares SII 2025</a>
+    <a href="ingestor_store_b.py">Ingestor de ejemplo (código)</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>7 · Detección de fraude + Ley 21.595</h3>
+  <div class="fecha">Jue 05 nov 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> construir reglas de detección de facturas truchas y alertas automáticas.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">30'</span> Concepto: reglas deterministas + señales de fraude</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: reglas que detectan anomalías</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Escribir reglas que marquen: facturas duplicadas, montos sospechosos, RUT inválido, fechas inconsistentes. Ligar cada alerta a un artículo de la Ley 21.595.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> sobre un dataset con trampas plantadas, detectar las facturas truchas y decir <b>qué artículo</b> de la Ley 21.595 se viola en cada caso.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.bcn.cl/leychile/navegar?idNorma=1195119">Ley 21.595 (artículos)</a>
+    <a href="https://www.tta.cl">Tribunales Tributarios (casos reales)</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>8 · HITO L2 — Auditoría en vivo a 1.000 transacciones</h3>
+  <div class="fecha">Jue 19 nov 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> tu agente concilia 1.000 facturas SII vs ERP en segundos y marca discrepancias.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque tarea"><span class="min">85'</span> TAREA: conciliación masiva + reporte</span>
+    <span class="bloque testeo"><span class="min">40'</span> TESTEO: demo en vivo</span>
+    <span class="bloque"><span class="min">25'</span> Cierre + entrega L2</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Correr la conciliación completa: comparar dataset SII contra ERP simulado, marcar discrepancias (monto, folio, proveedor) y generar reporte. Medir el tiempo.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> en vivo, el agente marca las facturas truchas en <b>segundos</b>, con el tiempo en pantalla, y la pareja explica cada discrepancia.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.sii.cl">SII</a>
+    <a href="https://www.bcn.cl/leychile/navegar?idNorma=1195119">Ley 21.595</a>
+  </div>
+</div>
+
+<div class="nivel">LEVEL 3 · Clases 9–11 — Armadura Cero Alucinación <small>spec-kit, Graft y Zod para cuadrar al centavo</small></div>
+
+<div class="clase">
+  <h3>9 · Cero alucinación: spec-first (spec-kit)</h3>
+  <div class="fecha">Jue 26 nov 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> escribir una especificación rígida de QUÉ debe hacer el agente antes de codificar.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">30'</span> Concepto: por qué los LLM alucinan y cómo la spec lo evita</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: escribir una spec de auditoría y que el agente la siga</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Escribir la spec de una tarea ("cuadrar la conciliación al centavo, citando la norma vigente, prohibido inventar artículos/plazos") y que el agente la ejecute respetándola.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> prueba adversarial — pedirle un artículo que no existe → debe decir "no está en la norma", no inventar el "Artículo 999".</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://github.com/github/spec-kit">spec-kit (Spec-Driven Development)</a>
+    <a href="https://www.pinecone.io/learn/rag-hallucinations/">Por qué un RAG alucina</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>10 · Guardrails: Zod + Graft</h3>
+  <div class="fecha">Jue 03 dic 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> blindar el agente con validación de datos (Zod) y mapeo del ERP (Graft).</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">30'</span> Concepto: guardrails de datos + grafo de código</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: schema Zod de factura + mapear el ERP con Graft</span>
+    <span class="bloque testeo"><span class="min">30'</span> TESTEO</span>
+    <span class="bloque"><span class="min">25'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Definir el schema Zod de una factura (campos, tipos, reglas) y mapear la estructura del ERP con Graft. El agente valida cada transacción antes de aceptarla.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> el agente <b>rechaza</b> una transacción que no cuadra y explica qué regla del schema la frenó.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://zod.dev">Zod (validación de datos)</a>
+    <a href="https://docs.pydantic.dev">Pydantic</a>
+    <a href="https://github.com/NanoNets/graft">Graft (grafo de código)</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>11 · HITO L3 — Blindaje al centavo + evaluación</h3>
+  <div class="fecha">Jue 10 dic 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> tu agente cuadra al centavo sin alucinar y sabes MEDIRLO con un set de evaluación.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura</span>
+    <span class="bloque"><span class="min">25'</span> Concepto: recall/precision/MRR + faithfulness</span>
+    <span class="bloque tarea"><span class="min">65'</span> TAREA: armar set de evaluación</span>
+    <span class="bloque testeo"><span class="min">35'</span> TESTEO: batería adversarial</span>
+    <span class="bloque"><span class="min">25'</span> Cierre + entrega L3</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Armar un set de evaluación (10+ consultas con respuesta esperada) y medir recall/precision del retrieval + faithfulness de la generación.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> pasar la batería adversarial (falsas premisas, typos, prompt injection) y que el agente responda con fuente o declare "no está", con las métricas en pantalla.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.pinecone.io/learn/rag-evaluation/">Evaluar un RAG</a>
+    <a href="https://www.pinecone.io/learn/rag-faithfulness/">Faithfulness / groundedness</a>
+  </div>
+</div>
+
+<div class="nivel">LEVEL 4 · Clases 12–13 — USACH AI Audit Hackathon <small>construcción del Swarm UFAS y pitch</small></div>
+
+<div class="clase">
+  <h3>12 · Hackathon: el Swarm multi-agente</h3>
+  <div class="fecha">Jue 17 dic 2026</div>
+  <div class="obj"><b>Al salir sabes:</b> orquestar varios agentes (extractor, conciliador, caza-fraudes) que colaboran.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura + consignas</span>
+    <span class="bloque"><span class="min">20'</span> Concepto: orquestación multi-agente</span>
+    <span class="bloque tarea"><span class="min">90'</span> TAREA: armar el swarm (2–3 agentes coordinados)</span>
+    <span class="bloque testeo"><span class="min">20'</span> TESTEO: flujo end-to-end</span>
+    <span class="bloque"><span class="min">20'</span> Cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>En equipos, orquestar 2–3 agentes que se pasan el trabajo: uno extrae, otro concilia, otro detecta fraude y alerta. El flujo corre de punta a punta.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> el swarm ejecuta el flujo completo (factura → conciliación → alerta) sin intervención manual entre pasos.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://www.anthropic.com/research/building-effective-agents">Patrones multi-agente (Anthropic)</a>
+    <a href="https://docs.crewai.com">CrewAI — crews multi-agente</a>
+  </div>
+</div>
+
+<div class="clase">
+  <h3>13 · Demo final / Executive Pitch</h3>
+  <div class="fecha">Jue 07 ene 2027</div>
+  <div class="obj"><b>Al salir sabes:</b> presentar tu sistema agéntico de auditoría como si fuera a un directorio.</div>
+  <div class="bloques">
+    <span class="bloque"><span class="min">10'</span> Apertura + orden del panel</span>
+    <span class="bloque testeo"><span class="min">110'</span> TESTEO FINAL: demo en vivo + pitch por equipo</span>
+    <span class="bloque"><span class="min">40'</span> Panel de preguntas + cierre</span>
+  </div>
+  <h4>Tarea</h4>
+  <div class="tarea"><p>Cada equipo presenta su Swarm UFAS: pitch ejecutivo (problema, solución, impacto) + demo en vivo del sistema auditando.</p></div>
+  <h4>Testeo</h4>
+  <div class="testeo"><p><b>Demostrar:</b> ante panel, el sistema responde con fuente, cuadra al centavo y defiende sus alertas. Lo que importa: que funcione y lo sepan explicar — no una nota.</p></div>
+  <div class="links"><b>Para aprender:</b>
+    <a href="https://github.com/vercel/eve">eve (para el deploy del swarm)</a>
+    <a href="https://docs.crewai.com">CrewAI</a>
+  </div>
+</div>
+
+<footer>
+  Objetivo del curso (no notas): cada alumno egresa con un <b>sistema agéntico de auditoría funcionando</b> y un portafolio en GitHub. Los testeos son demostraciones de aprendizaje, no calificaciones. Material complementario en este sitio: <a href="mapa-fuentes-contables.html">mapa de fuentes contables</a> · <a href="ingestor_store_b.py">ingestor de ejemplo</a>.
+</footer>
+</div>
+</body>
+</html>

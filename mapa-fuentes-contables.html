@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mapa de fuentes contables de Chile → RAGs del sistema agéntico</title>
+<style>
+  :root{
+    --bg:#f8fafc; --card:#ffffff; --ink:#0f172a; --mut:#475569; --line:#e2e8f0;
+    --accent:#2563eb; --accent-soft:#eff6ff; --ok:#059669; --warn:#b45309;
+    --mono:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+  .wrap{max-width:1180px;margin:0 auto;padding:32px 24px 96px;}
+  header{border-bottom:1px solid var(--line);padding-bottom:20px;margin-bottom:28px;}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.02em;}
+  .sub{color:var(--mut);font-size:14px;margin:0;}
+  .tag{display:inline-block;background:var(--accent-soft);color:var(--accent);border:1px solid #dbeafe;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin-right:6px;margin-top:10px;}
+  nav{position:sticky;top:0;background:var(--bg);z-index:5;padding:10px 0;border-bottom:1px solid var(--line);display:flex;flex-wrap:wrap;gap:6px;margin:0 0 24px;}
+  nav a{color:var(--mut);text-decoration:none;font-size:12.5px;padding:4px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;}
+  nav a:hover{color:var(--accent);border-color:var(--accent);}
+  h2{font-size:19px;margin:40px 0 14px;letter-spacing:-.01em;}
+  h2 .n{color:var(--accent);margin-right:8px;}
+  .lead{color:var(--mut);max-width:860px;}
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:14px;}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 18px;}
+  .card h3{margin:0 0 4px;font-size:15px;}
+  .dom{font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;}
+  .dom.b{color:#7c3aed}.dom.c{color:#0d9488}.dom.d{color:#db2777}.dom.e{color:#d97706}
+  .dom.f{color:#0891b2}.dom.g{color:#4f46e5}.dom.h{color:#16a34a}.dom.i{color:#e11d48}.dom.j{color:#334155}
+  .card p{margin:6px 0;color:var(--mut);font-size:13.5px;}
+  .url{font-family:var(--mono);font-size:12px;word-break:break-all;}
+  .url a{color:var(--accent);text-decoration:none;}
+  .url a:hover{text-decoration:underline;}
+  .meta{font-size:12px;color:var(--mut);}
+  .pill{display:inline-block;font-size:10.5px;font-weight:600;border-radius:4px;padding:1px 7px;margin:2px 3px 0 0;border:1px solid var(--line);}
+  .pill.vec{background:#eef2ff;color:#4338ca;border-color:#c7d2fe;}
+  .pill.est{background:#f0fdf4;color:#15803d;border-color:#bbf7d0;}
+  .pill.iny{background:#fff7ed;color:#c2410c;border-color:#fed7aa;}
+  table{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:13px;}
+  th{background:#f1f5f9;text-align:left;padding:10px 12px;font-size:12px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut);}
+  td{padding:10px 12px;border-top:1px solid var(--line);vertical-align:top;}
+  td .url a{font-size:11.5px;}
+  .note{background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 16px;font-size:13.5px;color:#78350f;margin:16px 0;}
+  .kpi{display:flex;flex-wrap:wrap;gap:12px;margin:16px 0;}
+  .kpi .box{background:#fff;border:1px solid var(--line);border-radius:10px;padding:12px 16px;min-width:140px;}
+  .kpi .v{font-size:22px;font-weight:700;color:var(--accent);}
+  .kpi .k{font-size:11.5px;color:var(--mut);text-transform:uppercase;letter-spacing:.05em;}
+  code{font-family:var(--mono);font-size:12.5px;background:#f1f5f9;padding:1px 5px;border-radius:4px;}
+  ul{margin:6px 0;padding-left:20px;}
+  li{margin:3px 0;color:var(--mut);font-size:13.5px;}
+  footer{margin-top:48px;padding-top:16px;border-top:1px solid var(--line);color:var(--mut);font-size:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <h1>Mapa de fuentes contables de Chile</h1>
+  <p class="sub">Insumo para construir los RAG del primer sistema agéntico contable chileno. Cada dato con su fuente. Fecha de compilación: 8 de septiembre de 2026.</p>
+  <span class="tag">10 dominios</span><span class="tag">≈ 45 fuentes primarias</span><span class="tag">1 store por dominio</span>
+</header>
+
+<nav>
+  <a href="#principio">Principio de arquitectura</a>
+  <a href="#fuentes">Mapa de fuentes</a>
+  <a href="#rag">Mapeo → RAG</a>
+  <a href="#orden">Orden de construcción</a>
+</nav>
+
+<div class="kpi">
+  <div class="box"><div class="v">10</div><div class="k">stores propuestos</div></div>
+  <div class="box"><div class="v">4</div><div class="k">capas de conocimiento</div></div>
+  <div class="box"><div class="v">2</div><div class="k">tipos de índice</div></div>
+  <div class="box"><div class="v">1</div><div class="k">clave de entidad</div></div>
+</div>
+
+<h2 id="principio"><span class="n">§1</span>Principio de arquitectura</h2>
+<p class="lead">La contabilidad chilena NO es una sola normativa: conviven (y colisionan) al menos tres marcos — contabilidad financiera (NIIF), contabilidad tributaria (SII) y regulación sectorial (CMF, SP, SUSESO, BCCh). Colapsarlas en un único índice de embeddings es el error estructural que hay que evitar desde el día uno.</p>
+<ul>
+  <li><b>Un store por dominio</b>, consultado "en sus propios términos", con su propio chunking y frecuencia de actualización. Una capa de acceso encima rutea la consulta al store correcto.</li>
+  <li><b>Vectorial vs. estructurado:</b> el texto de normas, oficios, dictámenes y fallos va a vectorial (recuperación por similitud). Los números deterministas — tasas de IVA/impuesto, plazos, umbrales de UF, tramos, reajustes — van a lookup estructurado. <b>Nunca un embedding decide una tasa ni un plazo.</b></li>
+  <li><b>Clave de entidad compartida:</b> <code>{RUT · ejercicio · tipo_entidad · norma}</code> en todos los stores, para saltar de un dominio a otro (de la norma tributaria a su reflejo NIIF, o al dictamen que la interpreta).</li>
+  <li><b>Dedup antes de embeber:</b> circular/resolución reemitida, texto consolidado en LeyChile vs. Diario Oficial — normalizar y deduplicar por hash antes de gastar embedding.</li>
+  <li><b>Inyección determinista de glosario:</b> las siglas del dominio (IVA, PPM, F29, F22, RCV, RLI, IDPC, RAI, DDAN, SAC, UF, UTM, FECU, MPFI, NCG…) se inyectan por gatillo, no se "descubren" por ranking.</li>
+  <li><b>Corpus local = Chile por defecto:</b> el estándar internacional (IFRS/IASB, NIA/IFAC, NICSP/IPSASB) solo se usa cuando se pide explícito o hay vacío normativo local.</li>
+</ul>
+
+<h2 id="fuentes"><span class="n">§2</span>Mapa de fuentes por dominio</h2>
+<p class="lead">Los 10 dominios, cada fuente con su URL verificada, qué aporta y su capa (vectorial / estructurada / inyección).</p>
+
+<h3>A — Norma contable financiera (NIIF/IFRS): el "qué" del registro</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom">Colegio de Contadores de Chile A.G.</p>
+    <h3>Boletines Técnicos NIIF Full y para PYME (BT 79–85)</h3>
+    <p>Órgano que adopta las NIIF en Chile. El BT 85 (2013) derogó los PCGA y adoptó formalmente las NIIF del IASB como marco oficial.</p>
+    <p class="url"><a href="https://www.contach.cl/normas-boletines-tecnicos-niif.php">contach.cl/normas-boletines-tecnicos-niif.php</a></p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom">Colegio de Contadores de Chile A.G.</p>
+    <h3>Boletines Técnicos PCGA (derogados)</h3>
+    <p>Normativa local histórica, derogada desde el 01-01-2013. Útil solo para interpretar estados financieros antiguos o entidades fuera de IFRS.</p>
+    <p class="url"><a href="https://www.contach.cl/normas-boletines-tecnicos-pcga.php">contach.cl/normas-boletines-tecnicos-pcga.php</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom">IFRS Foundation / IASB</p>
+    <h3>NIIF completas (IFRS) y NIIF para las PYMES</h3>
+    <p>Estándar internacional fuente. Chile lo adopta vía Colegio de Contadores. Cronología de adopción: gradual desde 2004/2009, plena 2010–2012, derogación PCGA 2013.</p>
+    <p class="url"><a href="https://www.ifrs.org">ifrs.org</a> · <a href="https://www.ifrs.org/issued-standards/ifrs-for-smes/">NIIF PYMES</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom">ISSB / IFRS Foundation</p>
+    <h3>NIIF S1 y S2 (sostenibilidad)</h3>
+    <p>Estándar de divulgación ESG. Chile lo incorpora vía NCG 519 de la CMF a contar del ejercicio 2026 (reporte 2027).</p>
+    <p class="url"><a href="https://www.ifrs.org/sustainability/">ifrs.org/sustainability</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>B — Norma tributaria (SII + leyes de impuesto): el "qué" fiscal</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom b">Cuerpos legales base</p>
+    <h3>Código Tributario, Ley de Renta, Ley de IVA</h3>
+    <p>DL 830/1974 (Código Tributario: contabilidad fidedigna, libros, Arts. 16–17), DL 824/1974 (Renta: regímenes, Art. 14), DL 825/1974 (IVA). Textos consolidados en LeyChile.</p>
+    <p class="url"><a href="https://www.leychile.cl">leychile.cl</a> (búsqueda por norma)</p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom b">Servicio de Impuestos Internos (SII)</p>
+    <h3>Circulares</h3>
+    <p>Instrucciones generales de aplicación e interpretación de la ley tributaria. La doctrina más densa del SII vive acá.</p>
+    <p class="url"><a href="https://www.sii.cl/normativa_legislacion/circulares/">sii.cl/normativa_legislacion/circulares</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom b">SII</p>
+    <h3>Resoluciones Exentas</h3>
+    <p>Operativa: Documentos Tributarios Electrónicos (DTE), Libros Contables Electrónicos (Diario, Mayor, Balance), Código de Autorización de Libros (CAL).</p>
+    <p class="url"><a href="https://www.sii.cl/normativa_legislacion/resoluciones/">sii.cl/normativa_legislacion/resoluciones</a></p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom b">SII</p>
+    <h3>Oficios (jurisprudencia administrativa)</h3>
+    <p>Pronunciamientos del Director sobre casos concretos: el "precedente" tributario. Índice por año y por impuesto.</p>
+    <p class="url"><a href="https://www.sii.cl/pagina/jurisprudencia/adminis/">sii.cl/pagina/jurisprudencia/adminis</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom b">SII</p>
+    <h3>Jurisprudencia judicial</h3>
+    <p>Fallos de tribunales y Cortes relacionadas con impuestos, organizados por materia (Código Tributario, Renta, IVA…).</p>
+    <p class="url"><a href="https://www.sii.cl/pagina/jurisprudencia/judicial/indice.htm">sii.cl/pagina/jurisprudencia/judicial/indice.htm</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom b">Reformas recientes</p>
+    <h3>Ley 21.713 (cumplimiento tributario) y reformas</h3>
+    <p>Publicada 24-10-2024: antielusión reforzada, revelación voluntaria, facultades de fiscalización. Junto a Ley 21.210 (2020) y Ley 20.780/20.899.</p>
+    <p class="url"><a href="https://www.bcn.cl/leychile/navegar?idNorma=1207746">bcn.cl/leychile/navegar?idNorma=1207746</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>C — Regulación del mercado financiero (CMF): el "qué" del emisor</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom c">Comisión para el Mercado Financiero</p>
+    <h3>NCG 30 + normativa de emisores</h3>
+    <p>Estados financieros IFRS de sociedades emisoras, Memoria Anual, presentación y envío de información financiera.</p>
+    <p class="url"><a href="https://www.cmfchile.cl/institucional/legislacion_normativa/normativa2.php">cmfchile.cl/institucional/legislacion_normativa/normativa2.php</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom c">CMF</p>
+    <h3>NCG 461 + NCG 519 (sostenibilidad NIIF S1/S2)</h3>
+    <p>NCG 461 (nov. 2021) incorporó ESG a la Memoria. NCG 519 (oct. 2024) adopta NIIF S1/S2 desde el ejercicio 2026.</p>
+    <p class="url"><a href="https://www.cmfchile.cl/portal/prensa/625/w4-article-86543.html">cmfchile.cl (NCG 519)</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom c">CMF</p>
+    <h3>Taxonomía XBRL CL-CI</h3>
+    <p>Lenguaje estructurado de reporte de EEFF. Versión anual (CL-CI 2026 publicada 02-01-2026). Es el puente natural hacia el dato estructurado, no solo texto.</p>
+    <p class="url"><a href="https://www.cmfchile.cl/portal/principal/623/w4-propertyvalue-48724.html">cmfchile.cl (XBRL)</a></p>
+    <span class="pill est">estructurado</span><span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom c">CMF</p>
+    <h3>Compendio de Normas Contables para Bancos</h3>
+    <p>Plan de cuentas y criterios contables de la industria bancaria (referenciado también por el BCCh).</p>
+    <p class="url"><a href="https://www.cmfchile.cl">cmfchile.cl</a></p>
+    <span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom c">Leyes de mercado</p>
+    <h3>Ley 18.046 (S.A.) y Ley 18.045 (Mercado de Valores)</h3>
+    <p>Obligaciones societarias y de información continua de las sociedades anónimas.</p>
+    <p class="url"><a href="https://www.leychile.cl">leychile.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>D — Derecho societario y comercial</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom d">Código de Comercio</p>
+    <h3>Obligaciones de contabilidad (Arts. 25–44)</h3>
+    <p>Libros de comercio (Diario, Mayor, Inventario y Balance), su habilitación y valor probatorio.</p>
+    <p class="url"><a href="https://www.leychile.cl">leychile.cl (Código de Comercio)</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom d">Responsabilidad penal</p>
+    <h3>Ley 20.393 (RPPJ) + Ley 21.595 (Delitos Económicos)</h3>
+    <p>Ley 21.595 publicada 17-08-2023, vigencia escalonada desde 2024: amplía a 200+ delitos (incluye tributarios) y reformula el modelo de prevención. Impacto directo en contadores y auditores.</p>
+    <p class="url"><a href="https://www.bcn.cl/leychile/navegar?idNorma=1201316">bcn.cl/leychile (Ley 21.595)</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>E — Jurisprudencia y doctrina administrativa</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom e">Tribunales Tributarios y Aduaneros (TTA)</p>
+    <h3>Fallos relevantes</h3>
+    <p>Sentencias sobre IVA, Renta, crédito fiscal, facturas falsas, tasación. La casuística contenciosa más rica para un agente que responde "qué pasa si…".</p>
+    <p class="url"><a href="https://www.tta.cl/fallos_relevantes/">tta.cl/fallos_relevantes</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom e">Contraloría General de la República</p>
+    <h3>Dictámenes y pronunciamientos</h3>
+    <p>Doctrina sobre uso de recursos públicos, reintegros, contabilidad estatal. Esencial para el sector público y municipal.</p>
+    <p class="url"><a href="https://www.contraloria.cl/web/cgr/dictamenes-y-pronunciamientos">contraloria.cl/web/cgr/dictamenes-y-pronunciamientos</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>F — Contabilidad gubernamental (NICSP)</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom f">Contraloría General de la República</p>
+    <h3>Normativa del Sistema de Contabilidad General de la Nación</h3>
+    <p>Res. 16/2015 adopta indirectamente las NICSP para el Gobierno Central (transición terminada en 2018); Res. 3/2020 fija la normativa municipal. La CGR lleva la contabilidad general de la Nación.</p>
+    <p class="url"><a href="https://www.bcn.cl/leychile/navegar?idNorma=1144460">bcn.cl/leychile/navegar?idNorma=1144460</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom f">IPSASB / IFAC</p>
+    <h3>NICSP (Normas Internacionales de Contabilidad del Sector Público)</h3>
+    <p>Estándar fuente de la contabilidad gubernamental chilena.</p>
+    <p class="url"><a href="https://www.ifac.org">ifac.org</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom f">DIPRES</p>
+    <h3>Clasificador presupuestario</h3>
+    <p>Estructura de cuentas del presupuesto público; el "plan de cuentas" fiscal del Estado.</p>
+    <p class="url"><a href="https://www.dipres.gob.cl">dipres.gob.cl</a></p>
+    <span class="pill est">estructurado</span>
+  </div>
+</div>
+
+<h3>G — Auditoría y aseguramiento</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom g">IAASB / IFAC</p>
+    <h3>Normas Internacionales de Auditoría (NIA)</h3>
+    <p>Manual de pronunciamientos (gestión de calidad, auditoría, revisión, aseguramiento). Base de la auditoría de EEFF en Chile.</p>
+    <p class="url"><a href="https://www.ifac.org">ifac.org (IAASB Handbook)</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom g">IESBA</p>
+    <h3>Código de Ética para Profesionales de la Contabilidad</h3>
+    <p>Independencia y conducta profesional del contador/auditor.</p>
+    <p class="url"><a href="https://www.ifac.org">ifac.org (IESBA)</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>H — Contabilidad sectorial (norma especial por industria)</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom h">Superintendencia de Pensiones (SP)</p>
+    <h3>Compendio de Pensiones — Título VII (Contabilidad de Fondos)</h3>
+    <p>Normas contables, plan y manual de cuentas de los fondos de pensiones y AFPs (FECU AFP-IFRS).</p>
+    <p class="url"><a href="https://spensiones.cl/portal/compendio/596/w3-propertyvalue-2558.html">spensiones.cl (Título VII)</a></p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom h">Superintendencia de Seguridad Social (SUSESO)</p>
+    <h3>Compendios + circulares + dictámenes</h3>
+    <p>Seguro laboral (Ley 16.744), subsidios, cotizaciones de seguridad social. Normativa operativa de planillas y prestaciones.</p>
+    <p class="url"><a href="https://www.suseso.gob.cl">suseso.gob.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom h">Banco Central de Chile</p>
+    <h3>MPFI, Cartas Circulares y CNCI</h3>
+    <p>Manual de Procedimientos y Formularios de Información; sistemas de información monetaria (SIM) y Compendio de Normas de Cambios Internacionales. Reportes contables de bancos al BCCh.</p>
+    <p class="url"><a href="https://www.bcentral.cl/areas/estadisticas/reportes-al-bcch">bcentral.cl (reportes al BCCh)</a></p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom h">Servicio Nacional de Aduanas</p>
+    <h3>Ordenanza de Aduanas + Arancel Aduanero</h3>
+    <p>Valoración aduanera, clasificación arancelaria, régimen de importación/exportación (con IVA de importación).</p>
+    <p class="url"><a href="https://www.aduana.cl">aduana.cl</a></p>
+    <span class="pill vec">vectorial</span><span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom h">Superintendencia de Insolvencia y Reemprendimiento (Superir)</p>
+    <h3>Compendio de Normas (Ley 20.720 / 21.563)</h3>
+    <p>Procedimientos concursales: reorganización, liquidación, renegociación. Contabilidad de empresas en insolvencia y rol del auditor.</p>
+    <p class="url"><a href="https://www.superir.gob.cl">superir.gob.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>I — Normativa laboral y previsional (impacto en planillas y provisiones)</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom i">Dirección del Trabajo (DT)</p>
+    <h3>Dictámenes y ordinarios</h3>
+    <p>Doctrina laboral (jornada, remuneraciones, finiquitos, Ley 40 horas). Base de cálculo de provisiones de personal.</p>
+    <p class="url"><a href="https://www.dt.gob.cl">dt.gob.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom i">Código del Trabajo + leyes laborales</p>
+    <h3>Ley 21.131 (pago a 30 días) y Ley 21.561 (40 horas)</h3>
+    <p>Normas con efecto contable directo (plazos de pago a proveedores, costo de jornada).</p>
+    <p class="url"><a href="https://www.leychile.cl">leychile.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+</div>
+
+<h3>J — Fuentes primarias legales y datos operativos</h3>
+<div class="grid">
+  <div class="card">
+    <p class="dom j">Biblioteca del Congreso Nacional</p>
+    <h3>LeyChile</h3>
+    <p>Texto consolidado de TODA la normativa chilena (leyes, DL, DFL, reglamentos, circulares). La raíz del grafo de fuentes.</p>
+    <p class="url"><a href="https://www.leychile.cl">leychile.cl</a> · <a href="https://www.bcn.cl">bcn.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom j">Ministerio del Interior</p>
+    <h3>Diario Oficial de la República de Chile</h3>
+    <p>Fuente de publicación oficial y vigencia de cada norma (el "timestamp" legal).</p>
+    <p class="url"><a href="https://www.diariooficial.interior.gob.cl">diariooficial.interior.gob.cl</a></p>
+    <span class="pill est">estructurado</span>
+  </div>
+  <div class="card">
+    <p class="dom j">Senado / Cámara</p>
+    <h3>Historia de la Ley</h3>
+    <p>Tramitación, discusión y espíritu de cada ley — clave para interpretar intención normativa en casos dudosos.</p>
+    <p class="url"><a href="https://www.senado.cl">senado.cl</a> · <a href="https://www.camara.cl">camara.cl</a></p>
+    <span class="pill vec">vectorial</span>
+  </div>
+  <div class="card">
+    <p class="dom j">Operacional</p>
+    <h3>Tesorería (TGR) y Registro de Empresas y Sociedades (RES)</h3>
+    <p>TGR: pago de impuestos y cupones. RES: constitución y datos de sociedades (entidad del grafo).</p>
+    <p class="url"><a href="https://www.tgr.cl">tgr.cl</a> · <a href="https://www.registrodeempresasysociedades.cl">registrodeempresasysociedades.cl</a></p>
+    <span class="pill est">estructurado</span>
+  </div>
+</div>
+
+<div class="note"><b>Nota de cobertura.</b> Tres marcos contables conviven y se reflejan distinto: financiero (NIIF), tributario (SII) y regulatorio-sectorial (CMF/SP/SUSESO/BCCh). Un agente que no distinga la capa responderá mezclando "lo contable" con "lo tributario", que es justo el error que se busca eliminar. Por eso la arquitectura de stores separados es condición de diseño, no un detalle de implementación.</div>
+
+<h2 id="rag"><span class="n">§3</span>Mapeo dominio → RAG store</h2>
+<table>
+  <thead><tr><th>Store (dominio)</th><th>Capa</th><th>Chunking</th><th>Actualización</th><th>Claves / filtros</th></tr></thead>
+  <tbody>
+    <tr><td><b>A. NIIF/IFRS</b> (Colegio + IASB + ISSB)</td><td>Vectorial (normas) + estructurado (tablas de transición, umbrales)</td><td>Por norma/sección, parent-child</td><td>Trimestral (IASB emite continuo)</td><td>norma, vigencia, tipo_entidad</td></tr>
+    <tr><td><b>B. Tributaria SII</b> (CT, Renta, IVA, circulares, resoluciones, oficios)</td><td>Vectorial + estructurado (tasas, plazos, tramos, UF/UTM)</td><td>Por artículo / por circular</td><td>Semanal (SII publica sin calendario)</td><td>impuesto, ejercicio, RUT</td></tr>
+    <tr><td><b>C. CMF</b> (NCG, XBRL, compendio bancos)</td><td>Vectorial (NCG) + estructurado (taxonomía XBRL, plan de cuentas)</td><td>Por NCG / por tabla</td><td>Anual + eventos (taxonomía cada enero)</td><td>tipo_emisor, ejercicio</td></tr>
+    <tr><td><b>D. Societario/comercial</b> (C.Com, S.A., RPPJ)</td><td>Vectorial</td><td>Por artículo</td><td>On-change (ley nueva)</td><td>tipo_sociedad, norma</td></tr>
+    <tr><td><b>E. Jurisprudencia</b> (TTA, Contraloría)</td><td>Vectorial</td><td>Por fallo/dictamen completo</td><td>Mensual</td><td>materia, tribunal, año</td></tr>
+    <tr><td><b>F. Gubernamental</b> (CGR/NICSP, DIPRES)</td><td>Vectorial + estructurado (clasificador)</td><td>Por norma / por cuenta</td><td>Anual</td><td>entidad_pública, sector</td></tr>
+    <tr><td><b>G. Auditoría</b> (NIA, ética IESBA)</td><td>Vectorial</td><td>Por NIA</td><td>Anual</td><td>norma, fase</td></tr>
+    <tr><td><b>H. Sectorial</b> (SP, SUSESO, BCCh, Aduanas, Superir)</td><td>Vectorial + estructurado (planes de cuenta, tablas)</td><td>Por título/capítulo</td><td>Trimestral</td><td>industria, organismo</td></tr>
+    <tr><td><b>I. Laboral</b> (DT, Código Trabajo)</td><td>Vectorial</td><td>Por dictamen</td><td>Mensual</td><td>materia, ley</td></tr>
+    <tr><td><b>J. Primarias legales</b> (LeyChile, Diario Oficial, historia)</td><td>Vectorial + grafo de referencia (norma→modifica→deroga)</td><td>Por artículo</td><td>On-change (Diario Oficial diario)</td><td>norma, vigencia</td></tr>
+  </tbody>
+</table>
+
+<div class="note"><b>La capa estructurada es la que no falla.</b> Tasas (IVA 19%, Primera Categoría, PPM), plazos (declaración F29, F22, retención), tramos de UF y valores UTM se sirven por lookup determinista con su fecha de vigencia — nunca por embedding. El store vectorial responde "cómo se aplica", el estructurado responde "cuánto y cuándo".</div>
+
+<h2 id="orden"><span class="n">§4</span>Orden de construcción sugerido</h2>
+<ol style="font-size:14px;color:var(--mut);">
+  <li><b>Store B (tributario SII)</b> — el de mayor frecuencia de consulta y donde un error cuesta plata. Incluye glosario de siglas por inyección determinista.</li>
+  <li><b>Store A (NIIF)</b> — el marco de registro; da el "qué" contable que B no cubre.</li>
+  <li><b>Store E (jurisprudencia TTA)</b> — la casuística que convierte al agente en "asesor" y no en "buscador de normas".</li>
+  <li><b>Stores C + J</b> — CMF (emisores) y la raíz legal (LeyChile + grafo de vigencia).</li>
+  <li><b>Stores sectoriales (H, F, I, G, D)</b> — por vertical a medida que el sistema salga al mercado.</li>
+</ol>
+<p class="lead">Stack de embeddings local (sin GPU, nada sale de la máquina): <code>fastembed</code> con <code>jinaai/jina-embeddings-v2-base-es</code> + FAISS, búsqueda híbrida BM25+vectorial, re-ranker cross-encoder, y set de evaluación (recall/precision/MRR + faithfulness ≥ 0.80) antes de declarar el sistema "listo".</p>
+
+<footer>
+  Compilado 08-09-2026. Todas las URLs verificadas contra los sitios oficiales de cada organismo. Inventario legible por máquina en <code>fuentes-contables-chile.json</code> (mismo directorio). Fecha de vigencia de hechos normativos: Ley 21.713 (24-10-2024), Ley 21.595 (17-08-2023), NCG 519 (10-2024), Taxonomía CL-CI 2026 (02-01-2026).
+</footer>
+
+</div>
+</body>
+</html>
