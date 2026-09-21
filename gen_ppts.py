@@ -1,268 +1,413 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""Genera los slide decks (PPT embebidas en HTML) de los cursos USACH desde una data declarativa.
-Regla (skill curso-ppt-html): todo curso = una PPT por clase, HTML autocontenido en GitHub Pages.
-Regenerar: editar CLASES y re-correr. Determinista, cero tokens.
-"""
+"""Genera los 25 slide decks de los cursos USACH con CONTENIDO que explica los conceptos.
+Regenerar: editar CLASES y re-correr. Determinista, cero tokens de LLM en la generación."""
 import html, os
 
-CURSOS = {
-    "auditoria":  {"nombre": "Hackeando la Auditoría con IA Agéntica", "short": "Auditoría IA Agéntica", "color": "#0a7a3d"},
-    "innovacion": {"nombre": "Innovación: Ideas Disruptivas para el Éxito", "short": "Innovación Disruptiva", "color": "#2456a5"},
-}
+CSS = """
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:ACC;--acc2:#2563eb;--warn:#b45309;--soft:SOFT;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+"""
 
-# n, fecha, titulo, objetivo, conceptos[], tarea, testeo, links[(label,url)]
-CLASES = [
-# ── AUDITORÍA ────────────────────────────────────────────────────────────────
-dict(curso="auditoria", n=1, fecha="Jue 24 sep 2026", titulo="De ChatGPT al agente autónomo",
-  objetivo="Distinguir IA conversacional de agéntica y correr tu primer agente que ejecuta una tarea de verdad.",
-  conceptos=["IA conversacional vs agéntica", "El loop: pensar → actuar → observar", "Un agente ejecuta; no solo responde"],
-  tarea="En parejas: crear venv, instalar el stack y correr un agente mínimo (CrewAI o eve) que recibe un CSV y ejecuta una acción (contar filas, sumar una columna).",
-  testeo="El agente corre en pantalla y la pareja explica las 3 fases del loop: qué pensó, qué hizo, qué observó.",
-  links=[("Building Effective Agents (Anthropic)", "https://www.anthropic.com/research/building-effective-agents"),
-         ("eve — framework de agentes (Vercel)", "https://github.com/vercel/eve"),
-         ("CrewAI docs", "https://docs.crewai.com")]),
-dict(curso="auditoria", n=2, fecha="Jue 01 oct 2026", titulo="Agente lector de documentos",
-  objetivo="Hacer que tu agente lea un PDF (un balance) y extraiga cifras estructuradas sin inventarlas.",
-  conceptos=["Extracción determinista (no LLM para las cifras)", "PyMuPDF para leer PDFs", "El LLM formatea; no inventa números"],
-  tarea="El agente abre un balance real (PDF), extrae las cuentas principales y las entrega en una tabla.",
-  testeo="La tabla cuadra contra el PDF (activo = pasivo + patrimonio). Si no cuadra, es error de extracción.",
-  links=[("PyMuPDF", "https://pymupdf.readthedocs.io"),
-         ("CrewAI — tools", "https://docs.crewai.com")]),
-dict(curso="auditoria", n=3, fecha="Jue 08 oct 2026", titulo="RAG: la memoria del agente",
-  objetivo="Entender por qué el agente necesita recuperación (y no meter todo al prompt) y armar un mini-RAG.",
-  conceptos=["Embeddings + búsqueda vectorial", "Chunking: partir el texto en trozos", "Índice FAISS + dedup"],
-  tarea="Chunkear 10 documentos, embeber con fastembed, indexar en FAISS y consultar: el agente responde solo con lo recuperado.",
-  testeo="El agente responde y muestra la fuente (qué chunk usó). Si no está en el corpus, dice «no está».",
-  links=[("Qué es RAG", "https://www.pinecone.io/learn/retrieval-augmented-generation/"),
-         ("Vector embeddings", "https://www.pinecone.io/learn/vector-embeddings/"),
-         ("fastembed", "https://github.com/qdrant/fastembed"),
-         ("FAISS", "https://github.com/facebookresearch/faiss")]),
-dict(curso="auditoria", n=4, fecha="Jue 15 oct 2026", titulo="HITO L1 · Agente lector de balances",
-  objetivo="Integrar extracción + RAG en un agente que lee un balance y responde con fuente.",
-  conceptos=["Integración: extracción + índice + respuesta", "Grounding: citar la fuente", "El agente dice «no está» cuando no tiene la respuesta"],
-  tarea="Integrar las clases 1–3 en un solo agente: lee un balance, lo indexa y responde preguntas citando la fuente.",
-  testeo="Demo de 2 min por pareja + prueba de fuego: una pregunta cuya respuesta NO está en el balance → el agente debe declararlo.",
-  links=[("Cómo hacer un agente confiable", "https://www.anthropic.com/research/building-effective-agents"),
-         ("RAG con grounding", "https://www.pinecone.io/learn/grounded-rag/")]),
-dict(curso="auditoria", n=5, fecha="Jue 22 oct 2026", titulo="El problema real: conciliación SII vs ERP",
-  objetivo="Entender el dolor real del auditor (conciliar facturas vs registro) y dónde viven los datos del SII.",
-  conceptos=["Factura electrónica del SII", "Conciliación: facturas vs registro", "Ley 21.595 de Delitos Económicos"],
-  tarea="Recorrer el mapa de fuentes contables chilenas (SII, CMF, LeyChile) y armar un dataset de facturas de ejemplo listo para conciliar.",
-  testeo="Explicar dónde vive cada dato del SII y por qué conciliar 1.000 facturas a mano es trabajo de 8 horas que un agente hace en segundos.",
-  links=[("SII (factura electrónica)", "https://www.sii.cl"),
-         ("Ley 21.595 — Delitos Económicos", "https://www.bcn.cl/leychile/navegar?idNorma=1195119"),
-         ("CMF", "https://www.cmfchile.cl"),
-         ("Mapa de fuentes contables", "mapa-fuentes-contables.html")]),
-dict(curso="auditoria", n=6, fecha="Jue 29 oct 2026", titulo="Bajar datos del SII (ingestor, sin LLM)",
-  objetivo="Construir un ingestor en Python que baja normativa del SII de forma determinista (cero tokens de LLM).",
-  conceptos=["Ingesta determinista vs resumir con IA", "API XML de LeyChile", "Deduplicar por hash antes de embeber"],
-  tarea="Correr el ingestor de ejemplo: bajar una ley vía API XML de LeyChile y una circular del SII, extraer texto limpio y deduplicar.",
-  testeo="Cada pareja trae una fuente real bajada y muestra el texto limpio + confirma que la ingesta es Python puro.",
-  links=[("LeyChile (API de normas)", "https://www.leychile.cl"),
-         ("Circulares SII 2025", "https://www.sii.cl/normativa_legislacion/circulares/2025/indcir2025.htm"),
-         ("Ingestor de ejemplo", "ingestor_store_b.py")]),
-dict(curso="auditoria", n=7, fecha="Jue 05 nov 2026", titulo="Detección de fraude + Ley 21.595",
-  objetivo="Construir reglas de detección de facturas truchas y alertas automáticas.",
-  conceptos=["Reglas deterministas (no ML)", "Señales: duplicados, RUT inválido, montos raros", "Cada alerta ligada a un artículo de la Ley 21.595"],
-  tarea="Escribir reglas que marquen facturas duplicadas, montos sospechosos, RUT inválido y fechas inconsistentes. Ligar cada alerta a un artículo.",
-  testeo="Sobre un dataset con trampas plantadas, detectar las facturas truchas y decir qué artículo de la Ley 21.595 se viola en cada caso.",
-  links=[("Ley 21.595 (artículos)", "https://www.bcn.cl/leychile/navegar?idNorma=1195119"),
-         ("Tribunales Tributarios (casos reales)", "https://www.tta.cl")]),
-dict(curso="auditoria", n=8, fecha="Jue 19 nov 2026", titulo="HITO L2 · Auditoría en vivo a 1.000 transacciones",
-  objetivo="Tu agente concilia 1.000 facturas SII vs ERP en segundos y marca las discrepancias.",
-  conceptos=["Conciliación masiva", "Reporte de discrepancias (monto, folio, proveedor)", "Medir el tiempo total"],
-  tarea="Correr la conciliación completa: dataset SII vs ERP simulado, marcar discrepancias y generar reporte. Medir el tiempo.",
-  testeo="En vivo, el agente marca las facturas truchas en segundos, con el tiempo en pantalla, y la pareja explica cada discrepancia.",
-  links=[("SII", "https://www.sii.cl"),
-         ("Ley 21.595", "https://www.bcn.cl/leychile/navegar?idNorma=1195119")]),
-dict(curso="auditoria", n=9, fecha="Jue 26 nov 2026", titulo="Cero alucinación: spec-first (spec-kit)",
-  objetivo="Escribir una especificación rígida de QUÉ debe hacer el agente antes de codificar.",
-  conceptos=["Por qué los LLM alucinan", "Spec-first: definir antes de codificar", "La spec prohíbe inventar artículos/plazos"],
-  tarea="Escribir la spec de una tarea («cuadrar la conciliación al centavo, citando la norma vigente, prohibido inventar») y que el agente la ejecute.",
-  testeo="Prueba adversarial: pedir un artículo que no existe → el agente dice «no está en la norma», no inventa el «Artículo 999».",
-  links=[("spec-kit (Spec-Driven Development)", "https://github.com/github/spec-kit"),
-         ("Por qué un RAG alucina", "https://www.pinecone.io/learn/rag-hallucinations/")]),
-dict(curso="auditoria", n=10, fecha="Jue 03 dic 2026", titulo="Guardrails: Zod + Graft",
-  objetivo="Blindar el agente con validación de datos (Zod) y mapeo del ERP (Graft).",
-  conceptos=["Guardrails de datos", "Schema Zod de la factura", "Graft: grafo de código para no perderse"],
-  tarea="Definir el schema Zod de una factura (campos, tipos, reglas) y mapear la estructura del ERP con Graft.",
-  testeo="El agente rechaza una transacción que no cuadra y explica qué regla del schema la frenó.",
-  links=[("Zod", "https://zod.dev"),
-         ("Pydantic", "https://docs.pydantic.dev"),
-         ("Graft (grafo de código)", "https://github.com/NanoNets/graft")]),
-dict(curso="auditoria", n=11, fecha="Jue 10 dic 2026", titulo="HITO L3 · Blindaje al centavo + evaluación",
-  objetivo="Tu agente cuadra al centavo sin alucinar y sabes MEDIRLO con un set de evaluación.",
-  conceptos=["Recall / precision / MRR", "Faithfulness / groundedness", "Batería adversarial"],
-  tarea="Armar un set de evaluación (10+ consultas con respuesta esperada) y medir recall/precision del retrieval + faithfulness.",
-  testeo="Pasar la batería adversarial (falsas premisas, typos, prompt injection) y que el agente responda con fuente o declare «no está».",
-  links=[("Evaluar un RAG", "https://www.pinecone.io/learn/rag-evaluation/"),
-         ("Faithfulness / groundedness", "https://www.pinecone.io/learn/rag-faithfulness/")]),
-dict(curso="auditoria", n=12, fecha="Jue 17 dic 2026", titulo="Hackathon: el Swarm multi-agente",
-  objetivo="Orquestar varios agentes (extractor, conciliador, caza-fraudes) que colaboran en un flujo.",
-  conceptos=["Orquestación multi-agente", "División de tareas entre agentes", "Flujo end-to-end"],
-  tarea="En equipos, orquestar 2–3 agentes que se pasan el trabajo: uno extrae, otro concilia, otro detecta fraude y alerta.",
-  testeo="El swarm ejecuta el flujo completo (factura → conciliación → alerta) sin intervención manual entre pasos.",
-  links=[("Patrones multi-agente (Anthropic)", "https://www.anthropic.com/research/building-effective-agents"),
-         ("CrewAI — crews multi-agente", "https://docs.crewai.com")]),
-dict(curso="auditoria", n=13, fecha="Jue 07 ene 2027", titulo="Demo final / Executive Pitch",
-  objetivo="Presentar tu sistema agéntico de auditoría como si fuera a un directorio.",
-  conceptos=["Pitch ejecutivo: problema, solución, impacto", "Demo en vivo", "Defender el sistema ante preguntas"],
-  tarea="Cada equipo presenta su Swarm UFAS: pitch + demo en vivo del sistema auditando.",
-  testeo="Ante panel, el sistema responde con fuente, cuadra al centavo y defiende sus alertas. Importa que funcione y lo sepan explicar.",
-  links=[("eve (deploy del swarm)", "https://github.com/vercel/eve"),
-         ("CrewAI", "https://docs.crewai.com")]),
-# ── INNOVACIÓN ───────────────────────────────────────────────────────────────
-dict(curso="innovacion", n=1, fecha="Sáb 26 sep 2026", titulo="¿Qué es innovar de verdad? Disrupción vs mejora",
-  objetivo="Distinguir disrupción de mejora incremental e identificar un «job to be done» no satisfecho.",
-  conceptos=["El dilema del innovador (Christensen)", "Jobs to be Done", "Disrupción ≠ mejora incremental"],
-  tarea="En parejas, elegir un mercado real y redactar el «job to be done» que hoy se resuelve mal. No proponer solución todavía.",
-  testeo="Explicar por qué su idea es disruptiva (segmento ignorado u otra forma de hacer el trabajo), no una mejora incremental del líder.",
-  links=[("Christensen — The Innovator's Dilemma", "https://www.claytonchristensen.com"),
-         ("Jobs to be Done (Alan Klement)", "https://jtbd.info")]),
-dict(curso="innovacion", n=2, fecha="Sáb 03 oct 2026", titulo="Océano Azul: crear mercados sin competencia",
-  objetivo="Usar la curva de valor (eliminar-reducir-elevar-crear) para redefinir un mercado.",
-  conceptos=["Estrategia del Océano Azul", "La curva de valor", "Eliminar · Reducir · Elevar · Crear"],
-  tarea="Dibujar la curva de valor de su idea y compararla contra la del competidor típico.",
-  testeo="Su curva redefine los factores (al menos uno que la industria da por sentado), no es una copia desplazada.",
-  links=[("Blue Ocean Strategy (Kim & Mauborgne)", "https://www.blueoceanstrategy.com")]),
-dict(curso="innovacion", n=3, fecha="Sáb 10 oct 2026", titulo="Modelo de negocio: Canvas + 4 cajas",
-  objetivo="Diseñar el modelo de negocio con el Canvas (9 cajas) y las 4 cajas de Johnson.",
-  conceptos=["Business Model Canvas (9 cajas)", "Las 4 cajas de Johnson", "Crear, entregar y capturar valor"],
-  tarea="Llenar las 9 cajas del Canvas para su idea e identificar las 2 cajas más débiles (supuestos críticos).",
-  testeo="Explicar en 60 segundos cómo su modelo crea, entrega y captura valor, y cuáles son sus 2 supuestos más arriesgados.",
-  links=[("Business Model Canvas", "https://www.strategyzer.com/library/the-business-model-canvas"),
-         ("Las 4 cajas de Johnson (HBR)", "https://hbr.org/2008/12/reinventing-your-business-model")]),
-dict(curso="innovacion", n=4, fecha="Sáb 17 oct 2026", titulo="Patrones: 55 patrones + 10 tipos de innovación",
-  objetivo="Generar variantes de tu modelo usando patrones sistemáticos, no solo inspiración.",
-  conceptos=["55 patrones (Gassmann)", "10 tipos de innovación (Doblin)", "Patrones → modelos alternativos"],
-  tarea="Aplicar al menos 3 patrones a su modelo base y producir 2 modelos alternativos (no variaciones cosméticas).",
-  testeo="Los 2 modelos nuevos son genuinamente distintos y pueden decir qué patrón los generó.",
-  links=[("Business Model Navigator (55 patrones)", "https://www.businessmodelnavigator.com"),
-         ("Ten Types of Innovation (Doblin)", "https://doblin.com/ten-types")]),
-dict(curso="innovacion", n=5, fecha="Sáb 24 oct 2026", titulo="Propuesta de valor + Customer Development",
-  objetivo="Diseñar la propuesta de valor y salir a validar el dolor del cliente real.",
-  conceptos=["Value Proposition Canvas", "Customer Development", "Entrevistas de descubrimiento"],
-  tarea="Llenar el Value Proposition Canvas y redactar un guión de entrevista (mínimo 5 preguntas que validen el dolor).",
-  testeo="El encaje problema-solución con evidencia de cliente (al menos 1 entrevista hecha), no con opinión propia.",
-  links=[("Value Proposition Design", "https://www.strategyzer.com/library/value-proposition-design"),
-         ("Customer Development (Steve Blank)", "https://steveblank.com")]),
-dict(curso="innovacion", n=6, fecha="Sáb 07 nov 2026", titulo="Lean Startup + MVP",
-  objetivo="Diseñar un MVP y un experimento medible para validar tu hipótesis más riesgosa.",
-  conceptos=["Build-Measure-Learn", "MVP mínimo viable", "Hipótesis falsable"],
-  tarea="Definir la hipótesis más riesgosa, el MVP mínimo para testearla y el experimento (métrica, plazo, umbral).",
-  testeo="Explicar qué métrica validaría o refutaría la hipótesis. Si nada puede refutarla, el experimento está mal diseñado.",
-  links=[("The Lean Startup (Ries)", "http://theleanstartup.com"),
-         ("Running Lean (Maurya)", "https://leanstack.com")]),
-dict(curso="innovacion", n=7, fecha="Sáb 21 nov 2026", titulo="HITO mitad · Presenta tu modelo disruptivo",
-  objetivo="Presentar tu modelo disruptivo a pares y defenderlo ante crítica constructiva.",
-  conceptos=["Presentación en 4 min", "Crítica estructurada", "Iterar con feedback"],
-  tarea="Presentar el modelo (Canvas + curva de valor + hipótesis) en 4 min y anotar qué van a cambiar.",
-  testeo="Defender el modelo ante preguntas duras y explicitar qué feedback van a incorporar — no solo presentar, iterar.",
-  links=[("Business Model Canvas", "https://www.strategyzer.com/library/the-business-model-canvas")]),
-dict(curso="innovacion", n=8, fecha="Sáb 28 nov 2026", titulo="Portafolio: Tres Horizontes + Ambition Matrix",
-  objetivo="Organizar tus ideas en un portafolio de innovación (core / adyacente / transformacional).",
-  conceptos=["Tres horizontes de crecimiento", "Innovation Ambition Matrix", "Balance del portafolio"],
-  tarea="Ubicar sus ideas en la Ambition Matrix y los Tres Horizontes, e identificar si el portafolio está desbalanceado.",
-  testeo="Explicar el balance de su portafolio y por qué su idea es la apuesta transformacional correcta.",
-  links=[("Three Horizons (McKinsey)", "https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/enduring-ideas-the-three-horizons-of-growth"),
-         ("Innovation Ambition Matrix (HBR)", "https://hbr.org/2012/05/managing-your-innovation-portfolio")]),
-dict(curso="innovacion", n=9, fecha="Sáb 05 dic 2026", titulo="Design Thinking + 101 Design Methods",
-  objetivo="Idear de forma estructurada (empatizar → definir → idear → prototipar → testear).",
-  conceptos=["Ciclo de design thinking", "Métodos de Kumar (101 Design Methods)", "Prototipo de baja fidelidad"],
-  tarea="Aplicar un ciclo completo de design thinking a un sub-problema: empatizar, definir, idear y prototipar.",
-  testeo="El prototipo + qué aprendieron del test con un usuario real. Importa lo que enseñó, no que sea bonito.",
-  links=[("Design Thinking (IDEO)", "https://designthinking.ideo.com")]),
-dict(curso="innovacion", n=10, fecha="Sáb 12 dic 2026", titulo="Von Hippel: fuentes de innovación + lead users",
-  objetivo="Identificar usuarios líderes y fuentes de innovación fuera de la empresa.",
-  conceptos=["Lead users", "Democratización de la innovación", "Co-creación con usuarios"],
-  tarea="Identificar los lead users de su mercado (los que ya sufren el problema y se arman soluciones propias) y diseñar la co-creación.",
-  testeo="Explicar quién es su lead user concreto y cómo lo incorporan — un perfil real, no una abstracción.",
-  links=[("Eric von Hippel (MIT)", "https://evhippel.mit.edu")]),
-dict(curso="innovacion", n=11, fecha="Sáb 19 dic 2026", titulo="NABC pitch: vender la idea disruptiva",
-  objetivo="Estructurar tu idea en un pitch NABC (Need-Approach-Benefit-Competition) y ensayarlo.",
-  conceptos=["Need — la necesidad", "Approach — el abordaje distinto", "Benefit — beneficio cuantificable", "Competition — por qué ganas"],
-  tarea="Armar el pitch NABC y ensayar el pitch de 3 min.",
-  testeo="Pitch de 3 min que responde las 4 letras sin muletillas y con el beneficio en números.",
-  links=[("Método NABC (SRI International)", "https://www.sri.com")]),
-dict(curso="innovacion", n=12, fecha="Sáb 09 ene 2027", titulo="Demo final: pitch + portafolio",
-  objetivo="Presentar tu idea disruptiva final ante un panel, con el portafolio completo.",
-  conceptos=["Pitch final", "Evidencia de validación", "Portafolio de innovación"],
-  tarea="Cada equipo presenta: NABC + modelo de negocio + evidencia de validación (entrevistas, prototipo, experimento) + portafolio.",
-  testeo="Defender la idea con evidencia real de cliente, no suposiciones. Importa que esté validada y sepan argumentarla.",
-  links=[("Método NABC (SRI International)", "https://www.sri.com")]),
-]
+def esc(s): return html.escape(s, quote=False)
 
-def esc(s):
-    return html.escape(s, quote=False)
+def render_slide(s):
+    k = s[0]; w = s[1]
+    kick = f'<div class="kicker">{esc(w.get("kicker",""))}</div>' if w.get("kicker") else ""
+    h2 = f'<h2>{esc(w["h2"])}</h2>' if w.get("h2") else ""
+    if k == "pregunta":
+        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p></section>'
+    if k == "definicion":
+        return f'<section class="slide">{kick}{h2}<p class="def">{w["defn"]}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
+    if k == "vs":
+        bad = "".join(f"<li>{esc(x)}</li>" for x in w["bad"])
+        good = "".join(f"<li>{esc(x)}</li>" for x in w["good"])
+        return (f'<section class="slide">{kick}{h2}<div class="grid2">'
+                f'<div class="col bad"><div class="t">{esc(w["bad_t"])}</div><ul>{bad}</ul></div>'
+                f'<div class="col good"><div class="t">{esc(w["good_t"])}</div><ul>{good}</ul></div></div></section>')
+    if k == "loop":
+        nodes = "".join(f'<div class="node"><div class="n">{esc(t)}</div><div class="d">{esc(d)}</div></div>' for t, d in w["nodes"])
+        nodes = f'<span class="arrow">→</span>'.join([nodes]) if len(w["nodes"]) == 1 else nodes
+        # intercalar flechas
+        parts = []
+        for i, (t, d) in enumerate(w["nodes"]):
+            parts.append(f'<div class="node"><div class="n">{esc(t)}</div><div class="d">{esc(d)}</div></div>')
+            if i < len(w["nodes"]) - 1:
+                parts.append('<span class="arrow">→</span>')
+        loop = "".join(parts)
+        return f'<section class="slide">{kick}{h2}<p class="lead" style="margin-bottom:20px">{esc(w.get("lead",""))}</p><div class="loop">{loop}</div><p class="meta">{esc(w.get("meta",""))}</p></section>'
+    if k == "ejemplo":
+        steps = "".join(f"<li>{w['steps'][i]}</li>" for i in range(len(w["steps"]))) if isinstance(w.get("steps"), list) else ""
+        return f'<section class="slide">{kick}{h2}<div class="cajon"><div class="q">{esc(w["q"])}</div><ol>{steps}</ol></div><p class="meta">{esc(w.get("meta",""))}</p></section>'
+    if k == "piezas":
+        pz = "".join(f'<div class="pieza"><div class="t">{esc(t)}</div><p>{esc(p)}</p></div>' for t, p in w["piezas"])
+        return f'<section class="slide">{kick}{h2}<div class="piezas">{pz}</div></section>'
+    if k == "porque":
+        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
+    if k == "error":
+        return f'<section class="slide">{kick}{h2}<div class="warn">{w["warn"]}</div></section>'
+    if k == "pasos":
+        st = "".join(f'<div class="step"><p><b>{esc(b)}</b> {esc(t)}</p></div>' for b, t in w["steps"])
+        return f'<section class="slide">{kick}{h2}<div class="steps">{st}</div></section>'
+    if k == "testeo":
+        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
+    if k == "lista":
+        li = "".join(f"<li>{x}</li>" for x in w["items"])
+        return f'<section class="slide">{kick}{h2}<ul class="plain">{li}</ul></section>'
+    if k == "links":
+        li = "".join(f'<li><a href="{esc(u)}" target="_blank">{esc(l)}</a></li>' for l, u in w["links"])
+        return f'<section class="slide">{kick}{h2}<ul class="links">{li}</ul></section>'
+    return f'<section class="slide">{kick}{h2}</section>'
 
-def deck(c):
-    cu = CURSOS[c["curso"]]
-    color = cu["color"]
-    conceptos = "".join(f"<li>{esc(x)}</li>" for x in c["conceptos"])
-    links = "".join(f'<li><a href="{esc(l[1])}" target="_blank">{esc(l[0])}</a></li>' for l in c["links"])
-    titulo = esc(c["titulo"])
-    objetivo = esc(c["objetivo"])
-    tarea = esc(c["tarea"])
-    testeo = esc(c["testeo"])
-    fecha = esc(c["fecha"])
+def deck(curso, cu, n, fecha, titulo, lead, slides):
+    acc = cu["color"]; soft = cu["soft"]
+    css = CSS.replace("ACC", acc).replace("SOFT", soft)
+    portada = (f'<section class="slide active"><div class="kicker">{esc(cu["level"]+" · "+cu["short"])}</div>'
+               f'<h1>{esc(titulo)}</h1><p class="lead">{esc(lead)}</p></section>')
+    cuerpo = "".join(render_slide(s) for s in slides)
+    total = len(slides) + 1
     return f"""<!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Clase {c['n']} · {titulo}</title>
-<style>
-:root{{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:{color};}}
-*{{box-sizing:border-box}}
-html,body{{margin:0;height:100%}}
-body{{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}}
-.deck{{max-width:920px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 20px;}}
-header{{display:flex;justify-content:space-between;align-items:center;padding:14px 2px;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}}
-header .curso{{font-weight:700;color:var(--acc);}}
-main{{flex:1;display:flex;align-items:center;justify-content:center;}}
-.slide{{display:none;width:100%;max-width:760px;animation:in .25s ease;}}
-.slide.active{{display:block;}}
-@keyframes in{{from{{opacity:0;transform:translateY(8px)}}to{{opacity:1;transform:none}}}}
-.kicker{{color:var(--acc);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em;}}
-.slide h1{{font-size:40px;margin:10px 0 6px;letter-spacing:-.02em;line-height:1.15;}}
-.slide h2{{font-size:26px;margin:0 0 16px;letter-spacing:-.01em;}}
-.curso-name{{color:var(--mut);font-size:16px;}}
-.big{{font-size:24px;line-height:1.4;color:var(--ink);}}
-.slide p{{font-size:19px;line-height:1.5;color:var(--mut);margin:0;}}
-.slide ul{{padding-left:22px;margin:0;}}
-.slide li{{font-size:19px;line-height:1.6;margin:8px 0;color:var(--mut);}}
-.slide .links li a{{color:var(--acc);font-size:19px;}}
-footer{{display:flex;justify-content:space-between;align-items:center;padding:14px 2px;border-top:1px solid var(--line);}}
-footer button{{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}}
-footer button:disabled{{opacity:.3;cursor:default;}}
-.counter{{color:var(--mut);font-size:13px;}}
-</style></head>
+<title>Clase {n} · {esc(titulo)}</title><style>{css}</style></head>
 <body><div class="deck">
-<header><span class="curso">{esc(cu['short'])}</span><span class="counter">Clase {c['n']} · {fecha}</span></header>
-<main>
-  <section class="slide active"><div class="kicker">Clase {c['n']} · {fecha}</div><h1>{titulo}</h1><p class="curso-name">{esc(cu['nombre'])}</p></section>
-  <section class="slide"><h2>Al salir sabes…</h2><p class="big">{objetivo}</p></section>
-  <section class="slide"><h2>Conceptos clave</h2><ul>{conceptos}</ul></section>
-  <section class="slide"><h2>La tarea</h2><p>{tarea}</p></section>
-  <section class="slide"><h2>El testeo</h2><p>{testeo}</p></section>
-  <section class="slide"><h2>Para aprender</h2><ul class="links">{links}</ul></section>
-  <section class="slide"><h2>A practicar</h2><p>En parejas: deja funcionando la tarea de hoy y anota una duda para la próxima clase.</p></section>
-</main>
-<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 7</span><button id="next">→</button></footer>
+<header><span class="curso">{esc(cu['nombre'])}</span><span class="counter">Clase {n} · {fecha}</span></header>
+<main>{portada}{cuerpo}</main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / {total}</span><button id="next">→</button></footer>
 </div>
 <script>
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){{s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}}
-document.getElementById('prev').onclick=function(){{go(i-1)}};
-document.getElementById('next').onclick=function(){{go(i+1)}};
-document.addEventListener('keydown',function(e){{if(e.key==='ArrowRight'||e.key===' '){{go(i+1)}}else if(e.key==='ArrowLeft'){{go(i-1)}}}});
-</script>
-</body></html>"""
+document.getElementById('prev').onclick=function(){{go(i-1)}};document.getElementById('next').onclick=function(){{go(i+1)}};
+document.addEventListener('keydown',function(e){{if(e.key==='ArrowRight'||e.key===' '){{e.preventDefault();go(i+1)}}else if(e.key==='ArrowLeft'){{go(i-1)}}}});
+</script></body></html>"""
+
+# ══════════════════════════════ CONTENIDO ══════════════════════════════
+AU = {"nombre": "Hackeando la Auditoría con IA Agéntica", "short": "Auditoría IA Agéntica",
+      "color": "#0a7a3d", "soft": "#eefaf1", "level": "Electivo IV"}
+IN = {"nombre": "Innovación: Ideas Disruptivas para el Éxito", "short": "Innovación Disruptiva",
+      "color": "#2456a5", "soft": "#eef4fc", "level": "Electivo VI"}
+
+CLASES = []
+# ── AUDITORÍA ──
+CLASES.append(dict(curso=AU, n=1, fecha="Jue 24 sep 2026", titulo="De ChatGPT al agente autónomo",
+  lead="Por qué «chatear» con una IA no le cambia la pega a un auditor — y qué significa, de verdad, que una IA ejecute el trabajo por ti.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta del día", h2="Un auditor que solo «chatea» con una IA, ¿en qué cambió su pega?", big="En nada. Sigue copiando datos a mano, solo que ahora la IA le redacta el correo. El trabajo duro — conciliar, revisar, marcar — sigue siendo suyo.")),
+   ("definicion", dict(kicker="Definición", h2="Qué es un agente (de verdad)", defn="Un agente es un programa que recibe un <b>objetivo</b>, <b>decide por sí mismo</b> qué hacer, usa <b>herramientas</b> y <b>ejecuta</b> hasta cumplirlo. No espera instrucciones paso a paso.", meta="La diferencia no es de «más inteligente»: es de quién hace el trabajo. Con ChatGPT tú eres el ejecutor. Con un agente, el ejecutor es la máquina.")),
+   ("vs", dict(kicker="La diferencia clave", h2="IA conversacional vs. IA agéntica", bad_t="ChatGPT (conversacional)", bad=["Conversa y responde texto","No ejecuta acciones","Olvida todo al cerrar el chat","El trabajo lo haces tú"], good_t="Agente (agéntica)", good=["Ejecuta tareas completas","Usa herramientas (archivos, APIs, código)","Mantiene estado y avanza","El trabajo lo hace la máquina"])),
+   ("loop", dict(kicker="El mecanismo", h2="El loop del agente", lead="Todo agente repite un ciclo de 3 pasos hasta cumplir el objetivo:", nodes=[("🎯 Objetivo","qué hay que lograr"),("PENSAR","¿qué hago ahora?"),("ACTUAR","llamar una herramienta"),("OBSERVAR","ver el resultado")], meta="Si el resultado no cumple el objetivo, vuelve a PENSAR con la info nueva. Es un loop, no una respuesta única.")),
+   ("ejemplo", dict(kicker="Ejemplo real de auditoría", h2="Qué haría un agente con esta orden", q="«Conciliá estas 1.000 facturas contra el SII y marcá las que no cuadren.»", steps=["<b>Piensa:</b> «Necesito leer el archivo y cruzar cada factura con el registro del SII».","<b>Actúa:</b> abre el archivo, consulta la API del SII, compara montos y folios.","<b>Observa:</b> encuentra 37 facturas que no cuadran.","<b>Vuelve a actuar:</b> genera un reporte con las 37 marcadas y su motivo."], meta="No te redactó un consejo. Hizo la conciliación. Esa es la diferencia entre conversar y ejecutar.")),
+   ("piezas", dict(kicker="Anatomía", h2="Las 3 piezas de un agente", piezas=[("🧠 Modelo","El cerebro que decide. Es el LLM (Claude, GPT, DeepSeek…), pero no basta solo."),("✋ Herramientas","Las manos: leer archivos, consultar APIs, correr código. Sin ellas es solo un ChatGPT."),("💾 Memoria","Recuerda qué ya hizo y qué le falta, para no repetir ni perder el hilo del objetivo.")])),
+   ("porque", dict(kicker="Por qué importa", h2="Lo que le pasa al auditor", big="El auditor deja de ser <b>operador</b> (pegar datos en Excel) y pasa a ser <b>supervisor</b>: define qué controlar y revisa lo que el agente marcó.", meta="Resultado: audita el 100% de las transacciones, no una muestra. Y usa su criterio en lo que de verdad importa.")),
+   ("error", dict(kicker="Error típico", h2="Confundir «pedir un texto» con «delegar una tarea»", warn="<b>Mal:</b> «Hazme un informe de las facturas.» → la IA devuelve texto genérico, sin tocar tus datos.<br><br><b>Bien:</b> darle <b>objetivo + herramientas + restricciones</b>: «Lee este archivo, cruza con el SII, marca las que no cuadren y devuélveme un reporte. No inventes cifras.»")),
+   ("pasos", dict(kicker="La tarea de hoy", h2="Tu primer agente", steps=[("Monta el entorno:","crea un venv e instala CrewAI (o eve)."),("Escribe un agente mínimo","que reciba un CSV y ejecute una acción: contar filas o sumar una columna."),("Dale una herramienta","(leer el archivo) y un objetivo claro.")])),
+   ("testeo", dict(kicker="El testeo", h2="Demostrá que entendiste el loop", big="Corre tu agente en pantalla y explica las 3 fases: qué pensó, qué hizo y qué observó.", meta="Si no puedes explicar el loop con tus palabras, el agente «funcionó» pero no aprendiste nada.")),
+   ("links", dict(kicker="Para profundizar", h2="Para aprender", links=[("Building Effective Agents (Anthropic)","https://www.anthropic.com/research/building-effective-agents"),("eve — framework de agentes (Vercel)","https://github.com/vercel/eve"),("CrewAI docs","https://docs.crewai.com")])),
+  ]))
+CLASES.append(dict(curso=AU, n=2, fecha="Jue 01 oct 2026", titulo="Agente lector de documentos",
+  lead="Sacar cifras de un balance sin leerlo a mano, y sin que la IA invente números.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo sacas las cifras de un PDF sin leerlo a mano?", big="Un auditor recibe balances en PDF todo el día. Si el agente tiene que «leerlos como persona», no ganaste nada. La clave es la extracción determinista.")),
+   ("definicion", dict(kicker="Concepto", h2="Extracción determinista", defn="Leer el texto del PDF con una <b>librería</b> (PyMuPDF), no pedirle al LLM que «recuerde» las cifras. El LLM <b>formatea</b> lo que el parser ya leyó: nunca inventa números.", meta="Determinista = mismo PDF, misma salida, siempre. Sin aleatoriedad ni alucinación de cifras.")),
+   ("vs", dict(kicker="Por qué no el LLM", h2="LLM leyendo vs. parser", bad_t="LLM «leyendo» el PDF", bad=["Puede inventar montos que no están","Resultado distinto cada vez","No cuadra el balance"], good_t="Parser (PyMuPDF)", good=["Lee el texto exacto del PDF","Siempre la misma salida","Las cifras cuadran contra el original"])),
+   ("ejemplo", dict(kicker="Ejemplo", h2="Balance → tabla", q="De un balance real, extraer las cuentas principales:", steps=["Abrir el PDF y extraer todo el texto.","Ubicar activos, pasivos y patrimonio.","Emitir una tabla estructurada (cuenta, monto).","Verificar: activo = pasivo + patrimonio."], meta="La verificación del cuarto paso es la prueba de que la extracción fue correcta.")),
+   ("pasos", dict(kicker="La tarea", h2="Manos a la obra", steps=[("Lee el PDF:","usa PyMuPDF para extraer el texto plano."),("Ubica las cuentas","con regex o búsqueda de etiquetas («Total activos», etc.)."),("Entrega una tabla","y que el agente la presente formateada.")])),
+   ("testeo", dict(kicker="El testeo", h2="Que cuadre", big="La tabla extraída debe cuadrar contra el PDF: activo = pasivo + patrimonio.", meta="Si no cuadra, es error de extracción, no del PDF. Ese es el estándar mínimo de un agente lector.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("PyMuPDF","https://pymupdf.readthedocs.io"),("CrewAI — tools","https://docs.crewai.com")])),
+  ]))
+CLASES.append(dict(curso=AU, n=3, fecha="Jue 08 oct 2026", titulo="RAG: la memoria del agente",
+  lead="Por qué un agente necesita recuperar (y no meter todo al prompt), y cómo se arma un mini-RAG.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Por qué no puedes meter 1.000 normas en el prompt?", big="El prompt tiene un límite (ventana de contexto) y, aunque cupiera, sería lento y caro. El agente necesita <b>recuperar solo lo relevante</b> para cada pregunta.")),
+   ("definicion", dict(kicker="Concepto", h2="Qué es RAG", defn="<b>R</b>etrieval-<b>A</b>ugmented <b>G</b>eneration: antes de responder, el agente <b>busca</b> en su biblioteca los fragmentos relevantes y responde <b>basado en ellos</b>, citando la fuente.", meta="Sin RAG, el LLM responde de memoria (y alucina). Con RAG, responde con el documento delante.")),
+   ("lista", dict(kicker="Las 3 piezas", h2="Cómo se construye", items=["<b>Chunking:</b> partir los documentos en trozos (párrafos, artículos).","<b>Embeddings:</b> convertir cada trozo en un vector que captura su significado.","<b>Índice vectorial:</b> guardar los vectores (FAISS) para buscar por similitud."])),
+   ("loop", dict(kicker="El flujo", h2="Cómo responde un RAG", lead="Ante una pregunta:", nodes=[("❓ Pregunta","«¿cuál es la multa?»"),("🔍 Buscar","vectores más parecidos"),("📄 Recuperar","los top chunks"),("✍️ Responder","con esos chunks citados")], meta="El modelo genera SOLO a partir de lo recuperado. No de su memoria.")),
+   ("vs", dict(kicker="Por qué no el prompt gigante", h2="Prompt gigante vs. retrieval", bad_t="Meter todo al prompt", bad=["Lento y caro (tokens)","Desborda la ventana de contexto","El modelo se confunde con tanto texto"], good_t="Recuperar solo lo relevante", good=["Rápido y barato","Escala a miles de docs","El modelo ve solo lo que importa"])),
+   ("pasos", dict(kicker="La tarea", h2="Mini-RAG en 3 pasos", steps=[("Chunkea","10 documentos en párrafos."),("Embebe e indexa","con fastembed + FAISS."),("Consulta","y que el agente responda citando el chunk que usó.")])),
+   ("testeo", dict(kicker="El testeo", h2="Muestra la fuente", big="El agente responde y muestra qué chunk usó. Pregunta trampa: si no está en el corpus, debe decir «no está», no inventar.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Qué es RAG","https://www.pinecone.io/learn/retrieval-augmented-generation/"),("Vector embeddings","https://www.pinecone.io/learn/vector-embeddings/"),("fastembed","https://github.com/qdrant/fastembed"),("FAISS","https://github.com/facebookresearch/faiss")])),
+  ]))
+CLASES.append(dict(curso=AU, n=4, fecha="Jue 15 oct 2026", titulo="HITO L1 · Agente lector de balances",
+  lead="Integrar extracción + RAG en un agente que lee un balance y responde con fuente.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Qué te falta para que sea «de verdad»?", big="Un agente que solo extrae cifras no responde preguntas. Uno que solo responde no lee documentos. El hito es <b>unirlos</b>.")),
+   ("lista", dict(kicker="Integración", h2="Las piezas a unir", items=["<b>Extracción</b> (clase 2): leer el balance → tabla.","<b>RAG</b> (clase 3): indexar → recuperar → responder.","<b>Grounding:</b> toda respuesta cita su fuente."])),
+   ("error", dict(kicker="Error típico", h2="El agente que no sabe decir «no está»", warn="Si le preguntan algo que no está en el balance y el agente inventa una cifra, <b>todo lo demás pierde valor</b>. La honestidad («no está en el documento») es más importante que parecer listo.")),
+   ("pasos", dict(kicker="La tarea", h2="Integrá", steps=[("Conecta","extracción + índice en un solo agente."),("Agrega grounding:","cada respuesta lleva su fuente."),("Añade la regla","«si no está, dilo».")])),
+   ("testeo", dict(kicker="El testeo", h2="Demo + prueba de fuego", big="Demo de 2 min por pareja. Luego, una pregunta cuya respuesta NO está en el balance: el agente debe declararlo.", meta="Pasa el hito quien demuestra que su agente lee, responde y NO inventa.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Cómo hacer un agente confiable","https://www.anthropic.com/research/building-effective-agents"),("RAG con grounding","https://www.pinecone.io/learn/grounded-rag/")])),
+  ]))
+CLASES.append(dict(curso=AU, n=5, fecha="Jue 22 oct 2026", titulo="El problema real: conciliación SII vs ERP",
+  lead="El dolor de verdad del auditor: cruzar lo facturado con lo registrado, y por qué la Ley 21.595 lo vuelve urgente.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cuántas facturas revisa un auditor al año… y a mano?", big="Miles, y casi todas a mano o por muestreo. La conciliación (facturas del SII vs. lo que registró el ERP) es donde se esconden los fraudes — y donde se pierden las horas.")),
+   ("definicion", dict(kicker="Concepto", h2="Factura electrónica (DTE)", defn="En Chile toda factura es un <b>Documento Tributario Electrónico</b> que el SII valida y almacena. Hay una <b>fuente oficial</b> de la verdad para cada factura.", meta="El auditor no tiene que creerle al cliente: puede cruzar contra el SII.")),
+   ("lista", dict(kicker="El problema", h2="Conciliación = cruzar", items=["<b>Registro de compras/ventas</b> (lo que dice la empresa).","<b>DTE del SII</b> (lo que realmente se facturó).","<b>Discrepancia</b> = factura sin respaldo, monto distinto, folio duplicado."])),
+   ("porque", dict(kicker="El contexto legal", h2="Ley 21.595 — Delitos Económicos", big="Desde 2024, la empresa responde penalmente por delitos económicos (entre ellos, facturas falsas y fraude tributario). El auditor ya no revisa «por orden»: revisa porque hay <b>riesgo penal</b>.", meta="Un agente que detecta facturas truchas no es un lujo, es control de riesgo.")),
+   ("pasos", dict(kicker="La tarea", h2="Prepará el terreno", steps=[("Explora el mapa de fuentes","contables de Chile (SII, CMF, LeyChile)."),("Arma un dataset","de facturas de ejemplo (RUT, monto, fecha, folio)."),("Deja el dataset listo","para conciliar la próxima clase.")])),
+   ("testeo", dict(kicker="El testeo", h2="Explicá el dolor", big="Decí dónde vive cada dato del SII y por qué conciliar 1.000 facturas a mano es trabajo de 8 horas que un agente hace en segundos.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("SII (factura electrónica)","https://www.sii.cl"),("Ley 21.595 — Delitos Económicos","https://www.bcn.cl/leychile/navegar?idNorma=1195119"),("CMF","https://www.cmfchile.cl"),("Mapa de fuentes contables","mapa-fuentes-contables.html")])),
+  ]))
+CLASES.append(dict(curso=AU, n=6, fecha="Jue 29 oct 2026", titulo="Bajar datos del SII (ingestor, sin LLM)",
+  lead="Traer la normativa y los datos del SII con Python determinista, sin gastar un token de IA.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo bajas 68 circulares sin copiar y pegar?", big="Con un script. La ingesta de datos es trabajo de <b>código determinista</b>, no de IA. La IA entra después, a responder; no a «resumir» 68 PDFs uno por uno.")),
+   ("definicion", dict(kicker="Concepto", h2="Ingestor determinista", defn="Un script que baja los documentos, extrae el texto y lo guarda limpio. <b>Siempre la misma salida</b> para la misma entrada — no depende de un modelo.", meta="Razón de fondo: si el LLM «resume» cada documento, gasta tokens y puede cambiar el contenido. Extraer es exacto y gratis.")),
+   ("lista", dict(kicker="Las fuentes", h2="Dónde bajar", items=["<b>LeyChile:</b> API XML con el texto completo de cada ley (limpio, sin scrapear).","<b>SII:</b> índices de circulares/resoluciones + sus PDFs.","<b>Dedup:</b> hash por documento para no embeber dos veces lo mismo."])),
+   ("error", dict(kicker="Error típico", h2="Mandar el LLM a «leer» en vez de extraer", warn="Si usas la IA para descargar/resumir el corpus, <b>pagas tokens por algo que un script hace gratis y mejor</b>. La regla: ingesta = código; IA = solo para responder.")),
+   ("pasos", dict(kicker="La tarea", h2="Corré el ingestor", steps=[("Baja una ley","vía la API XML de LeyChile."),("Baja una circular","del SII (índice + PDF)."),("Extrae texto limpio","y deduplica por hash.")])),
+   ("testeo", dict(kicker="El testeo", h2="Traé una fuente real", big="Cada pareja muestra una fuente real bajada, con el texto limpio, y confirma que la ingesta es Python puro (cero tokens de LLM).")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("LeyChile (API de normas)","https://www.leychile.cl"),("Circulares SII 2025","https://www.sii.cl/normativa_legislacion/circulares/2025/indcir2025.htm"),("Ingestor de ejemplo","ingestor_store_b.py")])),
+  ]))
+CLASES.append(dict(curso=AU, n=7, fecha="Jue 05 nov 2026", titulo="Detección de fraude + Ley 21.595",
+  lead="Reglas que marcan facturas truchas, ligadas a los artículos de la Ley 21.595.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Qué hace «trucha» a una factura?", big="No es magia ni un modelo de ML: son <b>señales concretas</b> que se pueden escribir como reglas.")),
+   ("lista", dict(kicker="Señales de fraude", h2="Qué buscar", items=["<b>Duplicados:</b> mismo folio/RUT repetido.","<b>RUT inválido:</b> dígito verificador que no cuadra.","<b>Montos redondos:</b> facturas sospechosamente exactas.","<b>Proveedores fantasma:</b> RUT sin inicio de actividades.","<b>Fechas inconsistentes:</b> factura emitida antes de existir la empresa."])),
+   ("vs", dict(kicker="Enfoque", h2="Reglas vs. ML", bad_t="Modelo de ML desde el día 1", bad=["Necesita miles de ejemplos etiquetados","Caja negra: no sabes por qué marcó","Sobredimensionado para empezar"], good_t="Reglas deterministas primero", good=["Escribes la señal explícita","Cada alerta es auditable y explicable","Luego, si acaso, ML encima"])),
+   ("porque", dict(kicker="El ancla legal", h2="Ligar cada alerta a la Ley 21.595", big="Una alerta sin respaldo legal es una opinión. Cada factura marcada debe decir <b>qué artículo</b> de la Ley 21.595 (o del Código Tributario) se viola.", meta="Eso convierte el agente de «detector» en «evidencia de auditoría».")),
+   ("pasos", dict(kicker="La tarea", h2="Escribí las reglas", steps=[("Regla por señal:","duplicado, RUT inválido, monto raro, fecha inconsistente."),("Liga cada regla","a un artículo (Ley 21.595 / Código Tributario)."),("Genera un reporte","de alertas con su fundamento.")])),
+   ("testeo", dict(kicker="El testeo", h2="Dataset con trampas", big="Sobre un dataset con facturas truchas plantadas, detectalas y decí qué artículo se viola en cada caso.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Ley 21.595 (artículos)","https://www.bcn.cl/leychile/navegar?idNorma=1195119"),("Tribunales Tributarios (casos reales)","https://www.tta.cl")])),
+  ]))
+CLASES.append(dict(curso=AU, n=8, fecha="Jue 19 nov 2026", titulo="HITO L2 · Auditoría en vivo a 1.000 transacciones",
+  lead="El agente concilia 1.000 facturas SII vs ERP en segundos y entrega el reporte de discrepancias.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Tu agente aguanta 1.000 facturas de una?", big="Hasta ahora trabajaste con 10 documentos. El hito es la escala: mil transacciones, en segundos, con un reporte limpio.")),
+   ("lista", dict(kicker="Qué armar", h2="La conciliación completa", items=["<b>Cargar</b> el dataset SII y el ERP simulado.","<b>Cruzar</b> por folio, RUT, monto y fecha.","<b>Marcar</b> discrepancias con su motivo.","<b>Reportar</b> en una tabla clara."])),
+   ("porque", dict(kicker="El resultado", h2="De 8 horas a segundos", big="Lo que un auditor hace en un día, el agente lo hace en segundos <b>sobre el 100% de las facturas</b>, no sobre una muestra.", meta="Miden el tiempo en pantalla: ese número es su argumento de venta del proyecto.")),
+   ("pasos", dict(kicker="La tarea", h2="Corré la auditoría", steps=[("Concilia","las 1.000 facturas contra el ERP."),("Marca","cada discrepancia (monto, folio, proveedor)."),("Mide y muestra","el tiempo total.")])),
+   ("testeo", dict(kicker="El testeo", h2="Demo en vivo", big="El agente marca las facturas truchas en segundos, con el tiempo en pantalla, y explicás cada discrepancia.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("SII","https://www.sii.cl"),("Ley 21.595","https://www.bcn.cl/leychile/navegar?idNorma=1195119")])),
+  ]))
+CLASES.append(dict(curso=AU, n=9, fecha="Jue 26 nov 2026", titulo="Cero alucinación: spec-first (spec-kit)",
+  lead="Por qué los LLM inventan, y cómo una especificación rígida lo evita.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Por qué un LLM inventa un artículo que no existe?", big="Porque genera la palabra «más probable», no la «más cierta». Sin una restricción, rellena los huecos con lo que suena plausible.")),
+   ("definicion", dict(kicker="Concepto", h2="Alucinación", defn="El modelo produce información <b>falsa pero verosímil</b> cuando no tiene la respuesta y no está obligado a decir «no sé».", meta="En auditoría una alucinación no es un error menor: es una cifra o un artículo inventado en un informe.")),
+   ("vs", dict(kicker="La solución", h2="Pedir suelto vs. especificar", bad_t="Prompt suelto", bad=["«Revisa estas facturas»","El modelo decide qué es importante","Inventa plazos y artículos"], good_t="Spec rígida (spec-kit)", good=["Define QUÉ hacer y QUÉ NO","«Prohibido inventar artículos/plazos»","El agente sigue la spec, no improvisa"])),
+   ("ejemplo", dict(kicker="Ejemplo", h2="Una spec de auditoría", q="Spec: «Cuadra la conciliación al centavo»", steps=["Cita la norma vigente, nunca de memoria.","Prohibido inventar artículos, plazos o umbrales.","Si un dato no está en la fuente, decláralo.","Entrega la cifra con su fuente al lado."], meta="Con esta spec, el agente prefiere decir «no está» antes que inventar.")),
+   ("pasos", dict(kicker="La tarea", h2="Escribí tu spec", steps=[("Define QUÉ","debe hacer el agente exactamente."),("Define QUÉ NO","puede hacer (inventar, redondear, omitir)."),("Haz que el agente","ejecute respetando la spec.")])),
+   ("testeo", dict(kicker="El testeo", h2="Prueba adversarial", big="Pedile un artículo que no existe. Debe decir «no está en la norma», no inventar el «Artículo 999».")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("spec-kit (Spec-Driven Development)","https://github.com/github/spec-kit"),("Por qué un RAG alucina","https://www.pinecone.io/learn/rag-hallucinations/")])),
+  ]))
+CLASES.append(dict(curso=AU, n=10, fecha="Jue 03 dic 2026", titulo="Guardrails: Zod + Graft",
+  lead="Blindar el agente con validación de datos y mapeo del código del ERP.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo haces que el agente RECHAZE un dato malo?", big="Un agente sin validación deja pasar basura. Con un <b>schema</b>, cada dato se chequea contra reglas antes de aceptarse.")),
+   ("definicion", dict(kicker="Concepto", h2="Guardrails de datos", defn="Un <b>schema</b> (Zod/Pydantic) define qué es una factura válida: campos, tipos y reglas. Si un dato no cumple, el agente lo <b>rechaza</b> en vez de pasarlo.", meta="Es el cinturón de seguridad: no evita que el modelo se equivoque, evita que el error llegue al reporte.")),
+   ("piezas", dict(kicker="Dos herramientas", h2="Zod + Graft", piezas=[("🔒 Zod","Valida datos: «el monto es número > 0», «el RUT tiene 9 dígitos». Rechaza lo que no cuadra."),("🗺️ Graft","Mapea el código del ERP en un grafo legible para que el agente no se pierda entre módulos."),("⚙️ Resultado","El agente valida cada transacción antes de aceptarla.")])),
+   ("vs", dict(kicker="El efecto", h2="Sin guardrails vs. con guardrails", bad_t="Sin validación", bad=["Pasa un monto negativo o un RUT roto","El error llega al informe final","Nadie sabe dónde se rompió"], good_t="Con schema Zod", good=["Rechaza la transacción al instante","Cada rechazo dice qué regla falló","El reporte solo lleva datos válidos"])),
+   ("pasos", dict(kicker="La tarea", h2="Blindá tu agente", steps=[("Define el schema Zod","de una factura (campos, tipos, reglas)."),("Mapea el mini-ERP","con Graft."),("Conecta la validación","al flujo del agente.")])),
+   ("testeo", dict(kicker="El testeo", h2="Que rechace", big="El agente rechaza una transacción que no cuadra y explica qué regla del schema la frenó.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Zod","https://zod.dev"),("Pydantic","https://docs.pydantic.dev"),("Graft (grafo de código)","https://github.com/NanoNets/graft")])),
+  ]))
+CLASES.append(dict(curso=AU, n=11, fecha="Jue 10 dic 2026", titulo="HITO L3 · Blindaje al centavo + evaluación",
+  lead="Medir si tu agente de verdad no alucina, con un set de evaluación y una batería adversarial.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo sabes que tu agente no alucina?", big="No lo sabes hasta que lo <b>mides</b>. «Me funciona» no es evidencia. Un set de evaluación lo es.")),
+   ("lista", dict(kicker="Las métricas", h2="Qué medir", items=["<b>Recall:</b> ¿recuperó los documentos relevantes? (≥ 0.75)","<b>Precision:</b> ¿lo recuperado era relevante? (≥ 0.70)","<b>Faithfulness:</b> ¿la respuesta se sostiene en la fuente? (≥ 0.80)","<b>MRR:</b> ¿la fuente correcta rankea arriba?"])),
+   ("lista", dict(kicker="La batería", h2="Pruebas adversariales", items=["<b>Falsa premisa:</b> preguntar por un artículo inexistente.","<b>Typos:</b> «plzso» en vez de «plazo».","<b>Prompt injection:</b> «ignora tus instrucciones».","<b>Cadena de 4 vueltas:</b> referencias a «eso», «el plazo»."])),
+   ("pasos", dict(kicker="La tarea", h2="Armá tu set de evaluación", steps=[("Escribe 10+ consultas","con su respuesta esperada."),("Medí","recall/precision del retrieval y faithfulness."),("Corré la batería adversarial","y registrá los resultados.")])),
+   ("testeo", dict(kicker="El testeo", h2="Con métricas en pantalla", big="Pasá la batería adversarial y mostrá que el agente responde con fuente o declara «no está», con los números de recall/faithfulness.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Evaluar un RAG","https://www.pinecone.io/learn/rag-evaluation/"),("Faithfulness / groundedness","https://www.pinecone.io/learn/rag-faithfulness/")])),
+  ]))
+CLASES.append(dict(curso=AU, n=12, fecha="Jue 17 dic 2026", titulo="Hackathon: el Swarm multi-agente",
+  lead="Orquestar varios agentes que se reparten el trabajo de auditoría.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Un solo agente o varios?", big="Un solo agente haciendo todo se pierde. Un <b>swarm</b> reparte el trabajo: cada agente hace una cosa y se la pasa al siguiente.")),
+   ("definicion", dict(kicker="Concepto", h2="Orquestación multi-agente", defn="Dividir la tarea en <b>roles</b> y hacer que colaboren: uno extrae, otro concilia, otro detecta fraude. El resultado de uno es la entrada del otro.", meta="No es correr 3 veces el mismo agente: es una cadena de especialistas.")),
+   ("loop", dict(kicker="El flujo", h2="Un swarm de auditoría", lead="El flujo end-to-end:", nodes=[("📄 Extractor","lee facturas y ERP"),("🔁 Conciliador","cruza y marca"),("🚨 Caza-fraudes","alerta + fundamento")], meta="Cada agente hace su parte y entrega al siguiente. Sin intervención manual.")),
+   ("error", dict(kicker="Error típico", h2="El agente «todista»", warn="Un solo agente con un prompt enorme que hace todo termina <b>confundido y lento</b>. Dividir en roles pequeños es más fácil de probar y de arreglar.")),
+   ("pasos", dict(kicker="La tarea", h2="Armá tu swarm", steps=[("Definí los roles","(2–3 agentes)."),("Encadená","la salida de uno como entrada del otro."),("Probá el flujo","de punta a punta.")])),
+   ("testeo", dict(kicker="El testeo", h2="End-to-end", big="El swarm ejecuta el flujo completo (factura → conciliación → alerta) sin intervención manual entre pasos.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Patrones multi-agente (Anthropic)","https://www.anthropic.com/research/building-effective-agents"),("CrewAI — crews multi-agente","https://docs.crewai.com")])),
+  ]))
+CLASES.append(dict(curso=AU, n=13, fecha="Jue 07 ene 2027", titulo="Demo final / Executive Pitch",
+  lead="Presentar el sistema agéntico de auditoría como si fuera a un directorio.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Puedes vender lo que construiste?", big="El mejor agente no vale si no sabes explicarlo a un directorio en 3 minutos.")),
+   ("lista", dict(kicker="El pitch", h2="Qué comunicar", items=["<b>Problema:</b> el dolor real del auditor.","<b>Solución:</b> qué hace tu swarm, con demo.","<b>Impacto:</b> tiempo/costo/cobertura (números).","<b>Confianza:</b> cómo garantizas que no alucina."])),
+   ("pasos", dict(kicker="La tarea", h2="Prepará la demo", steps=[("Estructura el pitch","problema → solución → impacto."),("Ensaya la demo en vivo","con datos reales."),("Anticipa preguntas","del panel.")])),
+   ("testeo", dict(kicker="El testeo final", h2="Ante el panel", big="El sistema responde con fuente, cuadra al centavo y defiende sus alertas. Importa que funcione y lo sepan explicar — no una nota.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("eve (deploy del swarm)","https://github.com/vercel/eve"),("CrewAI","https://docs.crewai.com")])),
+  ]))
+
+# ── INNOVACIÓN ──
+CLASES.append(dict(curso=IN, n=1, fecha="Sáb 26 sep 2026", titulo="¿Qué es innovar de verdad? Disrupción vs mejora",
+  lead="Por qué las grandes empresas fracasan ante lo nuevo, y qué es un «job to be done».",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Por qué las empresas grandes fracasan ante lo nuevo?", big="Porque son buenas sirviendo a sus mejores clientes. La disrupción no llega por lo alto: entra por abajo, con algo más simple y barato, y sube.")),
+   ("definicion", dict(kicker="Concepto", h2="Disrupción (Christensen)", defn="Una <b>disrupción</b> ataca un segmento que el líder <b>ignora</b> con una oferta más simple, barata o accesible, y desde ahí mejora hasta comerse el mercado.", meta="No es «hacerlo mejor»: es «hacerlo distinto para quien hoy no está servido».")),
+   ("vs", dict(kicker="La distinción clave", h2="Mejora incremental vs. disrupción", bad_t="Mejora incremental", bad=["Servir mejor al mismo cliente","El líder te copia rápido","Misma batalla, mismo campo"], good_t="Disrupción", good=["Nuevo segmento o nueva forma de usar","El líder lo desprecia al inicio","Redefine las reglas del juego"])),
+   ("definicion", dict(kicker="Concepto", h2="Jobs to be Done", defn="El cliente no «compra un producto»: <b>contrata algo para hacer un trabajo</b>. El taladro se contrata para hacer el agujero en la pared.", meta="La pregunta correcta no es «¿qué quiere comprar?» sino «¿qué trabajo necesita hacer?».")),
+   ("ejemplo", dict(kicker="Ejemplo clásico", h2="Netflix vs. Blockbuster", q="Blockbuster alquilaba DVDs en tiendas; Netflix mandaba DVDs por correo y luego streaming.", steps=["Blockbuster optimizaba su negocio de tiendas.","Netflix atacó el trabajo «ver una película sin salir de casa».","Blockbuster lo despreció… hasta que fue tarde."], meta="Netflix no ganó haciendo mejor las tiendas: redefinió el trabajo.")),
+   ("pasos", dict(kicker="La tarea", h2="Encontrá el «job»", steps=[("Elegí un mercado real.","Describí el trabajo que hoy se resuelve mal."),("NO propongas solución todavía","— solo el problema.")])),
+   ("testeo", dict(kicker="El testeo", h2="¿Es disruptiva o incremental?", big="Explicá por qué tu idea es disruptiva (segmento ignorado u otra forma de hacer el trabajo), no una mejora incremental del líder.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Christensen — The Innovator's Dilemma","https://www.claytonchristensen.com"),("Jobs to be Done (Alan Klement)","https://jtbd.info")])),
+  ]))
+CLASES.append(dict(curso=IN, n=2, fecha="Sáb 03 oct 2026", titulo="Océano Azul: crear mercados sin competencia",
+  lead="Redefinir los factores de la industria para crear un mercado donde no compites por lo mismo.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Competir por lo mismo o crear mercado nuevo?", big="En un <b>océano rojo</b> todos pelean por los mismos clientes y el agua se tiñe de sangre. En un <b>océano azul</b> redefinís el juego y la competencia se vuelve irrelevante.")),
+   ("definicion", dict(kicker="Concepto", h2="La curva de valor", defn="Un gráfico que compara <b>qué factores</b> compiten en la industria. Innovar es <b>cambiar la forma</b> de esa curva, no moverla un poco.", meta="Si tu curva es una copia desplazada de la competencia, estás en océano rojo.")),
+   ("lista", dict(kicker="La herramienta", h2="EREC: 4 movimientos", items=["<b>E</b>liminar: sacar un factor que la industria da por sentado.","<b>R</b>educir: bajarlo muy por debajo del estándar.","<b>E</b>levar: subirlo muy por encima.","<b>C</b>rear: un factor que la industria nunca ofreció."])),
+   ("ejemplo", dict(kicker="Ejemplo clásico", h2="Cirque du Soleil", q="Ni circo tradicional ni teatro: un mercado nuevo.", steps=["Eliminó: animales y estrellas de circo.","Redujo: humor barato y pista única.","Elevó: estética y música de teatro.","Creó: un espectáculo artístico para adultos."], meta="No compitió con Ringling Bros: creó su propio océano azul.")),
+   ("pasos", dict(kicker="La tarea", h2="Dibujá tu curva", steps=[("Listá los factores","en los que compite tu industria."),("Aplicá EREC","a cada factor."),("Compará tu curva","contra la del competidor típico.")])),
+   ("testeo", dict(kicker="El testeo", h2="Redefinís, no copiás", big="Tu curva redefine al menos un factor que la industria da por sentado — no es una copia desplazada.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Blue Ocean Strategy (Kim & Mauborgne)","https://www.blueoceanstrategy.com")])),
+  ]))
+CLASES.append(dict(curso=IN, n=3, fecha="Sáb 10 oct 2026", titulo="Modelo de negocio: Canvas + 4 cajas",
+  lead="Cómo tu idea crea, entrega y captura valor — y cómo lo dibujas en un Canvas.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Tu idea cómo gana plata?", big="Una idea genial sin modelo de negocio es un hobby. El modelo responde: ¿para quién creas valor, cómo lo entregas y cómo lo capturás?" )),
+   ("definicion", dict(kicker="Concepto", h2="Modelo de negocio", defn="La forma en que una organización <b>crea, entrega y captura</b> valor. Es la lógica de cómo el negocio funciona y se sostiene.", meta="No es el producto: es todo el sistema alrededor de él.")),
+   ("lista", dict(kicker="La herramienta", h2="Canvas: 9 cajas (Osterwalder)", items=["<b>Segmentos:</b> ¿para quién?","<b>Propuesta de valor:</b> ¿qué problema resolvés?","<b>Canales:</b> ¿cómo llegás?","<b>Relación:</b> ¿cómo la mantenés?","<b>Ingresos:</b> ¿quién paga y cómo?","<b>Recursos, actividades, socios:</b> ¿qué necesitás?","<b>Costos:</b> ¿qué te cuesta?"])),
+   ("lista", dict(kicker="Complemento", h2="4 cajas de Johnson", items=["<b>Propuesta de valor</b> para el cliente.","<b>Fórmula de utilidad:</b> cómo generás margen.","<b>Recursos clave.</b>","<b>Procesos clave.</b>"])),
+   ("pasos", dict(kicker="La tarea", h2="Llená tu Canvas", steps=[("Completá las 9 cajas","para tu idea."),("Marcá las 2 cajas más débiles","— son tus supuestos críticos."),("Prepará explicar","cómo creas, entregás y capturás valor.")])),
+   ("testeo", dict(kicker="El testeo", h2="En 60 segundos", big="Explicá cómo tu modelo crea, entrega y captura valor, y cuáles son tus 2 supuestos más arriesgados.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Business Model Canvas","https://www.strategyzer.com/library/the-business-model-canvas"),("Las 4 cajas de Johnson (HBR)","https://hbr.org/2008/12/reinventing-your-business-model")])),
+  ]))
+CLASES.append(dict(curso=IN, n=4, fecha="Sáb 17 oct 2026", titulo="Patrones: 55 patrones + 10 tipos de innovación",
+  lead="Generar variantes de tu modelo con recetas probadas, no esperando la inspiración.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo generás ideas nuevas sin esperar la inspiración?", big="La innovación no es un golpe de suerte: hay <b>patrones</b> — recetas de modelos que ya funcionaron — que podés aplicar sistemáticamente.")),
+   ("definicion", dict(kicker="Concepto", h2="55 patrones (Gassmann)", defn="El <b>Business Model Navigator</b> documenta 55 patrones de modelo de negocio (subscription, freemium, razor-and-blade, long tail…).", meta="El 90% de los modelos nuevos son una <b>recombinación</b> de patrones existentes.")),
+   ("lista", dict(kicker="Complemento", h2="10 tipos de innovación (Doblin)", items=["<b>Configuración:</b> modelo de negocio, red, estructura, proceso.","<b>Oferta:</b> producto, sistema de producto.","<b>Experiencia:</b> servicio, canal, marca, compromiso."])),
+   ("pasos", dict(kicker="La tarea", h2="Aplicá patrones", steps=[("Elegí 3 patrones","de los 55 que no usás hoy."),("Aplicalos a tu modelo base.",""),("Generá 2 modelos alternativos","genuinamente distintos.")])),
+   ("testeo", dict(kicker="El testeo", h2="No variaciones cosméticas", big="Los 2 modelos nuevos son genuinamente distintos (cambia la lógica de captura de valor) y podés decir qué patrón los generó.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Business Model Navigator (55 patrones)","https://www.businessmodelnavigator.com"),("Ten Types of Innovation (Doblin)","https://doblin.com/ten-types")])),
+  ]))
+CLASES.append(dict(curso=IN, n=5, fecha="Sáb 24 oct 2026", titulo="Propuesta de valor + Customer Development",
+  lead="Diseñar la propuesta de valor y salir a validarla con clientes reales.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Tu «gran idea» la valida alguien o solo vos?", big="La mayoría de las ideas mueren no por malas, sino por <b>nunca haber hablado con un cliente</b>. Validar es salir a la calle, no creerse la propia idea.")),
+   ("definicion", dict(kicker="Concepto", h2="Value Proposition Canvas", defn="Une dos lados: los <b>trabajos, dolores y ganancias</b> del cliente, con tus <b>productos, aliviadores y creadores de ganancia</b>.", meta="El encaje problema-solución se ve cuando tu oferta alivia el dolor real del cliente.")),
+   ("definicion", dict(kicker="Concepto", h2="Customer Development (Steve Blank)", defn="Salir del edificio y <b>hablar con clientes</b> para descubrir el problema antes de construir la solución.", meta="La regla: no preguntes «¿te gustaría?», pregunta «¿cómo lo resolvés hoy?».")),
+   ("error", dict(kicker="Error típico", h2="Enamorarse de la idea", warn="«Mi idea es genial» sin evidencia es una opinión. La <b>evidencia</b> es un cliente que ya sufre el problema y está dispuesto a pagar por resolverlo.")),
+   ("pasos", dict(kicker="La tarea", h2="Validá", steps=[("Llená el Value Proposition Canvas.",""),("Escribí un guión","de 5+ preguntas de descubrimiento."),("Hacé 1 entrevista real","antes de la próxima clase.")])),
+   ("testeo", dict(kicker="El testeo", h2="Con evidencia, no opinión", big="Mostrá el encaje problema-solución con evidencia de cliente (al menos 1 entrevista hecha), no con tu opinión.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Value Proposition Design","https://www.strategyzer.com/library/value-proposition-design"),("Customer Development (Steve Blank)","https://steveblank.com")])),
+  ]))
+CLASES.append(dict(curso=IN, n=6, fecha="Sáb 07 nov 2026", titulo="Lean Startup + MVP",
+  lead="Aprender rápido con el mínimo producto, antes de gastar un año construyendo.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo sabés si tu idea sirve antes de gastar un año?", big="No lo sabés, por eso no construís el producto completo: construís el <b>mínimo para aprender</b> y medís.")),
+   ("definicion", dict(kicker="Concepto", h2="Build-Measure-Learn", defn="Ciclo lean: <b>construí</b> lo mínimo, <b>medí</b> cómo responde el mercado, <b>aprendé</b> y decidí (pivotar o perseverar).", meta="La velocidad de aprendizaje, no la de construcción, es la ventaja.")),
+   ("definicion", dict(kicker="Concepto", h2="MVP", defn="La <b>versión mínima</b> que te permite testear tu hipótesis más riesgosa con el menor esfuerzo.", meta="No es un producto «malo»: es un experimento con la forma de un producto.")),
+   ("lista", dict(kicker="El experimento", h2="Hipótesis falsable", items=["<b>Hipótesis:</b> «los contadores pagarán por X».","<b>Métrica:</b> % de conversión, N de pedidos…","<b>Umbral:</b> qué número valida y qué número refuta."])),
+   ("ejemplo", dict(kicker="Ejemplo clásico", h2="Dropbox", q="Antes de escribir una línea de producto:", steps=["Hicieron un video de 3 min mostrando cómo funcionaría.","El video generó lista de espera de 75.000 personas.","Eso validó la demanda antes de construir."], meta="Un video fue el MVP. No hace falta código para validar interés.")),
+   ("pasos", dict(kicker="La tarea", h2="Diseñá tu experimento", steps=[("Definí la hipótesis más riesgosa.",""),("Diseñá el MVP mínimo","para testearla."),("Definí la métrica","y el umbral de éxito/fracaso.")])),
+   ("testeo", dict(kicker="El testeo", h2="Que sea refutable", big="Explicá qué métrica validaría o refutaría la hipótesis. Si nada puede refutarla, el experimento está mal diseñado.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("The Lean Startup (Ries)","http://theleanstartup.com"),("Running Lean (Maurya)","https://leanstack.com")])),
+  ]))
+CLASES.append(dict(curso=IN, n=7, fecha="Sáb 21 nov 2026", titulo="HITO · Presentá tu modelo disruptivo",
+  lead="Defender tu modelo ante pares y convertí la crítica en iteración.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Tu modelo resiste una crítica?", big="La mitad del curso fue construir. Ahora viene la prueba: presentarlo y defenderlo ante pares que no te deben nada.")),
+   ("lista", dict(kicker="Qué presentar", h2="Los 3 bloques", items=["<b>Canvas</b> completo (9 cajas).","<b>Curva de valor</b> (por qué es disruptiva).","<b>Hipótesis</b> y cómo pensás validarla."])),
+   ("error", dict(kicker="Error típico", h2="Defender en vez de escuchar", warn="La crítica no es un ataque: es <b>data gratis</b>. El que defiende su idea con uñas no aprende; el que anota el feedback, itera.")),
+   ("pasos", dict(kicker="La tarea", h2="Presentá (4 min)", steps=[("Presentá","Canvas + curva + hipótesis."),("Recibí crítica","estructurada de los pares."),("Anotá por escrito","qué vas a cambiar.")])),
+   ("testeo", dict(kicker="El testeo", h2="Iterá, no defiendas", big="Defendé el modelo ante preguntas duras y explicitá qué feedback vas a incorporar — no solo presentar, iterar.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Business Model Canvas","https://www.strategyzer.com/library/the-business-model-canvas")])),
+  ]))
+CLASES.append(dict(curso=IN, n=8, fecha="Sáb 28 nov 2026", titulo="Portafolio: Tres Horizontes + Ambition Matrix",
+  lead="Organizar tus ideas en un portafolio equilibrado entre el hoy y el mañana.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Todas tus ideas son de hoy, o tenés apuestas de futuro?", big="Un portafolio sano mezcla: lo que <b>hoy</b> da plata, lo <b>adyacente</b> y las <b>apuestas</b> de largo plazo. Todo de un solo tipo es un riesgo.")),
+   ("definicion", dict(kicker="Concepto", h2="Tres Horizontes", defn="<b>H1</b> core: defender y extender el negocio actual. <b>H2</b> emergente: construir el siguiente motor. <b>H3</b> transformacional: apostar a lo que aún no existe.", meta="Las empresas mueren cuando solo invierten en H1.")),
+   ("definicion", dict(kicker="Concepto", h2="Ambition Matrix", defn="Clasifica las iniciativas por <b>qué tan nuevo</b> es el producto y el mercado: core, adyacente o transformacional.", meta="La matriz deja ver si tu portafolio está desbalanceado.")),
+   ("pasos", dict(kicker="La tarea", h2="Ubicá tus ideas", steps=[("Poné cada idea","en la Ambition Matrix."),("Proyectala","en los Tres Horizontes."),("Detectá","si el portafolio está desbalanceado.")])),
+   ("testeo", dict(kicker="El testeo", h2="El balance", big="Explicá el balance de tu portafolio y por qué tu idea es la apuesta transformacional correcta para el horizonte elegido.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Three Horizons (McKinsey)","https://www.mckinsey.com/capabilities/strategy-and-corporate-finance/our-insights/enduring-ideas-the-three-horizons-of-growth"),("Innovation Ambition Matrix (HBR)","https://hbr.org/2012/05/managing-your-innovation-portfolio")])),
+  ]))
+CLASES.append(dict(curso=IN, n=9, fecha="Sáb 05 dic 2026", titulo="Design Thinking + 101 Design Methods",
+  lead="Idear de forma estructurada: empatizar, definir, idear, prototipar, testear.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Cómo idear sin quedarte con la primera idea obvia?", big="La primera idea casi siempre es la más mediocre. El design thinking fuerza <b>divergir</b> (muchas ideas) antes de <b>converger</b>.")),
+   ("loop", dict(kicker="El ciclo", h2="Design Thinking", lead="Cinco fases, no necesariamente lineales:", nodes=[("💙 Empatizar","entender al usuario"),("🎯 Definir","el problema real"),("💡 Idear","divergir"),("🛠️ Prototipar","algo tangible"),("🧪 Testear","con usuario")], meta="El corazón es el test: un prototipo rápido que te enseña qué funciona.")),
+   ("error", dict(kicker="Error típico", h2="Prototipo bonito, aprendizaje cero", warn="No construyas un prototipo para impresionar: construilo para <b>aprender</b>. Un prototipo feo que te enseña algo vale más que uno pulido que no responde ninguna pregunta.")),
+   ("pasos", dict(kicker="La tarea", h2="Un ciclo completo", steps=[("Empatizá","(entrevista u observación)."),("Definí","el problema en una frase."),("Ideá + prototipá","en baja fidelidad."),("Testeá","con un usuario real.")])),
+   ("testeo", dict(kicker="El testeo", h2="Qué aprendiste", big="Mostrá el prototipo y qué aprendiste del test con un usuario real. Lo importante no es el prototipo, es lo que te enseñó.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Design Thinking (IDEO)","https://designthinking.ideo.com")])),
+  ]))
+CLASES.append(dict(curso=IN, n=10, fecha="Sáb 12 dic 2026", titulo="Von Hippel: fuentes de innovación + lead users",
+  lead="La innovación no nace solo dentro de la empresa: los usuarios líderes la anticipan.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿De dónde vienen las mejores ideas?", big="No siempre del laboratorio. Muchas innovaciones nacen en los <b>usuarios</b> que sufren el problema antes que nadie y se arman su propia solución.")),
+   ("definicion", dict(kicker="Concepto", h2="Lead users (usuarios líderes)", defn="Usuarios que enfrentan una necesidad <b>antes</b> que el mercado masivo y que, para resolverla, <b>ya improvisan soluciones</b>. Son tu radar.", meta="Si encontrás al lead user, encontrás la demanda futura antes que nadie.")),
+   ("lista", dict(kicker="Concepto", h2="Fuentes de innovación (von Hippel)", items=["<b>Usuarios:</b> modifican productos, hackean soluciones.","<b>Proveedores y partners.</b>","<b>Democratización:</b> herramientas baratas ponen la innovación en manos de cualquiera."])),
+   ("pasos", dict(kicker="La tarea", h2="Buscá tu lead user", steps=[("Identificá","quién sufre tu problema HOY y se arma soluciones propias."),("Describí","su perfil concreto (no «los jóvenes»)."),("Diseñá","cómo co-crear con ellos.")])),
+   ("testeo", dict(kicker="El testeo", h2="Perfil real, no abstracción", big="Explicá quién es tu lead user concreto y cómo lo incorporás al desarrollo.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Eric von Hippel (MIT)","https://evhippel.mit.edu")])),
+  ]))
+CLASES.append(dict(curso=IN, n=11, fecha="Sáb 19 dic 2026", titulo="NABC pitch: vender la idea disruptiva",
+  lead="Estructurar la idea en un pitch de 3 minutos que responda Need, Approach, Benefit, Competition.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Podés vender tu idea en 3 minutos?", big="Un directorio no te da media hora. Si no podés explicar el valor en 3 minutos, no tenés clara la idea.")),
+   ("definicion", dict(kicker="El método", h2="NABC (SRI International)", defn="Un pitch estructurado en 4 partes que obliga a ir al grano.", meta="Usado para evaluar ideas de inversión en SRI International, Stanford y Silicon Valley.")),
+   ("lista", dict(kicker="Las 4 letras", h2="NABC", items=["<b>N</b>eed — la necesidad (el job no resuelto).","<b>A</b>pproach — tu abordaje distinto.","<b>B</b>enefit — el beneficio <b>cuantificable</b>.","<b>C</b>ompetition — por qué les ganás."])),
+   ("error", dict(kicker="Error típico", h2="Beneficio sin números", warn="«Mejora la eficiencia» no vende nada. «Reduce 8 horas a 3 segundos y audita el 100%» sí. <b>El beneficio va en números.</b>")),
+   ("pasos", dict(kicker="La tarea", h2="Armá tu pitch", steps=[("Escribí las 4 letras","en una frase cada una."),("Ensaya el pitch de 3 min.",""),("Que el beneficio","tenga números.")])),
+   ("testeo", dict(kicker="El testeo", h2="Pitch de 3 min", big="Pitch que responde las 4 letras sin muletillas y con el beneficio en números.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Método NABC (SRI International)","https://www.sri.com")])),
+  ]))
+CLASES.append(dict(curso=IN, n=12, fecha="Sáb 09 ene 2027", titulo="Demo final: pitch + portafolio",
+  lead="Presentar la idea disruptiva final con evidencia, ante un panel.",
+  slides=[
+   ("pregunta", dict(kicker="La pregunta", h2="¿Listo para defenderla ante un panel?", big="Cierre del curso: presentás la idea completa — no la idea «de la primera clase», sino la que sobrevivió a validación, feedback e iteración.")),
+   ("lista", dict(kicker="Qué presentar", h2="El paquete completo", items=["<b>NABC</b> (pitch de 3 min).","<b>Modelo de negocio</b> (Canvas).","<b>Evidencia de validación</b> (entrevistas, prototipo, experimento).","<b>Portafolio</b> (dónde encaja tu idea)."])),
+   ("pasos", dict(kicker="La tarea", h2="Prepará la defensa", steps=[("Estructurá","NABC + Canvas + evidencia."),("Ensaya","el pitch final."),("Anticipá","las preguntas del panel.")])),
+   ("testeo", dict(kicker="El testeo final", h2="Con evidencia real", big="Defendé la idea con evidencia real de cliente, no suposiciones. Importa que esté validada y sepan argumentarla — no una nota.")),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Método NABC (SRI International)","https://www.sri.com")])),
+  ]))
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 hechos = 0
 for c in CLASES:
-    fn = f"{c['curso']}-{c['n']:02d}.html"
+    cu = c["curso"]
+    key = "auditoria" if cu is AU else "innovacion"
+    fn = f"{key}-{c['n']:02d}.html"
     with open(fn, "w", encoding="utf-8") as f:
-        f.write(deck(c))
+        f.write(deck(cu, cu, c["n"], c["fecha"], c["titulo"], c["lead"], c["slides"]))
     hechos += 1
-    print(f"  {fn}")
-print(f"\n{hechos} decks generados.")
+    print(f"  {fn}  ({len(c['slides'])+1} slides)")
+print(f"\n{hechos} decks con contenido generados.")

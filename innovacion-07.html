@@ -1,50 +1,55 @@
 <!DOCTYPE html>
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Clase 7 · HITO mitad · Presenta tu modelo disruptivo</title>
-<style>
-:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#2456a5;}
-*{box-sizing:border-box}
-html,body{margin:0;height:100%}
+<title>Clase 7 · HITO · Presentá tu modelo disruptivo</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#2456a5;--acc2:#2563eb;--warn:#b45309;--soft:#eef4fc;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
 body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
-.deck{max-width:920px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 20px;}
-header{display:flex;justify-content:space-between;align-items:center;padding:14px 2px;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
 header .curso{font-weight:700;color:var(--acc);}
-main{flex:1;display:flex;align-items:center;justify-content:center;}
-.slide{display:none;width:100%;max-width:760px;animation:in .25s ease;}
-.slide.active{display:block;}
-@keyframes in{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-.kicker{color:var(--acc);font-weight:700;font-size:14px;text-transform:uppercase;letter-spacing:.06em;}
-.slide h1{font-size:40px;margin:10px 0 6px;letter-spacing:-.02em;line-height:1.15;}
-.slide h2{font-size:26px;margin:0 0 16px;letter-spacing:-.01em;}
-.curso-name{color:var(--mut);font-size:16px;}
-.big{font-size:24px;line-height:1.4;color:var(--ink);}
-.slide p{font-size:19px;line-height:1.5;color:var(--mut);margin:0;}
-.slide ul{padding-left:22px;margin:0;}
-.slide li{font-size:19px;line-height:1.6;margin:8px 0;color:var(--mut);}
-.slide .links li a{color:var(--acc);font-size:19px;}
-footer{display:flex;justify-content:space-between;align-items:center;padding:14px 2px;border-top:1px solid var(--line);}
-footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}
-footer button:disabled{opacity:.3;cursor:default;}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
 .counter{color:var(--mut);font-size:13px;}
 </style></head>
 <body><div class="deck">
-<header><span class="curso">Innovación Disruptiva</span><span class="counter">Clase 7 · Sáb 21 nov 2026</span></header>
-<main>
-  <section class="slide active"><div class="kicker">Clase 7 · Sáb 21 nov 2026</div><h1>HITO mitad · Presenta tu modelo disruptivo</h1><p class="curso-name">Innovación: Ideas Disruptivas para el Éxito</p></section>
-  <section class="slide"><h2>Al salir sabes…</h2><p class="big">Presentar tu modelo disruptivo a pares y defenderlo ante crítica constructiva.</p></section>
-  <section class="slide"><h2>Conceptos clave</h2><ul><li>Presentación en 4 min</li><li>Crítica estructurada</li><li>Iterar con feedback</li></ul></section>
-  <section class="slide"><h2>La tarea</h2><p>Presentar el modelo (Canvas + curva de valor + hipótesis) en 4 min y anotar qué van a cambiar.</p></section>
-  <section class="slide"><h2>El testeo</h2><p>Defender el modelo ante preguntas duras y explicitar qué feedback van a incorporar — no solo presentar, iterar.</p></section>
-  <section class="slide"><h2>Para aprender</h2><ul class="links"><li><a href="https://www.strategyzer.com/library/the-business-model-canvas" target="_blank">Business Model Canvas</a></li></ul></section>
-  <section class="slide"><h2>A practicar</h2><p>En parejas: deja funcionando la tarea de hoy y anota una duda para la próxima clase.</p></section>
-</main>
+<header><span class="curso">Innovación: Ideas Disruptivas para el Éxito</span><span class="counter">Clase 7 · Sáb 21 nov 2026</span></header>
+<main><section class="slide active"><div class="kicker">Electivo VI · Innovación Disruptiva</div><h1>HITO · Presentá tu modelo disruptivo</h1><p class="lead">Defender tu modelo ante pares y convertí la crítica en iteración.</p></section><section class="slide"><div class="kicker">La pregunta</div><h2>¿Tu modelo resiste una crítica?</h2><p class="big">La mitad del curso fue construir. Ahora viene la prueba: presentarlo y defenderlo ante pares que no te deben nada.</p></section><section class="slide"><div class="kicker">Qué presentar</div><h2>Los 3 bloques</h2><ul class="plain"><li><b>Canvas</b> completo (9 cajas).</li><li><b>Curva de valor</b> (por qué es disruptiva).</li><li><b>Hipótesis</b> y cómo pensás validarla.</li></ul></section><section class="slide"><div class="kicker">Error típico</div><h2>Defender en vez de escuchar</h2><div class="warn">La crítica no es un ataque: es <b>data gratis</b>. El que defiende su idea con uñas no aprende; el que anota el feedback, itera.</div></section><section class="slide"><div class="kicker">La tarea</div><h2>Presentá (4 min)</h2><div class="steps"><div class="step"><p><b>Presentá</b> Canvas + curva + hipótesis.</p></div><div class="step"><p><b>Recibí crítica</b> estructurada de los pares.</p></div><div class="step"><p><b>Anotá por escrito</b> qué vas a cambiar.</p></div></div></section><section class="slide"><div class="kicker">El testeo</div><h2>Iterá, no defiendas</h2><p class="big">Defendé el modelo ante preguntas duras y explicitá qué feedback vas a incorporar — no solo presentar, iterar.</p><p class="meta"></p></section><section class="slide"><div class="kicker">Para aprender</div><h2>Links</h2><ul class="links"><li><a href="https://www.strategyzer.com/library/the-business-model-canvas" target="_blank">Business Model Canvas</a></li></ul></section></main>
 <footer><button id="prev">←</button><span class="counter" id="cnt">1 / 7</span><button id="next">→</button></footer>
 </div>
 <script>
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
-document.getElementById('prev').onclick=function(){go(i-1)};
-document.getElementById('next').onclick=function(){go(i+1)};
-document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}});
-</script>
-</body></html>
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}});
+</script></body></html>
