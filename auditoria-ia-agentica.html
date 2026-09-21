@@ -14,6 +14,8 @@
   .sub{color:var(--mut);font-size:13.5px;margin:0;}
   .badge{display:inline-block;background:#eefaf1;color:var(--acc2);border:1px solid #c8ecd4;border-radius:999px;padding:2px 10px;font-size:12px;font-weight:600;margin:10px 6px 0 0;}
   a{color:var(--acc);text-decoration:none;} a:hover{text-decoration:underline;}
+  .ppt{display:inline-block;margin-left:10px;font-size:12px;font-weight:700;color:var(--acc);}
+  .prog{margin-top:36px;}.progtext{font-size:13.5px;color:var(--mut);margin:6px 0;max-width:860px;}
   .nivel{margin:34px 0 6px;padding:10px 16px;background:#0f172a;color:#fff;border-radius:10px;font-size:14px;letter-spacing:.02em;}
   .nivel small{color:#94a3b8;font-weight:400;}
   .clase{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin:14px 0;border-left:4px solid var(--acc2);}
@@ -45,11 +47,16 @@
 
 <p style="color:var(--mut);max-width:860px;margin:14px 0 0;">Cada clase está desglosada en <b>tareas</b> (lo que hacen con las manos) y <b>testeos</b> (la demostración de que aprendieron, no una nota). Debajo de cada clase van los <b>links para aprender</b> cada herramienta y concepto. Los 4 niveles vienen del programa oficial.</p>
 
+<h2 class="prog">Programa de asignatura</h2>
+<p class="progtext"><b>Objetivo general:</b> el alumno entiende la IA agéntica y egresa con un sistema de auditoría propio — lector de balances, caza-fraudes SII vs ERP y blindaje cero-alucinación — más portafolio en GitHub.</p>
+<p class="progtext"><b>4 niveles:</b> L1 Unboxing Agentic AI · L2 Caza-Fraudes Digital (Ley 21.595) · L3 Armadura Cero Alucinación (spec-kit / Graft / Zod) · L4 Hackathon Swarm UFAS.</p>
+<p class="progtext"><b>Stack:</b> spec-kit · Graft · Zod/Pydantic · eve · CrewAI · fastembed + FAISS.</p>
+<p class="progtext"><b>Evaluación (aprender &gt; notas):</b> laboratorios en parejas · proyecto capstone · demo/pitch final.</p>
 <div class="nivel">LEVEL 1 · Clases 1–4 — Unboxing Agentic AI <small>de la IA conversacional a agentes que ejecutan tareas</small></div>
 
 <div class="clase">
   <h3>1 · De ChatGPT al agente autónomo</h3>
-  <div class="fecha">Jue 24 sep 2026</div>
+  <div class="fecha">Jue 24 sep 2026</div><a class="ppt" href="auditoria-01.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> distinguir IA conversacional de agéntica y correr tu primer agente que ejecuta una tarea de verdad.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + objetivo</span>
@@ -71,7 +78,7 @@
 
 <div class="clase">
   <h3>2 · Agente lector de documentos</h3>
-  <div class="fecha">Jue 01 oct 2026</div>
+  <div class="fecha">Jue 01 oct 2026</div><a class="ppt" href="auditoria-02.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> hacer que tu agente lea un PDF (un balance) y extraiga cifras estructuradas sin inventarlas.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -92,7 +99,7 @@
 
 <div class="clase">
   <h3>3 · RAG: la memoria del agente</h3>
-  <div class="fecha">Jue 08 oct 2026</div>
+  <div class="fecha">Jue 08 oct 2026</div><a class="ppt" href="auditoria-03.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> por qué el agente necesita recuperación (y no meter todo al prompt) y armas un mini-RAG con embeddings + índice.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -115,7 +122,7 @@
 
 <div class="clase">
   <h3>4 · HITO L1 — Agente lector de balances</h3>
-  <div class="fecha">Jue 15 oct 2026</div>
+  <div class="fecha">Jue 15 oct 2026</div><a class="ppt" href="auditoria-04.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> integrar extracción + RAG en un agente que lee un balance y responde con fuente.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -137,7 +144,7 @@
 
 <div class="clase">
   <h3>5 · El problema real: conciliación SII vs ERP</h3>
-  <div class="fecha">Jue 22 oct 2026</div>
+  <div class="fecha">Jue 22 oct 2026</div><a class="ppt" href="auditoria-05.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> entender el dolor real del auditor (conciliar facturas vs registro) y dónde viven los datos del SII.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -160,7 +167,7 @@
 
 <div class="clase">
   <h3>6 · Bajar datos del SII (ingestor, sin LLM)</h3>
-  <div class="fecha">Jue 29 oct 2026</div>
+  <div class="fecha">Jue 29 oct 2026</div><a class="ppt" href="auditoria-06.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> construir un ingestor en Python que baja normativa del SII de forma determinista (cero tokens de LLM).</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -182,7 +189,7 @@
 
 <div class="clase">
   <h3>7 · Detección de fraude + Ley 21.595</h3>
-  <div class="fecha">Jue 05 nov 2026</div>
+  <div class="fecha">Jue 05 nov 2026</div><a class="ppt" href="auditoria-07.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> construir reglas de detección de facturas truchas y alertas automáticas.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -203,7 +210,7 @@
 
 <div class="clase">
   <h3>8 · HITO L2 — Auditoría en vivo a 1.000 transacciones</h3>
-  <div class="fecha">Jue 19 nov 2026</div>
+  <div class="fecha">Jue 19 nov 2026</div><a class="ppt" href="auditoria-08.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> tu agente concilia 1.000 facturas SII vs ERP en segundos y marca discrepancias.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -225,7 +232,7 @@
 
 <div class="clase">
   <h3>9 · Cero alucinación: spec-first (spec-kit)</h3>
-  <div class="fecha">Jue 26 nov 2026</div>
+  <div class="fecha">Jue 26 nov 2026</div><a class="ppt" href="auditoria-09.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> escribir una especificación rígida de QUÉ debe hacer el agente antes de codificar.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -246,7 +253,7 @@
 
 <div class="clase">
   <h3>10 · Guardrails: Zod + Graft</h3>
-  <div class="fecha">Jue 03 dic 2026</div>
+  <div class="fecha">Jue 03 dic 2026</div><a class="ppt" href="auditoria-10.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> blindar el agente con validación de datos (Zod) y mapeo del ERP (Graft).</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -268,7 +275,7 @@
 
 <div class="clase">
   <h3>11 · HITO L3 — Blindaje al centavo + evaluación</h3>
-  <div class="fecha">Jue 10 dic 2026</div>
+  <div class="fecha">Jue 10 dic 2026</div><a class="ppt" href="auditoria-11.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> tu agente cuadra al centavo sin alucinar y sabes MEDIRLO con un set de evaluación.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura</span>
@@ -291,7 +298,7 @@
 
 <div class="clase">
   <h3>12 · Hackathon: el Swarm multi-agente</h3>
-  <div class="fecha">Jue 17 dic 2026</div>
+  <div class="fecha">Jue 17 dic 2026</div><a class="ppt" href="auditoria-12.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> orquestar varios agentes (extractor, conciliador, caza-fraudes) que colaboran.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + consignas</span>
@@ -312,7 +319,7 @@
 
 <div class="clase">
   <h3>13 · Demo final / Executive Pitch</h3>
-  <div class="fecha">Jue 07 ene 2027</div>
+  <div class="fecha">Jue 07 ene 2027</div><a class="ppt" href="auditoria-13.html">Ver presentación →</a>
   <div class="obj"><b>Al salir sabes:</b> presentar tu sistema agéntico de auditoría como si fuera a un directorio.</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Apertura + orden del panel</span>
