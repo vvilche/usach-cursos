@@ -45,6 +45,11 @@ ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;col
 footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
 footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
 .counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 \"SF Mono\",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
 """
 
 def esc(s): return html.escape(s, quote=False)
@@ -54,7 +59,7 @@ def render_slide(s):
     kick = f'<div class="kicker">{esc(w.get("kicker",""))}</div>' if w.get("kicker") else ""
     h2 = f'<h2>{esc(w["h2"])}</h2>' if w.get("h2") else ""
     if k == "pregunta":
-        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p></section>'
+        return f'<section class="slide">{kick}{h2}<p class="big">{w["big"]}</p></section>'
     if k == "definicion":
         return f'<section class="slide">{kick}{h2}<p class="def">{w["defn"]}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
     if k == "vs":
@@ -81,20 +86,22 @@ def render_slide(s):
         pz = "".join(f'<div class="pieza"><div class="t">{esc(t)}</div><p>{esc(p)}</p></div>' for t, p in w["piezas"])
         return f'<section class="slide">{kick}{h2}<div class="piezas">{pz}</div></section>'
     if k == "porque":
-        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
+        return f'<section class="slide">{kick}{h2}<p class="big">{w["big"]}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
     if k == "error":
         return f'<section class="slide">{kick}{h2}<div class="warn">{w["warn"]}</div></section>'
     if k == "pasos":
         st = "".join(f'<div class="step"><p><b>{esc(b)}</b> {esc(t)}</p></div>' for b, t in w["steps"])
         return f'<section class="slide">{kick}{h2}<div class="steps">{st}</div></section>'
     if k == "testeo":
-        return f'<section class="slide">{kick}{h2}<p class="big">{esc(w["big"])}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
+        return f'<section class="slide">{kick}{h2}<p class="big">{w["big"]}</p><p class="meta">{esc(w.get("meta",""))}</p></section>'
     if k == "lista":
         li = "".join(f"<li>{x}</li>" for x in w["items"])
         return f'<section class="slide">{kick}{h2}<ul class="plain">{li}</ul></section>'
     if k == "links":
         li = "".join(f'<li><a href="{esc(u)}" target="_blank">{esc(l)}</a></li>' for l, u in w["links"])
         return f'<section class="slide">{kick}{h2}<ul class="links">{li}</ul></section>'
+    if k == "code":
+        return f'<section class="slide">{kick}{h2}<pre class="code">{w["code"]}</pre></section>'
     return f'<section class="slide">{kick}{h2}</section>'
 
 def deck(curso, cu, n, fecha, titulo, lead, slides):
@@ -130,6 +137,11 @@ CLASES = []
 CLASES.append(dict(curso=AU, n=1, fecha="Jue 24 sep 2026", titulo="De ChatGPT al agente autónomo",
   lead="Por qué «chatear» con una IA no le cambia la pega a un auditor — y qué significa, de verdad, que una IA ejecute el trabajo por ti.",
   slides=[
+   ("pregunta", dict(kicker="Dónde estamos hoy", h2="En 2025 las Big 4 invirtieron +US$6.000M en IA para auditar", big="PwC, Deloitte, EY y KPMG ya auditan con agentes de IA, análisis del 100% de las transacciones y process mining. La auditoría que aprenderás este semestre <b>ya está ocurriendo</b> — vos vas a construir una pieza de eso.")),
+   ("piezas", dict(kicker="Las 4 plataformas", h2="Qué usa cada Big 4", piezas=[("PwC · Aura NextGen","US$1.000M. Harvey AI lee contratos (IFRS 16) y GL.ai detecta anomalías en asientos."),("Deloitte · Omnia","US$1.400M+. Red de agentes autónomos para conciliación bancaria y vouching."),("EY · Canvas","US$1.400M. Plataforma cloud con 150.000 usuarios y análisis antifraude en nóminas."),("KPMG · Clara","US$2.000M. Azure OpenAI: coteja estados contra taxonomías IFRS automáticamente.")])),
+   ("lista", dict(kicker="Qué hace la IA hoy", h2="El fin del muestreo", items=["<b>Full-population testing:</b> auditar el 100% de los asientos, no una muestra de 25 facturas (se acaba la NIA 530).","<b>Agentes autónomos:</b> three-way matching (factura vs orden de compra vs recepción) — el 98% se aprueba solo.","<b>Process mining:</b> reconstruir la ruta REAL de cada transacción y detectar violaciones de segregación de funciones.","<b>ESG:</b> auditar datos no financieros (emisiones, agua) con el mismo rigor que un balance."])),
+   ("porque", dict(kicker="Y en Chile", h2="NCG 519: la auditoría ESG ya es obligatoria", big="La CMF alineó a Chile con los estándares ISSB (IFRS S1/S2). Desde el <b>ejercicio 2026</b>, los emisores deben revelar emisiones y riesgos climáticos — y eso se audita.", meta="No estás aprendiendo una moda: estás aprendiendo la herramienta que el mercado chileno ya está exigiendo.")),
+   ("lista", dict(kicker="Cómo lo vas a construir", h2="Sin computador potente, sin terminal", items=["<b>Google Colab:</b> Python corre en la nube de Google, en tu navegador. Funciona en Windows, Mac, Chromebook o tablet — solo necesitás una cuenta de Google y conexión a internet.","<b>No instalás nada:</b> no hay que configurar Python ni usar el terminal. Escribís código en celdas y lo ejecutás con un botón ▶.","<b>Learn Mode:</b> un tutor de IA gratis dentro de Colab que te explica cada línea de código en palabras simples. Activálo desde la barra lateral."])),
    ("pregunta", dict(kicker="La pregunta del día", h2="Un auditor que solo «chatea» con una IA, ¿en qué cambió su pega?", big="En nada. Sigue copiando datos a mano, solo que ahora la IA le redacta el correo. El trabajo duro — conciliar, revisar, marcar — sigue siendo suyo.")),
    ("definicion", dict(kicker="Definición", h2="Qué es un agente (de verdad)", defn="Un agente es un programa que recibe un <b>objetivo</b>, <b>decide por sí mismo</b> qué hacer, usa <b>herramientas</b> y <b>ejecuta</b> hasta cumplirlo. No espera instrucciones paso a paso.", meta="La diferencia no es de «más inteligente»: es de quién hace el trabajo. Con ChatGPT tú eres el ejecutor. Con un agente, el ejecutor es la máquina.")),
    ("vs", dict(kicker="La diferencia clave", h2="IA conversacional vs. IA agéntica", bad_t="ChatGPT (conversacional)", bad=["Conversa y responde texto","No ejecuta acciones","Olvida todo al cerrar el chat","El trabajo lo haces tú"], good_t="Agente (agéntica)", good=["Ejecuta tareas completas","Usa herramientas (archivos, APIs, código)","Mantiene estado y avanza","El trabajo lo hace la máquina"])),
@@ -138,9 +150,61 @@ CLASES.append(dict(curso=AU, n=1, fecha="Jue 24 sep 2026", titulo="De ChatGPT al
    ("piezas", dict(kicker="Anatomía", h2="Las 3 piezas de un agente", piezas=[("🧠 Modelo","El cerebro que decide. Es el LLM (Claude, GPT, DeepSeek…), pero no basta solo."),("✋ Herramientas","Las manos: leer archivos, consultar APIs, correr código. Sin ellas es solo un ChatGPT."),("💾 Memoria","Recuerda qué ya hizo y qué le falta, para no repetir ni perder el hilo del objetivo.")])),
    ("porque", dict(kicker="Por qué importa", h2="Lo que le pasa al auditor", big="El auditor deja de ser <b>operador</b> (pegar datos en Excel) y pasa a ser <b>supervisor</b>: define qué controlar y revisa lo que el agente marcó.", meta="Resultado: audita el 100% de las transacciones, no una muestra. Y usa su criterio en lo que de verdad importa.")),
    ("error", dict(kicker="Error típico", h2="Confundir «pedir un texto» con «delegar una tarea»", warn="<b>Mal:</b> «Hazme un informe de las facturas.» → la IA devuelve texto genérico, sin tocar tus datos.<br><br><b>Bien:</b> darle <b>objetivo + herramientas + restricciones</b>: «Lee este archivo, cruza con el SII, marca las que no cuadren y devuélveme un reporte. No inventes cifras.»")),
-   ("pasos", dict(kicker="La tarea de hoy", h2="Tu primer agente", steps=[("Monta el entorno:","crea un venv e instala CrewAI (o eve)."),("Escribe un agente mínimo","que reciba un CSV y ejecute una acción: contar filas o sumar una columna."),("Dale una herramienta","(leer el archivo) y un objetivo claro.")])),
+   ("pasos", dict(kicker="La tarea de hoy (paso a paso)", h2="Tu primer agente", steps=[("Abrí Google Colab:", "en el navegador, andá a colab.research.google.com y entrá con tu cuenta de Google. No instalás nada: corre en la nube de Google, da igual si tu compu es Windows o Mac."),("Creá un notebook nuevo:", "Archivo → Nuevo notebook. Es un documento donde escribís código y lo ejecutás con el botón ▶ (o Shift+Enter). Nada de terminal."),("Obtené tu key gratis de IA:", "andá a console.groq.com/keys y creá una key (gratis, 1 minuto). Es la llave que deja a tu código usar la IA."),("Pegá el código del ejemplo:", "copiá el código de la siguiente diapositiva y pegalo en una celda. Cambiá la línea de la key por la tuya."),("Correlo con ▶:", "y mirá lo que imprime. Ese es tu primer agente ejecutando una tarea de verdad.")])),
+   ("code", dict(kicker="El código (copialo tal cual)", h2="Tu primer agente, línea por línea", code="""# PASO PREVIO: instalar la librería que conecta con la IA
+# (escribí esta línea SOLA en una celda y apretá ▶)
+!pip install openai
+
+# ═══ AHORA SÍ, TU PRIMER AGENTE ═══
+# Copiá todo esto en OTRA celda y corrélo con ▶
+# Cada línea tiene un comentario (#) que explica qué hace.
+
+# 1) LA LLAVE de la IA (la sacaste gratis en console.groq.com/keys)
+from openai import OpenAI
+cliente = OpenAI(
+    api_key="PEGA-AQUI-TU-KEY",     # <- borrá esto y pegá tu key entre las comillas
+    base_url="https://api.groq.com/openai/v1"
+)
+
+# 2) CREAMOS UN ARCHIVO DE EJEMPLO (para no depender de subir nada)
+import pandas as pd
+pd.DataFrame({
+    "factura": ["F-001", "F-002", "F-003"],
+    "monto":   [120000,  85000,  240000],
+}).to_csv("facturas.csv", index=False)
+print("Archivo de ejemplo creado: facturas.csv")
+
+# 3) LA HERRAMIENTA: cuenta las filas de un CSV
+#    (un CSV es una tabla guardada como texto, como un Excel simple)
+def contar_filas(archivo):
+    datos = pd.read_csv(archivo)   # abre la tabla
+    return len(datos)              # len() cuenta cuántas filas tiene
+
+# 4) EL OBJETIVO: qué queremos que el agente logre
+objetivo = "contar cuántas filas tiene el archivo facturas.csv"
+
+# 5) EL LOOP: pensar -> actuar -> observar
+# PENSAR: le preguntamos a la IA qué herramienta usar
+respuesta = cliente.chat.completions.create(
+    model="openai/gpt-oss-120b",
+    messages=[{"role": "user", "content":
+        "Tengo un objetivo: " + objetivo +
+        ". Responde SOLO con el nombre de la función a usar: contar_filas"}]
+)
+decision = respuesta.choices[0].message.content
+print("La IA pensó:", decision)   # OBSERVAR lo que decidió
+
+# ACTUAR: ejecutar la herramienta que la IA eligió
+if "contar_filas" in decision:
+    filas = contar_filas("facturas.csv")   # ejecuta la herramienta
+    print("El archivo tiene", filas, "filas")   # OBSERVAR el resultado
+else:
+    print("La IA no supo qué hacer. Ajustá el objetivo.")
+""")),
+   ("lista", dict(kicker="Y ahora, crece", h2="El mismo agente, en 5 etapas", items=["<b>Etapa 1:</b> una herramienta (contar filas).","<b>Etapa 2:</b> 4 herramientas — la IA elige cuál usar.","<b>Etapa 3:</b> loop real — repetir hasta cumplir el objetivo.","<b>Etapa 4:</b> responder en lenguaje natural <b>con la fuente</b> (primer paso del cero-alucinación).","<b>Etapa 5:</b> conciliar facturas vs pagos y marcar las que no cuadran (aperitivo del caza-fraudes)."])),
+   ("lista", dict(kicker="Para correrlo ya", h2="El código completo", items=["<b>agente_progresivo.py</b> en este sitio: el agente de auditoría entero, etapa por etapa, comentado línea por línea.","<b>Cómo:</b> descargálo, subílo a Colab (o copiá su contenido en una celda), pegá tu key de Groq y corrélo.","<b>Mirá cómo crece:</b> cada etapa agrega UNA pieza. Así se construye un agente, de a poco."])),
    ("testeo", dict(kicker="El testeo", h2="Demostrá que entendiste el loop", big="Corre tu agente en pantalla y explica las 3 fases: qué pensó, qué hizo y qué observó.", meta="Si no puedes explicar el loop con tus palabras, el agente «funcionó» pero no aprendiste nada.")),
-   ("links", dict(kicker="Para profundizar", h2="Para aprender", links=[("Building Effective Agents (Anthropic)","https://www.anthropic.com/research/building-effective-agents"),("eve — framework de agentes (Vercel)","https://github.com/vercel/eve"),("CrewAI docs","https://docs.crewai.com")])),
+   ("links", dict(kicker="Para profundizar", h2="Para aprender", links=[("Google Colab (abrirlo ya)", "https://colab.research.google.com"),("Groq (key gratis, console.groq.com)", "https://console.groq.com/keys"),("agente_progresivo.py (código completo)", "agente_progresivo.py"),("Building Effective Agents (Anthropic)","https://www.anthropic.com/research/building-effective-agents")])),
   ]))
 CLASES.append(dict(curso=AU, n=2, fecha="Jue 01 oct 2026", titulo="Agente lector de documentos",
   lead="Sacar cifras de un balance sin leerlo a mano, y sin que la IA invente números.",
@@ -149,9 +213,9 @@ CLASES.append(dict(curso=AU, n=2, fecha="Jue 01 oct 2026", titulo="Agente lector
    ("definicion", dict(kicker="Concepto", h2="Extracción determinista", defn="Leer el texto del PDF con una <b>librería</b> (PyMuPDF), no pedirle al LLM que «recuerde» las cifras. El LLM <b>formatea</b> lo que el parser ya leyó: nunca inventa números.", meta="Determinista = mismo PDF, misma salida, siempre. Sin aleatoriedad ni alucinación de cifras.")),
    ("vs", dict(kicker="Por qué no el LLM", h2="LLM leyendo vs. parser", bad_t="LLM «leyendo» el PDF", bad=["Puede inventar montos que no están","Resultado distinto cada vez","No cuadra el balance"], good_t="Parser (PyMuPDF)", good=["Lee el texto exacto del PDF","Siempre la misma salida","Las cifras cuadran contra el original"])),
    ("ejemplo", dict(kicker="Ejemplo", h2="Balance → tabla", q="De un balance real, extraer las cuentas principales:", steps=["Abrir el PDF y extraer todo el texto.","Ubicar activos, pasivos y patrimonio.","Emitir una tabla estructurada (cuenta, monto).","Verificar: activo = pasivo + patrimonio."], meta="La verificación del cuarto paso es la prueba de que la extracción fue correcta.")),
-   ("pasos", dict(kicker="La tarea", h2="Manos a la obra", steps=[("Lee el PDF:","usa PyMuPDF para extraer el texto plano."),("Ubica las cuentas","con regex o búsqueda de etiquetas («Total activos», etc.)."),("Entrega una tabla","y que el agente la presente formateada.")])),
+   ("pasos", dict(kicker="La tarea (paso a paso)", h2="Manos a la obra", steps=[("Instalá el lector de PDF:", "en una celda de Colab escribí «!pip install pymupdf» y apretá ▶. Es la librería que convierte un PDF en texto plano, como abrirlo y copiar todo el contenido."),("Abrí un balance de ejemplo:", "subí un PDF real a Colab (podés bajar uno de la CMF y arrastrarlo al panel de archivos). «Abrirlo» en código significa: leer el archivo y extraer todo su texto."),("Ubicá las cuentas:", "buscá etiquetas conocidas («Total activos», «Total pasivos», «Patrimonio»). Son palabras fijas que podés encontrar con una búsqueda de texto."),("Entrega una tabla:", "cuenta + monto, para que el agente la presente limpia. Regla de oro: el número sale del PDF, no de la cabeza del modelo.")])),
    ("testeo", dict(kicker="El testeo", h2="Que cuadre", big="La tabla extraída debe cuadrar contra el PDF: activo = pasivo + patrimonio.", meta="Si no cuadra, es error de extracción, no del PDF. Ese es el estándar mínimo de un agente lector.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("PyMuPDF","https://pymupdf.readthedocs.io"),("CrewAI — tools","https://docs.crewai.com")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("PyMuPDF","https://pymupdf.readthedocs.io")])),
   ]))
 CLASES.append(dict(curso=AU, n=3, fecha="Jue 08 oct 2026", titulo="RAG: la memoria del agente",
   lead="Por qué un agente necesita recuperar (y no meter todo al prompt), y cómo se arma un mini-RAG.",
@@ -161,7 +225,7 @@ CLASES.append(dict(curso=AU, n=3, fecha="Jue 08 oct 2026", titulo="RAG: la memor
    ("lista", dict(kicker="Las 3 piezas", h2="Cómo se construye", items=["<b>Chunking:</b> partir los documentos en trozos (párrafos, artículos).","<b>Embeddings:</b> convertir cada trozo en un vector que captura su significado.","<b>Índice vectorial:</b> guardar los vectores (FAISS) para buscar por similitud."])),
    ("loop", dict(kicker="El flujo", h2="Cómo responde un RAG", lead="Ante una pregunta:", nodes=[("❓ Pregunta","«¿cuál es la multa?»"),("🔍 Buscar","vectores más parecidos"),("📄 Recuperar","los top chunks"),("✍️ Responder","con esos chunks citados")], meta="El modelo genera SOLO a partir de lo recuperado. No de su memoria.")),
    ("vs", dict(kicker="Por qué no el prompt gigante", h2="Prompt gigante vs. retrieval", bad_t="Meter todo al prompt", bad=["Lento y caro (tokens)","Desborda la ventana de contexto","El modelo se confunde con tanto texto"], good_t="Recuperar solo lo relevante", good=["Rápido y barato","Escala a miles de docs","El modelo ve solo lo que importa"])),
-   ("pasos", dict(kicker="La tarea", h2="Mini-RAG en 3 pasos", steps=[("Chunkea","10 documentos en párrafos."),("Embebe e indexa","con fastembed + FAISS."),("Consulta","y que el agente responda citando el chunk que usó.")])),
+   ("pasos", dict(kicker="La tarea (paso a paso)", h2="Mini-RAG en 3 pasos", steps=[("Instalá las librerías:", "en una celda de Colab: «!pip install fastembed faiss-cpu». fastembed convierte texto en vectores; faiss los guarda y busca parecidos."),("Chunkea:", "partí 10 documentos (normas del SII, por ejemplo) en párrafos. Cada párrafo será un «trozo» recuperable."),("Embebe e indexa:", "convertí cada trozo en un vector (una lista de números que captura su significado) y guardalos en FAISS."),("Consulta:", "ante una pregunta, buscá los trozos más parecidos y que el agente responda citando cuál usó. Si no está, que diga «no está».")])),
    ("testeo", dict(kicker="El testeo", h2="Muestra la fuente", big="El agente responde y muestra qué chunk usó. Pregunta trampa: si no está en el corpus, debe decir «no está», no inventar.")),
    ("links", dict(kicker="Para aprender", h2="Links", links=[("Qué es RAG","https://www.pinecone.io/learn/retrieval-augmented-generation/"),("Vector embeddings","https://www.pinecone.io/learn/vector-embeddings/"),("fastembed","https://github.com/qdrant/fastembed"),("FAISS","https://github.com/facebookresearch/faiss")])),
   ]))
@@ -193,7 +257,7 @@ CLASES.append(dict(curso=AU, n=6, fecha="Jue 29 oct 2026", titulo="Bajar datos d
    ("definicion", dict(kicker="Concepto", h2="Ingestor determinista", defn="Un script que baja los documentos, extrae el texto y lo guarda limpio. <b>Siempre la misma salida</b> para la misma entrada — no depende de un modelo.", meta="Razón de fondo: si el LLM «resume» cada documento, gasta tokens y puede cambiar el contenido. Extraer es exacto y gratis.")),
    ("lista", dict(kicker="Las fuentes", h2="Dónde bajar", items=["<b>LeyChile:</b> API XML con el texto completo de cada ley (limpio, sin scrapear).","<b>SII:</b> índices de circulares/resoluciones + sus PDFs.","<b>Dedup:</b> hash por documento para no embeber dos veces lo mismo."])),
    ("error", dict(kicker="Error típico", h2="Mandar el LLM a «leer» en vez de extraer", warn="Si usas la IA para descargar/resumir el corpus, <b>pagas tokens por algo que un script hace gratis y mejor</b>. La regla: ingesta = código; IA = solo para responder.")),
-   ("pasos", dict(kicker="La tarea", h2="Corré el ingestor", steps=[("Baja una ley","vía la API XML de LeyChile."),("Baja una circular","del SII (índice + PDF)."),("Extrae texto limpio","y deduplica por hash.")])),
+   ("pasos", dict(kicker="La tarea (paso a paso)", h2="Corré el ingestor", steps=[("Bajá una ley:", "en Colab, pedí una ley a la API XML de LeyChile por su código y te devuelve el texto completo, limpio, sin copiar y pegar."),("Bajá una circular:", "del SII (índice + PDF). La circular es un PDF: extraés el texto con la misma librería de la clase 2."),("Limpialo y deduplicá:", "quedate con el texto plano y evitá guardar dos veces lo mismo (un «hash» por documento).")])),
    ("testeo", dict(kicker="El testeo", h2="Traé una fuente real", big="Cada pareja muestra una fuente real bajada, con el texto limpio, y confirma que la ingesta es Python puro (cero tokens de LLM).")),
    ("links", dict(kicker="Para aprender", h2="Links", links=[("LeyChile (API de normas)","https://www.leychile.cl"),("Circulares SII 2025","https://www.sii.cl/normativa_legislacion/circulares/2025/indcir2025.htm"),("Ingestor de ejemplo","ingestor_store_b.py")])),
   ]))
@@ -236,7 +300,7 @@ CLASES.append(dict(curso=AU, n=10, fecha="Jue 03 dic 2026", titulo="Guardrails: 
    ("definicion", dict(kicker="Concepto", h2="Guardrails de datos", defn="Un <b>schema</b> (Zod/Pydantic) define qué es una factura válida: campos, tipos y reglas. Si un dato no cumple, el agente lo <b>rechaza</b> en vez de pasarlo.", meta="Es el cinturón de seguridad: no evita que el modelo se equivoque, evita que el error llegue al reporte.")),
    ("piezas", dict(kicker="Dos herramientas", h2="Zod + Graft", piezas=[("🔒 Zod","Valida datos: «el monto es número > 0», «el RUT tiene 9 dígitos». Rechaza lo que no cuadra."),("🗺️ Graft","Mapea el código del ERP en un grafo legible para que el agente no se pierda entre módulos."),("⚙️ Resultado","El agente valida cada transacción antes de aceptarla.")])),
    ("vs", dict(kicker="El efecto", h2="Sin guardrails vs. con guardrails", bad_t="Sin validación", bad=["Pasa un monto negativo o un RUT roto","El error llega al informe final","Nadie sabe dónde se rompió"], good_t="Con schema Zod", good=["Rechaza la transacción al instante","Cada rechazo dice qué regla falló","El reporte solo lleva datos válidos"])),
-   ("pasos", dict(kicker="La tarea", h2="Blindá tu agente", steps=[("Define el schema Zod","de una factura (campos, tipos, reglas)."),("Mapea el mini-ERP","con Graft."),("Conecta la validación","al flujo del agente.")])),
+   ("pasos", dict(kicker="La tarea (paso a paso)", h2="Blindá tu agente", steps=[("Definí el schema Zod:", "escribí qué es una factura VÁLIDA: qué campos tiene (RUT, monto, fecha), de qué tipo es cada uno y qué reglas debe cumplir (monto > 0, RUT con dígito verificador)."),("Mapeá el mini-ERP:", "con Graft, dibujá cómo se conectan los módulos (factura → pago → conciliación) para que el agente no se pierda."),("Conectá la validación:", "que el agente chequee cada transacción contra el schema ANTES de aceptarla. Si falla, la rechaza y dice por qué.")])),
    ("testeo", dict(kicker="El testeo", h2="Que rechace", big="El agente rechaza una transacción que no cuadra y explica qué regla del schema la frenó.")),
    ("links", dict(kicker="Para aprender", h2="Links", links=[("Zod","https://zod.dev"),("Pydantic","https://docs.pydantic.dev"),("Graft (grafo de código)","https://github.com/NanoNets/graft")])),
   ]))
@@ -259,7 +323,7 @@ CLASES.append(dict(curso=AU, n=12, fecha="Jue 17 dic 2026", titulo="Hackathon: e
    ("error", dict(kicker="Error típico", h2="El agente «todista»", warn="Un solo agente con un prompt enorme que hace todo termina <b>confundido y lento</b>. Dividir en roles pequeños es más fácil de probar y de arreglar.")),
    ("pasos", dict(kicker="La tarea", h2="Armá tu swarm", steps=[("Definí los roles","(2–3 agentes)."),("Encadená","la salida de uno como entrada del otro."),("Probá el flujo","de punta a punta.")])),
    ("testeo", dict(kicker="El testeo", h2="End-to-end", big="El swarm ejecuta el flujo completo (factura → conciliación → alerta) sin intervención manual entre pasos.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("Patrones multi-agente (Anthropic)","https://www.anthropic.com/research/building-effective-agents"),("CrewAI — crews multi-agente","https://docs.crewai.com")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Patrones multi-agente (Anthropic)","https://www.anthropic.com/research/building-effective-agents")])),
   ]))
 CLASES.append(dict(curso=AU, n=13, fecha="Jue 07 ene 2027", titulo="Demo final / Executive Pitch",
   lead="Presentar el sistema agéntico de auditoría como si fuera a un directorio.",
@@ -268,7 +332,7 @@ CLASES.append(dict(curso=AU, n=13, fecha="Jue 07 ene 2027", titulo="Demo final /
    ("lista", dict(kicker="El pitch", h2="Qué comunicar", items=["<b>Problema:</b> el dolor real del auditor.","<b>Solución:</b> qué hace tu swarm, con demo.","<b>Impacto:</b> tiempo/costo/cobertura (números).","<b>Confianza:</b> cómo garantizas que no alucina."])),
    ("pasos", dict(kicker="La tarea", h2="Prepará la demo", steps=[("Estructura el pitch","problema → solución → impacto."),("Ensaya la demo en vivo","con datos reales."),("Anticipa preguntas","del panel.")])),
    ("testeo", dict(kicker="El testeo final", h2="Ante el panel", big="El sistema responde con fuente, cuadra al centavo y defiende sus alertas. Importa que funcione y lo sepan explicar — no una nota.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("eve (deploy del swarm)","https://github.com/vercel/eve"),("CrewAI","https://docs.crewai.com")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Cómo hacer un agente confiable","https://www.anthropic.com/research/building-effective-agents")])),
   ]))
 
 # ── INNOVACIÓN (profundizado) ──
