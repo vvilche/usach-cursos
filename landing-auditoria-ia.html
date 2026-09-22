@@ -3,173 +3,218 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Hackeando la Auditoría con IA Agéntica — Electivo FAE USACH</title>
+<title>Hackeando la Auditoría con IA Agéntica — Infografía</title>
 <style>
-  :root{--navy:#0f172a;--ink:#1e293b;--mut:#64748b;--line:#e2e8f0;--acc:#2563eb;--green:#0a7a3d;--amber:#d97706;--bg:#f8fafc;--card:#fff;}
+  :root{--navy:#0f172a;--ink:#1e293b;--mut:#64748b;--line:#e2e8f0;--blue:#2563eb;--green:#10B981;--amber:#f59e0b;--sky:#eef4ff;--paper:#ffffff;}
   *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--ink);font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
-  .wrap{max-width:1000px;margin:0 auto;padding:0 22px 80px;}
+  body{background:#0b1220;display:flex;justify-content:center;padding:28px 14px;}
+  .poster{width:100%;max-width:820px;background:var(--paper);border-radius:22px;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.5);font:15px/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;color:var(--ink);}
 
-  /* HERO */
-  .hero{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 60%,#2563eb 100%);color:#fff;padding:64px 40px 56px;border-radius:0 0 28px 28px;position:relative;overflow:hidden;}
-  .hero::after{content:"";position:absolute;right:-80px;top:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.06);}
-  .hero::before{content:"";position:absolute;right:40px;bottom:-120px;width:240px;height:240px;border-radius:50%;background:rgba(16,185,129,.15);}
-  .tag{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.25);padding:5px 14px;border-radius:20px;font-size:12.5px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:18px;}
-  .hero h1{font-size:40px;line-height:1.12;letter-spacing:-.02em;margin-bottom:16px;max-width:820px;}
-  .hero h1 b{color:#86efac;}
-  .hero .lede{font-size:17px;color:#cbd5e1;max-width:680px;margin-bottom:28px;}
-  .fichas{display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:1;}
-  .ficha{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 18px;}
-  .ficha .k{font-size:11px;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;display:block;}
-  .ficha .v{font-size:15px;font-weight:700;}
+  /* CABECERA */
+  .head{background:linear-gradient(135deg,#0f172a 0%,#1e3a8a 55%,#2563eb 100%);color:#fff;padding:46px 44px 40px;position:relative;overflow:hidden;}
+  .head::after{content:"";position:absolute;right:-70px;top:-70px;width:280px;height:280px;border-radius:50%;background:rgba(255,255,255,.07);}
+  .head::before{content:"";position:absolute;right:60px;bottom:-110px;width:220px;height:220px;border-radius:50%;background:rgba(16,185,129,.22);}
+  .kicker{display:inline-flex;background:rgba(255,255,255,.13);border:1px solid rgba(255,255,255,.25);padding:6px 14px;border-radius:20px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:20px;}
+  .head h1{font-size:44px;line-height:1.05;letter-spacing:-.02em;margin-bottom:14px;max-width:640px;}
+  .head h1 em{font-style:normal;color:#86efac;}
+  .head .sub{font-size:16px;color:#cbd5e1;max-width:560px;position:relative;z-index:1;}
+  .fichas{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:30px;position:relative;z-index:1;}
+  .ficha{background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:12px;padding:12px 10px;text-align:center;}
+  .ficha .k{font-size:10px;text-transform:uppercase;letter-spacing:.06em;color:#94a3b8;display:block;margin-bottom:3px;}
+  .ficha .v{font-size:13.5px;font-weight:700;line-height:1.2;}
 
-  /* SECCIONES */
-  section{margin-top:56px;}
-  .sec-tag{color:var(--acc);font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px;}
-  h2{font-size:28px;letter-spacing:-.02em;margin-bottom:22px;}
-  .lead{color:var(--mut);font-size:16px;max-width:760px;margin-bottom:26px;}
+  /* FRANJA DE CIFRAS */
+  .band{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:1px solid var(--line);}
+  .band .cell{padding:24px 22px;border-right:1px solid var(--line);}
+  .band .cell:last-child{border-right:0;}
+  .band .big{font-size:34px;font-weight:800;letter-spacing:-.02em;color:var(--blue);line-height:1;}
+  .band .lbl{font-size:13px;color:var(--mut);margin-top:6px;}
+
+  .sec{padding:44px 44px;}
+  .sec .tag{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--blue);margin-bottom:14px;}
+  .sec h2{font-size:27px;letter-spacing:-.02em;margin-bottom:8px;color:var(--navy);}
+  .sec .lede{color:var(--mut);font-size:15px;max-width:640px;margin-bottom:26px;}
+
+  /* LOOP */
+  .loop{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:6px;}
+  .loop .n{display:flex;flex-direction:column;align-items:center;text-align:center;background:var(--sky);border-radius:14px;padding:22px 16px;position:relative;}
+  .loop .n .ico{width:52px;height:52px;border-radius:14px;background:#fff;border:1px solid var(--line);display:flex;align-items:center;justify-content:center;margin-bottom:12px;}
+  .loop .n b{color:var(--navy);font-size:15px;margin-bottom:4px;}
+  .loop .n span{color:var(--mut);font-size:13px;}
+  .loop .arrow{position:absolute;top:50%;right:-13px;transform:translateY(-50%);color:var(--blue);font-size:20px;font-weight:800;z-index:2;}
+  .loop .n:last-child .arrow{display:none;}
 
   /* CAPACIDADES */
-  .caps{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;}
-  .cap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:22px;border-top:4px solid var(--green);}
-  .cap .n{width:30px;height:30px;border-radius:8px;background:#ecfdf5;color:var(--green);font-weight:800;display:flex;align-items:center;justify-content:center;font-size:15px;margin-bottom:12px;}
-  .cap h3{font-size:16px;margin-bottom:6px;}
-  .cap p{color:var(--mut);font-size:14px;}
+  .caps{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .cap{display:flex;gap:16px;background:#fff;border:1px solid var(--line);border-radius:14px;padding:20px;align-items:flex-start;}
+  .cap .num{width:40px;height:40px;border-radius:10px;background:var(--navy);color:#fff;font-weight:800;font-size:17px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+  .cap.g .num{background:var(--green);}
+  .cap h3{font-size:15.5px;color:var(--navy);margin-bottom:4px;}
+  .cap p{color:var(--mut);font-size:13.5px;}
 
-  /* ETAPAS (progresión) */
-  .etapas{display:flex;flex-direction:column;gap:0;}
-  .etapa{display:flex;gap:16px;align-items:flex-start;}
+  /* ETAPAS */
+  .etapas{display:flex;flex-direction:column;}
+  .etapa{display:flex;gap:18px;}
   .etapa .rail{display:flex;flex-direction:column;align-items:center;flex-shrink:0;}
-  .etapa .dot{width:18px;height:18px;border-radius:50%;background:var(--acc);border:3px solid #dbeafe;flex-shrink:0;}
-  .etapa .line{width:2px;flex:1;background:var(--line);min-height:28px;}
+  .etapa .dot{width:20px;height:20px;border-radius:50%;background:var(--blue);border:4px solid #dbeafe;flex-shrink:0;}
+  .etapa .line{width:3px;flex:1;background:var(--line);min-height:24px;}
   .etapa:last-child .line{display:none;}
-  .etapa .body{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-bottom:14px;flex:1;}
-  .etapa .body b{color:var(--navy);}
-  .etapa .body p{color:var(--mut);font-size:14px;margin-top:3px;}
+  .etapa .body{flex:1;padding:0 0 24px;}
+  .etapa .body b{color:var(--navy);font-size:15.5px;}
+  .etapa .body p{color:var(--mut);font-size:13.5px;margin-top:2px;}
 
-  /* TIMELINE SVG */
-  .tl-box{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:24px 20px 8px;overflow-x:auto;}
+  /* TIMELINE */
+  .tl-box{background:#fbfcfe;border:1px solid var(--line);border-radius:16px;padding:20px 18px 6px;}
 
   /* STACK */
-  .stack{display:flex;flex-wrap:wrap;gap:12px;}
-  .chip{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:9px 18px;font-size:14px;font-weight:600;}
-  .chip small{color:var(--mut);font-weight:500;}
+  .stack{display:flex;flex-wrap:wrap;gap:10px;}
+  .chip{background:var(--navy);color:#fff;border-radius:22px;padding:9px 16px;font-size:13px;font-weight:600;display:inline-flex;align-items:center;gap:7px;}
+  .chip small{color:#94a3b8;font-weight:500;}
+  .chip.g{background:var(--green);}
+  .chip.g small{color:#d1fae5;}
 
-  /* FOOTER / CTA */
-  .cta{background:var(--navy);color:#fff;border-radius:18px;padding:34px 36px;margin-top:56px;display:flex;flex-wrap:wrap;gap:20px;justify-content:space-between;align-items:center;}
-  .cta h3{font-size:21px;margin-bottom:6px;}
-  .cta p{color:#94a3b8;font-size:14px;}
-  .cta .btn{background:#10B981;color:#fff;padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;white-space:nowrap;}
-  .nota{color:var(--mut);font-size:12.5px;margin-top:20px;text-align:center;}
+  /* FOOTER */
+  .foot{background:var(--navy);color:#fff;padding:34px 44px;text-align:center;}
+  .foot h3{font-size:19px;margin-bottom:6px;}
+  .foot p{color:#94a3b8;font-size:13.5px;margin-bottom:16px;}
+  .foot .btn{display:inline-block;background:var(--green);color:#fff;padding:11px 24px;border-radius:10px;text-decoration:none;font-weight:700;font-size:14px;}
+  .foot .cred{font-size:11.5px;color:#64748b;margin-top:18px;}
+
+  @media(max-width:640px){
+    .head{padding:34px 24px 30px;} .sec{padding:34px 24px;}
+    .head h1{font-size:33px;} .fichas{grid-template-columns:repeat(2,1fr);}
+    .band{grid-template-columns:repeat(2,1fr);} .band .cell:nth-child(2){border-right:0;}
+    .band .cell:nth-child(-n+2){border-bottom:1px solid var(--line);}
+    .loop{grid-template-columns:1fr;} .caps{grid-template-columns:1fr;}
+    .loop .arrow{display:none;}
+  }
 </style>
 </head>
 <body>
+<div class="poster">
 
-<div class="hero">
-  <span class="tag">Electivo FAE · Universidad de Santiago de Chile · 2° semestre 2026</span>
-  <h1>Hackeando la Auditoría con <b>IA Agéntica</b></h1>
-  <p class="lede">Alumnos de Contabilidad y Auditoría construyen, clase a clase, su propio agente de auditoría: un sistema que lee balances, cruza datos del SII contra el ERP y detecta fraudes — sin alucinar. Sin saber programar antes.</p>
-  <div class="fichas">
-    <div class="ficha"><span class="k">Duración</span><span class="v">13 clases · 1 semestre</span></div>
-    <div class="ficha"><span class="k">Horario</span><span class="v">Jueves 14:35–17:30</span></div>
-    <div class="ficha"><span class="k">Sala</span><span class="v">EF207</span></div>
-    <div class="ficha"><span class="k">Modalidad</span><span class="v">100% en el navegador · gratis</span></div>
-    <div class="ficha"><span class="k">Requisito</span><span class="v">Ninguno — desde cero</span></div>
+  <div class="head">
+    <span class="kicker">Electivo FAE · USACH · 2° semestre 2026</span>
+    <h1>Hackeando la Auditoría con <em>IA Agéntica</em></h1>
+    <p class="sub">Alumnos de Contabilidad construyen su propio agente de auditoría — desde cero, sin saber programar. De las planillas Excel a un sistema que audita en vivo.</p>
+    <div class="fichas">
+      <div class="ficha"><span class="k">Duración</span><span class="v">13 clases</span></div>
+      <div class="ficha"><span class="k">Horario</span><span class="v">Jue 14:35</span></div>
+      <div class="ficha"><span class="k">Sala</span><span class="v">EF207</span></div>
+      <div class="ficha"><span class="k">Modalidad</span><span class="v">Navegador</span></div>
+      <div class="ficha"><span class="k">Requisito</span><span class="v">Ninguno</span></div>
+    </div>
   </div>
-</div>
 
-<div class="wrap">
-
-<section>
-  <div class="sec-tag">De qué se trata</div>
-  <h2>No enseñamos a usar ChatGPT. Enseñamos a construir lo que hay detrás.</h2>
-  <p class="lead">La auditoría está dejando de ser muestreo por planilla: las Big 4 ya auditan el 100% de las transacciones con agentes de IA (NCG 519 lo vuelve obligatorio en ESG). El auditor del futuro no «pide un texto» a una IA: le <b>delega una tarea</b> a un agente que piensa, actúa y se corrige. Este curso cierra esa brecha.</p>
-</section>
-
-<section>
-  <div class="sec-tag">Qué serán capaces de hacer</div>
-  <h2>Al terminar, cada alumno habrá construido esto</h2>
-  <div class="caps">
-    <div class="cap"><div class="n">1</div><h3>Construir un agente desde cero</h3><p>El loop pensar→actuar→observar en Python puro, sin frameworks pesados. Entienden la máquina, no la memorizan.</p></div>
-    <div class="cap"><div class="n">2</div><h3>Leer balances y documentos</h3><p>Un agente que extrae cifras de EE.FF. y PDFs y responde con la fuente citada (RAG, la memoria del agente).</p></div>
-    <div class="cap"><div class="n">3</div><h3>Bajar datos del SII automáticamente</h3><p>Ingestor que descarga y normaliza datos tributarios sin LLM, para auditar sobre datos reales.</p></div>
-    <div class="cap"><div class="n">4</div><h3>Detectar fraudes SII vs ERP</h3><p>Conciliación de folios y montos entre lo declarado y lo registrado — con la Ley 21.595 como marco.</p></div>
-    <div class="cap"><div class="n">5</div><h3>Blindar la IA contra alucinaciones</h3><p>spec-first + guardrails (Zod/Graft) + evaluación: el agente no inventa cifras, o se detiene.</p></div>
-    <div class="cap"><div class="n">6</div><h3>Pitchear un sistema real</h3><p>Demo final estilo executive pitch: venden su agente de auditoría a un «directorio» como si fuera un cliente.</p></div>
+  <div class="band">
+    <div class="cell"><div class="big">0</div><div class="lbl">programación previa requerida</div></div>
+    <div class="cell"><div class="big" style="color:var(--green)">$0</div><div class="lbl">de costo en herramientas</div></div>
+    <div class="cell"><div class="big">5</div><div class="lbl">etapas para construir el agente</div></div>
+    <div class="cell"><div class="big" style="color:var(--amber)">3</div><div class="lbl">hitos entregables (L1·L2·L3)</div></div>
   </div>
-</section>
 
-<section>
-  <div class="sec-tag">Cómo se construye</div>
-  <h2>La progresión: el mismo agente, creciendo en 5 etapas</h2>
-  <div class="etapas">
-    <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>Etapa 1 · Una herramienta</b><p>El agente aprende a contar filas de un CSV. Primera probada del loop.</p></div></div>
-    <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>Etapa 2 · Elige entre varias</b><p>Cuatro herramientas (sumar, buscar mayor, detectar duplicados). La IA decide cuál usar según el objetivo.</p></div></div>
-    <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>Etapa 3 · Loop real</b><p>Repite pensar→actuar→observar con memoria de lo ya hecho, hasta cumplir el objetivo.</p></div></div>
-    <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>Etapa 4 · Responde con fuente</b><p>Lenguaje natural + cifra + fuente citada. Primer paso del cero-alucinación.</p></div></div>
-    <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>Etapa 5 · Conciliación</b><p>Facturas vs pagos: marca lo que no cuadra. El aperitivo del caza-fraudes de la clase 7.</p></div></div>
+  <div class="sec">
+    <span class="tag">La idea en una frase</span>
+    <h2>Un agente no chatea: trabaja en loop</h2>
+    <p class="lede">Toda la asignatura se apoya en un solo ciclo que el alumno escribe con sus manos, no que un framework le esconde.</p>
+    <div class="loop">
+      <div class="n">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M12 3a5 5 0 0 0-5 5v1H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8a2 2 0 0 0-2-2h-1V8a5 5 0 0 0-5-5Z" stroke="#2563eb" stroke-width="1.8"/><circle cx="12" cy="14" r="1.6" fill="#2563eb"/></svg></div>
+        <b>PENSAR</b><span>La IA decide qué herramienta usar</span><span class="arrow">→</span>
+      </div>
+      <div class="n">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><path d="M5 5h11l3 3v11H5z" stroke="#2563eb" stroke-width="1.8"/><path d="M16 5v3h3M8 12h8M8 16h5" stroke="#2563eb" stroke-width="1.8"/></svg></div>
+        <b>ACTUAR</b><span>Ejecuta la herramienta sobre datos reales</span><span class="arrow">→</span>
+      </div>
+      <div class="n">
+        <div class="ico"><svg width="26" height="26" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="8.5" stroke="#2563eb" stroke-width="1.8"/><path d="M12 7.5V12l3 2" stroke="#2563eb" stroke-width="1.8"/></svg></div>
+        <b>OBSERVAR</b><span>Ve el resultado y repite hasta cumplir</span>
+      </div>
+    </div>
   </div>
-</section>
 
-<section>
-  <div class="sec-tag">El recorrido</div>
-  <h2>13 clases, 3 hitos entregables</h2>
-  <div class="tl-box" id="tl"></div>
-</section>
-
-<section>
-  <div class="sec-tag">Stack</div>
-  <h2>Tecnología liviana, gratis y accesible</h2>
-  <div class="stack">
-    <div class="chip">Python puro <small>sin frameworks pesados</small></div>
-    <div class="chip">Google Colab <small>corre en el navegador</small></div>
-    <div class="chip">API de Groq <small>key gratis</small></div>
-    <div class="chip">fastembed + FAISS <small>memoria del agente</small></div>
-    <div class="chip">Zod / Pydantic <small>guardrails</small></div>
-    <div class="chip">spec-kit <small>spec-first</small></div>
+  <div class="sec" style="background:#f8fafc;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <span class="tag">Al terminar</span>
+    <h2>Qué sabrán hacer los alumnos</h2>
+    <p class="lede">No se van con teoría: se van con un sistema funcional que construyeron clase a clase.</p>
+    <div class="caps">
+      <div class="cap"><div class="num">1</div><div><h3>Construir un agente desde cero</h3><p>El loop pensar→actuar→observar en Python puro, sin frameworks pesados.</p></div></div>
+      <div class="cap g"><div class="num">2</div><div><h3>Leer balances y documentos</h3><p>Un agente que extrae cifras de EE.FF. y PDFs, citando la fuente (RAG).</p></div></div>
+      <div class="cap g"><div class="num">3</div><div><h3>Bajar datos del SII automáticamente</h3><p>Ingestor que descarga y normaliza datos tributarios, sin LLM.</p></div></div>
+      <div class="cap"><div class="num">4</div><div><h3>Detectar fraudes SII vs ERP</h3><p>Conciliación de folios y montos, con la Ley 21.595 como marco.</p></div></div>
+      <div class="cap"><div class="num">5</div><div><h3>Blindar la IA contra alucinaciones</h3><p>spec-first + guardrails + evaluación: no inventa cifras, o se detiene.</p></div></div>
+      <div class="cap g"><div class="num">6</div><div><h3>Pitchear un sistema real</h3><p>Demo final estilo executive pitch ante un «directorio».</p></div></div>
+    </div>
   </div>
-  <p class="lead" style="margin-top:18px;">Diseñado para alumnos que <b>nunca programaron</b> y que no necesariamente tienen computador potente ni Mac: todo corre en la capa gratis de Google Colab, desde Windows, Mac o Chromebook.</p>
-</section>
 
-<div class="cta">
-  <div>
+  <div class="sec">
+    <span class="tag">Cómo se construye</span>
+    <h2>El mismo agente, creciendo en 5 etapas</h2>
+    <p class="lede">La primera tarea es un agente de 15 líneas. Cada clase le agrega una pieza.</p>
+    <div class="etapas">
+      <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>1 · Una herramienta</b><p>El agente cuenta filas de un CSV. Primera probada del loop.</p></div></div>
+      <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>2 · Elige entre varias</b><p>Cuatro herramientas (sumar, buscar mayor, detectar duplicados). La IA decide cuál usar.</p></div></div>
+      <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>3 · Loop real</b><p>Repite el ciclo con memoria de lo ya hecho, hasta cumplir el objetivo.</p></div></div>
+      <div class="etapa"><div class="rail"><div class="dot"></div><div class="line"></div></div><div class="body"><b>4 · Responde con fuente</b><p>Lenguaje natural + cifra + fuente citada. Primer paso del cero-alucinación.</p></div></div>
+      <div class="etapa"><div class="rail"><div class="dot"></div></div><div class="body"><b>5 · Conciliación</b><p>Facturas vs pagos: marca lo que no cuadra. Aperitivo del caza-fraudes.</p></div></div>
+    </div>
+  </div>
+
+  <div class="sec" style="background:#f8fafc;border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+    <span class="tag">El recorrido</span>
+    <h2>13 clases · 3 hitos entregables</h2>
+    <div class="tl-box" id="tl"></div>
+  </div>
+
+  <div class="sec">
+    <span class="tag">Stack</span>
+    <h2>Liviano, gratis y en el navegador</h2>
+    <p class="lede">Pensado para quien nunca programó y no tiene computador potente ni Mac.</p>
+    <div class="stack">
+      <div class="chip">Python puro <small>sin frameworks</small></div>
+      <div class="chip g">Google Colab <small>gratis, en el navegador</small></div>
+      <div class="chip g">API de Groq <small>key gratis</small></div>
+      <div class="chip">fastembed + FAISS <small>memoria</small></div>
+      <div class="chip">Zod / Pydantic <small>guardrails</small></div>
+      <div class="chip">spec-kit <small>spec-first</small></div>
+    </div>
+  </div>
+
+  <div class="foot">
     <h3>¿Querés ver el curso completo?</h3>
-    <p>Plan de clases, presentaciones y el código del agente, todo público.</p>
+    <p>Plan de clases, presentaciones y código, todo público.</p>
+    <a class="btn" href="auditoria-ia-agentica.html">Ver plan de clases →</a>
+    <div class="cred">Prof. Victor Vilche · Depto. Contabilidad y Auditoría · FAE · USACH · vvilche.github.io/usach-cursos</div>
   </div>
-  <a class="btn" href="auditoria-ia-agentica.html">Ver plan de clases →</a>
-</div>
-
-<p class="nota">Prof. Victor Vilche · Departamento de Contabilidad y Auditoría · FAE · Universidad de Santiago de Chile · vvilche.github.io/usach-cursos</p>
 
 </div>
 
 <script>
-// Timeline SVG de las 13 clases, generado para que siempre sea fiel al plan
 const clases = [
-  ["1","De ChatGPT al agente autónomo","24 sep"],
-  ["2","Agente lector de documentos","01 oct"],
-  ["3","RAG: la memoria del agente","08 oct"],
-  ["4","HITO L1 — Agente lector de balances","15 oct"],
-  ["5","El problema real: conciliación SII vs ERP","22 oct"],
-  ["6","Bajar datos del SII (ingestor)","29 oct"],
-  ["7","Detección de fraude + Ley 21.595","05 nov"],
-  ["8","HITO L2 — Auditoría a 1.000 transacciones","19 nov"],
-  ["9","Cero alucinación: spec-first","26 nov"],
-  ["10","Guardrails: Zod + Graft","03 dic"],
-  ["11","HITO L3 — Blindaje al centavo","10 dic"],
-  ["12","Hackathon: el Swarm multi-agente","17 dic"],
-  ["13","Demo final / Executive Pitch","07 ene"]
+  ["1","De ChatGPT al agente autónomo","24 sep",0],
+  ["2","Agente lector de documentos","01 oct",0],
+  ["3","RAG: la memoria del agente","08 oct",0],
+  ["4","HITO L1 — Agente lector de balances","15 oct",1],
+  ["5","El problema real: conciliación SII vs ERP","22 oct",0],
+  ["6","Bajar datos del SII (ingestor)","29 oct",0],
+  ["7","Detección de fraude + Ley 21.595","05 nov",0],
+  ["8","HITO L2 — Auditoría a 1.000 transacciones","19 nov",1],
+  ["9","Cero alucinación: spec-first","26 nov",0],
+  ["10","Guardrails: Zod + Graft","03 dic",0],
+  ["11","HITO L3 — Blindaje al centavo","10 dic",1],
+  ["12","Hackathon: el Swarm multi-agente","17 dic",0],
+  ["13","Demo final / Executive Pitch","07 ene",0]
 ];
-const W=940, H=clases.length*46+30, X=96, XT=118;
+const W=760, H=clases.length*44+26, X=84, XT=104;
 let svg='<svg viewBox="0 0 '+W+' '+H+'" width="100%" xmlns="http://www.w3.org/2000/svg">';
-svg+='<line x1="'+X+'" y1="20" x2="'+X+'" y2="'+(H-14)+'" stroke="#e2e8f0" stroke-width="2"/>';
+svg+='<line x1="'+X+'" y1="20" x2="'+X+'" y2="'+(H-12)+'" stroke="#e2e8f0" stroke-width="2"/>';
 clases.forEach((c,i)=>{
-  const y=24+i*46, hito=c[1].startsWith("HITO");
-  const col = hito ? "#d97706" : "#2563eb";
-  svg+='<circle cx="'+X+'" cy="'+y+'" r="'+(hito?8:6)+'" fill="'+col+'" stroke="#fff" stroke-width="2"/>';
-  svg+='<text x="'+(X-16)+'" y="'+(y+4)+'" text-anchor="end" font-size="13" font-weight="700" fill="'+col+'" font-family="-apple-system,Segoe UI,Roboto,Arial">'+c[0]+'</text>';
-  svg+='<text x="'+XT+'" y="'+(y-2)+'" font-size="'+(hito?14.5:13.5)+'" font-weight="'+(hito?800:600)+'" fill="'+(hito?"#0f172a":"#1e293b")+'" font-family="-apple-system,Segoe UI,Roboto,Arial">'+c[1]+'</text>';
-  svg+='<text x="'+XT+'" y="'+(y+16)+'" font-size="11.5" fill="#94a3b8" font-family="-apple-system,Segoe UI,Roboto,Arial">Jue '+c[2]+' 2026</text>';
+  const y=22+i*44, hito=c[3]===1;
+  const col = hito ? "#f59e0b" : "#2563eb";
+  svg+='<circle cx="'+X+'" cy="'+y+'" r="'+(hito?8:5.5)+'" fill="'+col+'" stroke="#fff" stroke-width="2.5"/>';
+  svg+='<text x="'+(X-15)+'" y="'+(y+4)+'" text-anchor="end" font-size="12.5" font-weight="700" fill="'+col+'" font-family="-apple-system,Segoe UI,Roboto,Arial">'+c[0]+'</text>';
+  svg+='<text x="'+XT+'" y="'+(y-1)+'" font-size="'+(hito?14:13)+'" font-weight="'+(hito?800:600)+'" fill="'+(hito?"#0f172a":"#1e293b")+'" font-family="-apple-system,Segoe UI,Roboto,Arial">'+c[1]+'</text>';
+  svg+='<text x="'+XT+'" y="'+(y+16)+'" font-size="11" fill="#94a3b8" font-family="-apple-system,Segoe UI,Roboto,Arial">Jue '+c[2]+' 2026</text>';
 });
 svg+='</svg>';
 document.getElementById('tl').innerHTML=svg;
