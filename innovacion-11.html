@@ -46,9 +46,37 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 .code .k{color:#7dd3fc}
 .code .s{color:#86efac}
 .code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
 </style></head>
 <body><div class="deck">
-<header><span class="curso">Innovación: Ideas Disruptivas para el Éxito</span><span class="counter">Clase 11 · Sáb 19 dic 2026</span></header>
+<header><span class="hdr-left"><a class="volver" href="innovacion-disruptiva.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">Innovación: Ideas Disruptivas para el Éxito</span></span><span class="hdr-right"><span class="counter">Clase 11 · Sáb 19 dic 2026</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
 <main><section class="slide active"><div class="kicker">Electivo VI · Innovación Disruptiva</div><h1>NABC pitch: vender la idea disruptiva</h1><p class="lead">Estructurar la idea en un pitch de 3 minutos que responda Need, Approach, Benefit, Competition.</p></section><section class="slide"><div class="kicker">La pregunta</div><h2>¿Podés vender tu idea en 3 minutos?</h2><p class="big">Un directorio no te da media hora. Si no puedes explicar el valor en 3 minutos, no tienes clara la idea.</p></section><section class="slide"><div class="kicker">El método</div><h2>NABC (SRI International)</h2><p class="def">Un pitch estructurado en 4 partes que obliga a ir al grano.</p><p class="meta">Usado para evaluar ideas de inversión en SRI International, Stanford y Silicon Valley.</p></section><section class="slide"><div class="kicker">Las 4 letras</div><h2>NABC</h2><ul class="plain"><li><b>N</b>eed — la necesidad (el job no resuelto).</li><li><b>A</b>pproach — tu abordaje distinto.</li><li><b>B</b>enefit — el beneficio <b>cuantificable</b>.</li><li><b>C</b>ompetition — por qué les ganas.</li></ul></section><section class="slide"><div class="kicker">Profundizar</div><h2>Cada letra bien hecha</h2><ul class="plain"><li><b>Need:</b> un dolor concreto, no «mejorar la eficiencia».</li><li><b>Approach:</b> en qué SOS distinto, no en qué sos bueno.</li><li><b>Benefit:</b> números (tiempo, plata, cobertura).</li><li><b>Competition:</b> qué hará el otro y por qué no le alcanza.</li></ul></section><section class="slide"><div class="kicker">Error típico</div><h2>Beneficio sin números</h2><div class="warn">«Mejora la eficiencia» no vende nada. «Reduce 8 horas a 3 segundos y audita el 100%» sí. <b>El beneficio va en números.</b></div></section><section class="slide"><div class="kicker">Estructura</div><h2>El pitch de 3 min</h2><ul class="plain"><li><b>0:00 Hook</b> — una frase que engancha.</li><li><b>0:30 Need</b> — el dolor.</li><li><b>1:00 Approach</b> — tu solución distinta.</li><li><b>2:00 Benefit</b> — los números.</li><li><b>2:30 Competition</b> — por qué ganas.</li><li><b>3:00 Cierre</b> — qué pedís.</li></ul></section><section class="slide"><div class="kicker">La tarea</div><h2>Armá tu pitch</h2><div class="steps"><div class="step"><p><b>Escribí las 4 letras</b> en una frase cada una.</p></div><div class="step"><p><b>Ensaya el pitch de 3 min.</b> </p></div><div class="step"><p><b>Que el beneficio</b> tenga números.</p></div></div></section><section class="slide"><div class="kicker">El testeo</div><h2>Pitch de 3 min</h2><p class="big">Pitch que responde las 4 letras sin muletillas y con el beneficio en números.</p><p class="meta"></p></section><section class="slide"><div class="kicker">Para aprender</div><h2>Links</h2><ul class="links"><li><a href="https://www.sri.com" target="_blank">Método NABC (SRI International)</a></li></ul></section></main>
 <footer><button id="prev">←</button><span class="counter" id="cnt">1 / 10</span><button id="next">→</button></footer>
 </div>
@@ -56,5 +84,11 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
 document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
-document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}});
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
 </script></body></html>

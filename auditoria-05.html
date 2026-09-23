@@ -46,9 +46,37 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 .code .k{color:#7dd3fc}
 .code .s{color:#86efac}
 .code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
 </style></head>
 <body><div class="deck">
-<header><span class="curso">Hackeando la Auditoría con IA Agéntica</span><span class="counter">Clase 5 · Jue 22 oct 2026</span></header>
+<header><span class="hdr-left"><a class="volver" href="auditoria-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">Hackeando la Auditoría con IA Agéntica</span></span><span class="hdr-right"><span class="counter">Clase 5 · Jue 22 oct 2026</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
 <main><section class="slide active"><div class="kicker">Electivo IV · Auditoría IA Agéntica</div><h1>El problema real: conciliación SII vs ERP</h1><p class="lead">El dolor de verdad del auditor: cruzar lo facturado con lo registrado, y por qué la Ley 21.595 lo vuelve urgente.</p></section><section class="slide"><div class="kicker">La pregunta</div><h2>¿Cuántas facturas revisa un auditor al año… y a mano?</h2><p class="big">Miles, y casi todas a mano o por muestreo. La conciliación (facturas del SII vs. lo que registró el ERP) es donde se esconden los fraudes — y donde se pierden las horas.</p></section><section class="slide"><div class="kicker">Concepto</div><h2>Factura electrónica (DTE)</h2><p class="def">En Chile toda factura es un <b>Documento Tributario Electrónico</b> que el SII valida y almacena. Hay una <b>fuente oficial</b> de la verdad para cada factura.</p><p class="meta">El auditor no tiene que creerle al cliente: puede cruzar contra el SII.</p></section><section class="slide"><div class="kicker">El problema</div><h2>Conciliación = cruzar</h2><ul class="plain"><li><b>Registro de compras/ventas</b> (lo que dice la empresa).</li><li><b>DTE del SII</b> (lo que realmente se facturó).</li><li><b>Discrepancia</b> = factura sin respaldo, monto distinto, folio duplicado.</li></ul></section><section class="slide"><div class="kicker">El contexto legal</div><h2>Ley 21.595 — Delitos Económicos</h2><p class="big">Desde 2024, la empresa responde penalmente por delitos económicos (entre ellos, facturas falsas y fraude tributario). El auditor ya no revisa «por orden»: revisa porque hay <b>riesgo penal</b>.</p><p class="meta">Un agente que detecta facturas truchas no es un lujo, es control de riesgo.</p></section><section class="slide"><div class="kicker">La tarea</div><h2>Prepará el terreno</h2><div class="steps"><div class="step"><p><b>Explora el mapa de fuentes</b> contables de Chile (SII, CMF, LeyChile).</p></div><div class="step"><p><b>Arma un dataset</b> de facturas de ejemplo (RUT, monto, fecha, folio).</p></div><div class="step"><p><b>Deja el dataset listo</b> para conciliar la próxima clase.</p></div></div></section><section class="slide"><div class="kicker">El testeo</div><h2>Explicá el dolor</h2><p class="big">Decí dónde vive cada dato del SII y por qué conciliar 1.000 facturas a mano es trabajo de 8 horas que un agente hace en segundos.</p><p class="meta"></p></section><section class="slide"><div class="kicker">Para aprender</div><h2>Links</h2><ul class="links"><li><a href="https://www.sii.cl" target="_blank">SII (factura electrónica)</a></li><li><a href="https://www.bcn.cl/leychile/navegar?idNorma=1195119" target="_blank">Ley 21.595 — Delitos Económicos</a></li><li><a href="https://www.cmfchile.cl" target="_blank">CMF</a></li><li><a href="mapa-fuentes-contables.html" target="_blank">Mapa de fuentes contables</a></li></ul></section></main>
 <footer><button id="prev">←</button><span class="counter" id="cnt">1 / 8</span><button id="next">→</button></footer>
 </div>
@@ -56,5 +84,11 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
 document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
-document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}});
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
 </script></body></html>

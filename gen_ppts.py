@@ -50,6 +50,34 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 .code .k{color:#7dd3fc}
 .code .s{color:#86efac}
 .code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
 """
 
 def esc(s): return html.escape(s, quote=False)
@@ -115,7 +143,7 @@ def deck(curso, cu, n, fecha, titulo, lead, slides):
 <html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Clase {n} · {esc(titulo)}</title><style>{css}</style></head>
 <body><div class="deck">
-<header><span class="curso">{esc(cu['nombre'])}</span><span class="counter">Clase {n} · {fecha}</span></header>
+<header><span class="hdr-left"><a class="volver" href="{cu['plan']}" title="Volver al plan de clases">← Plan de clases</a><span class="curso">{esc(cu['nombre'])}</span></span><span class="hdr-right"><span class="counter">Clase {n} · {fecha}</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
 <main>{portada}{cuerpo}</main>
 <footer><button id="prev">←</button><span class="counter" id="cnt">1 / {total}</span><button id="next">→</button></footer>
 </div>
@@ -123,14 +151,22 @@ def deck(curso, cu, n, fecha, titulo, lead, slides):
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){{s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}}
 document.getElementById('prev').onclick=function(){{go(i-1)}};document.getElementById('next').onclick=function(){{go(i+1)}};
-document.addEventListener('keydown',function(e){{if(e.key==='ArrowRight'||e.key===' '){{e.preventDefault();go(i+1)}}else if(e.key==='ArrowLeft'){{go(i-1)}}}});
+var fsBtn=document.getElementById('fs');
+function toggleFs(){{var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){{if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}}else{{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){{document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){{if(e.key==='ArrowRight'||e.key===' '){{e.preventDefault();go(i+1)}}else if(e.key==='ArrowLeft'){{go(i-1)}}else if(e.key==='f'||e.key==='F'){{toggleFs()}}}});
 </script></body></html>"""
 
 # ══════════════════════════════ CONTENIDO ══════════════════════════════
 AU = {"nombre": "Hackeando la Auditoría con IA Agéntica", "short": "Auditoría IA Agéntica",
-      "color": "#0a7a3d", "soft": "#eefaf1", "level": "Electivo IV"}
+      "color": "#0a7a3d", "soft": "#eefaf1", "level": "Electivo IV",
+      "plan": "auditoria-ia-agentica.html"}
 IN = {"nombre": "Innovación: Ideas Disruptivas para el Éxito", "short": "Innovación Disruptiva",
-      "color": "#2456a5", "soft": "#eef4fc", "level": "Electivo VI"}
+      "color": "#2456a5", "soft": "#eef4fc", "level": "Electivo VI",
+      "plan": "innovacion-disruptiva.html"}
 
 CLASES = []
 # ── AUDITORÍA ──

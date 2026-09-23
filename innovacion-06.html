@@ -46,9 +46,37 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 .code .k{color:#7dd3fc}
 .code .s{color:#86efac}
 .code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
 </style></head>
 <body><div class="deck">
-<header><span class="curso">Innovación: Ideas Disruptivas para el Éxito</span><span class="counter">Clase 6 · Sáb 07 nov 2026</span></header>
+<header><span class="hdr-left"><a class="volver" href="innovacion-disruptiva.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">Innovación: Ideas Disruptivas para el Éxito</span></span><span class="hdr-right"><span class="counter">Clase 6 · Sáb 07 nov 2026</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
 <main><section class="slide active"><div class="kicker">Electivo VI · Innovación Disruptiva</div><h1>Lean Startup + MVP</h1><p class="lead">Aprender rápido con el mínimo producto, antes de gastar un año construyendo.</p></section><section class="slide"><div class="kicker">La pregunta</div><h2>¿Cómo sabes si tu idea sirve antes de gastar un año?</h2><p class="big">No lo sabes, por eso no construís el producto completo: construís el <b>mínimo para aprender</b> y mides.</p></section><section class="slide"><div class="kicker">Concepto</div><h2>Build-Measure-Learn</h2><p class="def">Ciclo lean: <b>construí</b> lo mínimo, <b>medí</b> cómo responde el mercado, <b>aprendé</b> y decide (pivotar o perseverar).</p><p class="meta">La velocidad de aprendizaje, no la de construcción, es la ventaja.</p></section><section class="slide"><div class="kicker">Concepto</div><h2>MVP</h2><p class="def">La <b>versión mínima</b> que te permite testear tu hipótesis más riesgosa con el menor esfuerzo.</p><p class="meta">No es un producto «malo»: es un experimento con la forma de un producto.</p></section><section class="slide"><div class="kicker">Tipos de MVP</div><h2>No hace falta código</h2><ul class="plain"><li><b>Landing page:</b> mides interés antes de construir.</li><li><b>Video:</b> muestras cómo funcionaría (Dropbox).</li><li><b>Concierge:</b> hacés el trabajo a mano (Zappos).</li><li><b>Wizard of Oz:</b> el «software» es una persona detrás.</li><li><b>Prototipo:</b> maqueta para testear usabilidad.</li></ul></section><section class="slide"><div class="kicker">Ejemplo clásico</div><h2>Dropbox (video)</h2><div class="cajon"><div class="q">Antes de escribir una línea de producto:</div><ol><li>Hicieron un video de 3 min mostrando cómo funcionaría.</li><li>El video generó lista de espera de 75.000 personas.</li><li>Eso validó la demanda antes de construir.</li></ol></div><p class="meta">Un video fue el MVP. No hace falta código para validar interés.</p></section><section class="slide"><div class="kicker">Ejemplo clásico</div><h2>Zappos (concierge)</h2><div class="cajon"><div class="q">Antes de montar el e-commerce de zapatos:</div><ol><li>El fundador fue a tiendas, sacó fotos y las subió a un sitio.</li><li>Cuando alguien compraba, él compraba el zapato y lo enviaba.</li><li>Eso validó que la gente compraría zapatos online.</li></ol></div><p class="meta">Cero inventario, cero sistema: solo validar la demanda.</p></section><section class="slide"><div class="kicker">Error típico</div><h2>Métricas de vanidad vs. accionables</h2><div class="warn">«10.000 visitas» no te dice nada si nadie compra. Medí lo que <b>cambia tu decisión</b>: % de conversión, retención, N de pedidos. Una métrica es útil solo si te hace decidir.</div></section><section class="slide"><div class="kicker">La decisión</div><h2>Pivotar o perseverar</h2><ul class="plain"><li><b>Perseverar:</b> la hipótesis se validó, sigue optimizando.</li><li><b>Pivotar:</b> cambia un componente (segmento, canal, pricing) y re-testea.</li><li>Pivotar NO es fracasar: es aprender con datos.</li></ul></section><section class="slide"><div class="kicker">La tarea</div><h2>Diseñá tu experimento</h2><div class="steps"><div class="step"><p><b>Definí la hipótesis más riesgosa.</b> </p></div><div class="step"><p><b>Diseñá el MVP mínimo</b> para testearla.</p></div><div class="step"><p><b>Definí la métrica</b> y el umbral de éxito/fracaso.</p></div></div></section><section class="slide"><div class="kicker">El testeo</div><h2>Que sea refutable</h2><p class="big">Explicá qué métrica validaría o refutaría la hipótesis. Si nada puede refutarla, el experimento está mal diseñado.</p><p class="meta"></p></section><section class="slide"><div class="kicker">Para aprender</div><h2>Links</h2><ul class="links"><li><a href="http://theleanstartup.com" target="_blank">The Lean Startup (Ries)</a></li><li><a href="https://leanstack.com" target="_blank">Running Lean (Maurya)</a></li></ul></section></main>
 <footer><button id="prev">←</button><span class="counter" id="cnt">1 / 12</span><button id="next">→</button></footer>
 </div>
@@ -56,5 +84,11 @@ footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:
 var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
 function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
 document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
-document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}});
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
 </script></body></html>
