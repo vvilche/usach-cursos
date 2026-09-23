@@ -1,7 +1,7 @@
 # ═══════════════════════════════════════════════════════════════════
 #  AGENTE PROGRESIVO — cómo se construye un agente de auditoría
 #  Etapa por etapa. Cada etapa agrega UNA pieza sobre la anterior.
-#  Corré todo de arriba a abajo en Google Colab (una celda = todo).
+#  Corre todo de arriba a abajo en Google Colab (una celda = todo).
 #
 #  Antes de empezar, en OTRA celda:
 #     !pip install openai
