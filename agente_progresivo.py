@@ -17,18 +17,23 @@ cliente = OpenAI(
 
 import pandas as pd
 
-# Datos de ejemplo: facturas (lo que se facturó) y pagos (lo que entró)
-pd.DataFrame({
-    "folio":  ["F-001", "F-002", "F-003", "F-004"],
-    "monto":  [120000,  85000,   240000,  50000],
-}).to_csv("facturas.csv", index=False)
+# Datos de ejemplo: facturas (lo que se facturó) y pagos (lo que entró).
+# Van en una función para poder llamarla de nuevo antes de la Etapa 5:
+# así cada etapa funciona sola, aunque corras solo una parte del script.
+def crear_datos_ejemplo():
+    pd.DataFrame({
+        "folio":  ["F-001", "F-002", "F-003", "F-004"],
+        "monto":  [120000,  85000,   240000,  50000],
+    }).to_csv("facturas.csv", index=False)
 
-pd.DataFrame({
-    "folio":  ["F-001", "F-002", "F-003", "F-005"],   # ojo: F-004 no aparece, F-005 no existe en facturas
-    "monto":  [120000,  85000,   240000,  99999],
-}).to_csv("pagos.csv", index=False)
+    pd.DataFrame({
+        "folio":  ["F-001", "F-002", "F-003", "F-005"],   # ojo: F-004 no aparece, F-005 no existe en facturas
+        "monto":  [120000,  85000,   240000,  99999],
+    }).to_csv("pagos.csv", index=False)
 
-print("Archivos de ejemplo creados: facturas.csv y pagos.csv\n")
+    print("Archivos de ejemplo listos: facturas.csv y pagos.csv\n")
+
+crear_datos_ejemplo()
 
 
 # ═══════════════════════════════════════════════════════════════════
@@ -192,6 +197,8 @@ print()
 #  Esto es el aperitivo del caza-fraudes (clase 7).
 # ═══════════════════════════════════════════════════════════════════
 print("════ ETAPA 5 · Conciliación facturas vs pagos ════")
+
+crear_datos_ejemplo()   # por si corrés solo la Etapa 5: asegura que los CSV existan
 
 facturas = pd.read_csv("facturas.csv")
 pagos = pd.read_csv("pagos.csv")
