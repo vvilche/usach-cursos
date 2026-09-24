@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 0 · El estado del arte: la revolución de las Big 4</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#0a7a3d;--acc2:#2563eb;--warn:#b45309;--soft:#eefaf1;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="auditoria-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">Hackeando la Auditoría con IA Agéntica</span></span><span class="hdr-right"><span class="counter">Clase 0 · Estado del arte · Deep dive</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Electivo IV · Auditoría IA Agéntica</div><h1>El estado del arte: la revolución de las Big 4</h1><p class="lead">PwC, Deloitte, EY y KPMG redefinieron la auditoría con IA agéntica, process mining y ESG. Este es el mapa de lo que vas a construir este semestre.</p></section><section class="slide"><div class="kicker">La tesis</div><h2>¿Por qué las Big 4 invirtieron +US$10.000M en IA?</h2><p class="big">Porque el paradigma de la auditoría murió: revisar una muestra de 25 facturas ya no es auditar. Hoy se audita el <b>100% de las transacciones</b> con agentes de IA.</p></section><section class="slide"><div class="kicker">El cambio de paradigma</div><h2>El fin del muestreo selectivo (NIA 530)</h2><p class="def">Durante un siglo, auditar fue <b>muestrear</b>: revisar 25 a 50 transacciones por cuenta y suponer que el resto estaba bien. Con millones de asientos, el <b>99,99% quedaba a ciegas</b>.</p><p class="meta">Enron, Wirecard y Parmalat explotaron exactamente ese punto ciego.</p></section><section class="slide"><div class="kicker">Dos mundos</div><h2>Auditoría tradicional vs. Big 4 de frontera</h2><div class="grid2"><div class="col bad"><div class="t">Tradicional (siglo XX)</div><ul><li>Post-mortem: revisión 3 meses después del cierre</li><li>Muestra de 25-60 facturas (5% de los datos)</li><li>Junior dedica 70% del tiempo a «ticking &amp; tying»</li><li>Solo cifras contables históricas</li></ul></div><div class="col good"><div class="t">Big 4 (2025-2030)</div><ul><li>Auditoría continua, 100% del General Ledger en tiempo real</li><li>Agentes de IA cotejan contratos (IFRS 15/16) y bancos</li><li>Process Mining reconstruye el 100% de P2P y O2C</li><li>Triple aseguramiento: financiero + IA + ESG</li></ul></div></div></section><section class="slide"><div class="kicker">Las 4 plataformas</div><h2>El mapa tecnológico de las Big 4</h2><div class="piezas"><div class="pieza"><div class="t">PwC · Aura NextGen</div><p>Harvey AI + GL.ai. US$1.000M con OpenAI/Microsoft. 120.000 auditores.</p></div><div class="pieza"><div class="t">Deloitte · Omnia</div><p>Connected Agentic Intelligence. US$1.400M+ con NVIDIA/AWS/GCP.</p></div><div class="pieza"><div class="t">EY · Canvas</div><p>EY.ai + Canvas Analyzer. US$1.400M sobre Azure. 150 países.</p></div><div class="pieza"><div class="t">KPMG · Clara</div><p>Financial Report Analyzer + Substantive Agents. US$2.000M con Microsoft.</p></div></div></section><section class="slide"><div class="kicker">El detalle</div><h2>Qué hace cada plataforma</h2><ul class="plain"><li><b>PwC:</b> Harvey lee miles de contratos (IFRS 16/15) y GL.ai detecta anomalías en miles de millones de asientos.</li><li><b>Deloitte:</b> redes de agentes autónomos: conciliación bancaria, revisión documental y revelaciones (DART + GenAI).</li><li><b>EY:</b> Canvas Analyzer visualiza el riesgo por división/país; Virtual Analytics vigila pagos, nómina y fraude.</li><li><b>KPMG:</b> FRA compara estados financieros contra taxonomías IFRS al instante; dashboards Power BI todo el año.</li></ul></section><section class="slide"><div class="kicker">El corazón</div><h2>Las 6 innovaciones disruptivas</h2><ul class="plain"><li><b>1. Full-population testing:</b> auditar el 100% del ledger, no una muestra.</li><li><b>2. Agentes sustantivos:</b> three-way matching autónomo + extracción de contratos.</li><li><b>3. Process mining:</b> reconstruir el 100% de los flujos P2P/O2C (SOX 404).</li><li><b>4. ESG:</b> aseguramiento CSRD/ISSB y NCG 461/519.</li><li><b>5. Forense con grafos:</b> partes relacionadas ocultas y deepfakes.</li><li><b>6. Auditar la IA:</b> gobernanza de algoritmos (EU AI Act / NIST RMF).</li></ul></section><section class="slide"><div class="kicker">Innovación 1</div><h2>Full-population testing</h2><p class="def">Se extrae el <b>100% de los asientos</b> del ERP (SAP, Oracle, Dynamics). Cada asiento recibe un <b>Anomaly Score</b>: hora rara (3 AM), usuario inusual (el CFO contabilizando directo), pagos justo bajo el umbral (smurfing) o contrapartidas cruzadas.</p><p class="meta">El auditor ya no muestrea: filtra el 0,1% más anómalo y lo investiga a fondo.</p></section><section class="slide"><div class="kicker">Innovación 2</div><h2>El agente sustantivo (three-way matching)</h2><p class="lead" style="margin-bottom:20px">Lo que hacía un junior en horas, un agente lo hace en segundos:</p><div class="loop"><div class="node"><div class="n">📄 Extraer</div><div class="d">factura + OC + recepción + cartola</div></div><span class="arrow">→</span><div class="node"><div class="n">⚖️ Validar</div><div class="d">cantidad, precio, impuestos al 100%</div></div><span class="arrow">→</span><div class="node"><div class="n">🚨 Escalar</div><div class="d">98% conforme · 2% al senior</div></div><span class="arrow">→</span><div class="node"><div class="n">🧾 Registrar</div><div class="d">papel de trabajo con evidencia</div></div></div><p class="meta">98% de transacciones conformes se archivan solas; el 2% sube con hallazgo detallado.</p></section><section class="slide"><div class="kicker">Innovación 3</div><h2>Process mining (SOX 404)</h2><div class="cajon"><div class="q">En vez de entrevistar al contador y probar 2 transacciones:</div><ol><li><b>Reconstruye</b> el 100% de P2P y O2C desde los event logs del ERP.</li><li><b>Revela</b> +300 variaciones reales del proceso (no las 5 del manual).</li><li><b>Detecta</b> segregación de funciones violada y maverick buying.</li><li><b>Alerta</b> cambio de cuenta bancaria de proveedor + pago millonario en 48h.</li></ol></div><p class="meta"></p></section><section class="slide"><div class="kicker">Innovación 4</div><h2>ESG: auditar carbono, agua y derechos</h2><p class="big">La auditoría ya no es solo dinero. Con <b>NCG 519</b>, desde el <b>ejercicio 2026</b> los emisores chilenos reportan IFRS S1/S2 (emisiones, clima) — y eso se audita.</p><p class="meta">Doble materialidad: impacto del clima en la empresa Y de la empresa en el ambiente.</p></section><section class="slide"><div class="kicker">Innovación 5</div><h2>Forense: grafos y deepfakes</h2><ul class="plain"><li><b>Grafos:</b> cruzan direcciones, teléfonos, correos y cuentas para destapar empresas fantasma y conflictos de interés.</li><li><b>Deepfake del CEO:</b> clonan voz y video del gerente para ordenar transferencias millonarias.</li><li><b>Control:</b> verificación criptográfica fuera de banda para pagos extraordinarios.</li></ul></section><section class="slide"><div class="kicker">Innovación 6</div><h2>Auditar la IA (AI Governance)</h2><ul class="plain"><li><b>Bias:</b> ¿el scoring de crédito discrimina por género o código postal?</li><li><b>Explicabilidad:</b> ¿puedes explicar por qué el algoritmo rechazó un crédito?</li><li><b>Alucinación:</b> guardrails para que la IA no invente cifras en reportes.</li><li><b>Prompt injection:</b> ¿el sistema puede ser engañado para liberar pagos?</li><li><b>Privacidad:</b> ¿el modelo filtra datos personales?</li></ul></section><section class="slide"><div class="kicker">En Chile</div><h2>El calendario que te toca a ti</h2><p class="big"><b>NCG 461</b> (memorias integradas) ya rige. <b>NCG 519</b> obliga a converger con ISSB (IFRS S1/S2) desde el <b>ejercicio 2026</b>, reportes en 2027.</p><p class="meta">Las empresas IPSA ya contratan aseguramiento ESG voluntario para inversionistas como BlackRock.</p></section><section class="slide"><div class="kicker">El negocio</div><h2>ROI: de 2.380 a 1.020 horas (-57%)</h2><ul class="plain"><li><b>Planificación y mapeo:</b> 250 → 90 HH (-64%)</li><li><b>Pruebas de control:</b> 400 → 120 HH (-70%)</li><li><b>Vouching mecánico:</b> 900 → 150 HH (-83%)</li><li><b>Confirmaciones:</b> 180 → 30 HH (-83%)</li><li><b>Contratos IFRS 15/16:</b> 350 → 80 HH (-77%)</li><li><b>Juicio profesional:</b> 300 → 550 HH (+83%: más valor, menos mecánica)</li></ul></section><section class="slide"><div class="kicker">El retorno</div><h2>Los 4 ROI para la empresa auditada</h2><ul class="plain"><li><b>Menos «audit fatigue»:</b> -75% de interrupción al equipo contable.</li><li><b>Fugas y fraude:</b> el 100% del ledger detecta lo que la muestra de 25 no veía.</li><li><b>Menos restatements:</b> -80% de probabilidad de corregir balances públicos.</li><li><b>Comité de auditoría:</b> dashboards de calor, no PDF de 80 páginas.</li></ul></section><section class="slide"><div class="kicker">La gobernanza</div><h2>Tres líneas de defensa (IIA)</h2><div class="steps"><div class="step"><p><b>1ª línea — Gerencia:</b> responsable de la calidad del data lake y del monitoreo continuo.</p></div><div class="step"><p><b>2ª línea — Riesgo/Cumplimiento:</b> aprueba y supervisa controles y reportabilidad ESG.</p></div><div class="step"><p><b>3ª línea — Auditoría Interna:</b> aseguramiento de algoritmos e IA del negocio.</p></div><div class="step"><p><b>Big 4 — Asegurador externo:</b> full-population testing y opinión de auditoría.</p></div></div></section><section class="slide"><div class="kicker">La conclusión</div><h2>Qué significa para ti</h2><p class="big">El auditor deja de ser <b>operador</b> (pegar datos, muestrear) y pasa a ser <b>supervisor de sistemas agénticos</b>: define qué controlar, revisa lo que el agente marcó y aporta juicio donde importa.</p><p class="meta">Eso es exactamente lo que vas a construir en las próximas clases.</p></section><section class="slide"><div class="kicker">El testeo</div><h2>Demuestra que entendiste el cambio</h2><p class="big">Explica en 60 segundos: por qué el muestreo murió, qué hace un agente sustantivo y qué cambia con la NCG 519 en Chile.</p><p class="meta">Si puedes explicarlo sin leer, entendiste el mapa de la auditoría que viene.</p></section><section class="slide"><div class="kicker">Para profundizar</div><h2>Links</h2><ul class="links"><li><a href="https://vvilche.github.io/auditoria-big4-innovacion/" target="_blank">Dashboard interactivo Big 4 (simulador ROI)</a></li><li><a href="https://github.com/vvilche/auditoria-big4-innovacion" target="_blank">Informe completo (Estado del Arte)</a></li><li><a href="auditoria-ia-agentica.html" target="_blank">Plan de clases del curso</a></li><li><a href="https://www.bcn.cl/leychile/navegar?idNorma=1195119" target="_blank">Ley 21.595 — Delitos Económicos</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 20</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+</script></body></html>
