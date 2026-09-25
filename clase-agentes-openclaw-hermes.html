@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Clase · La guerra de los agentes de IA — Resumen, Tarea y Comparativo de Modelos</title>
+<style>
+  :root{--bg:#f8fafc;--card:#fff;--line:#e2e8f0;--ink:#0f172a;--mut:#475569;--acc:#0a7a3d;--acc2:#2563eb;--warn:#b45309;--soft:#eefaf1;}
+  *{box-sizing:border-box}
+  body{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:28px 20px 70px}
+  .wrap{max-width:880px;margin:0 auto}
+  h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
+  .sub{color:var(--mut);font-size:14px;margin-bottom:26px}
+  h2{font-size:20px;margin:38px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
+  h3{font-size:16px;margin:22px 0 6px;color:var(--acc)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:16px 20px;margin:12px 0}
+  .card p{margin:8px 0}
+  .kicker{color:var(--acc);font-weight:700;font-size:12px;text-transform:uppercase;letter-spacing:.08em}
+  .idea{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:10px;padding:14px 18px;margin:10px 0;font-size:15px}
+  .idea b{color:var(--acc)}
+  .warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:10px;padding:14px 18px;margin:12px 0;font-size:15px}
+  ol.steps{padding-left:22px;margin:10px 0}
+  ol.steps li{margin:10px 0}
+  .testeo{background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:14px 18px;margin:14px 0}
+  .testeo h4{margin:0 0 6px;color:var(--acc);font-size:15px}
+  ul.links{list-style:none;padding:0;margin:12px 0 0}
+  ul.links li{padding:4px 0;font-size:15px}
+  a{color:var(--acc2);text-decoration:none}
+  a:hover{text-decoration:underline}
+  code{background:#eef2f7;border-radius:5px;padding:1px 6px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:13.5px}
+  pre{background:#0f172a;color:#e2e8f0;border-radius:10px;padding:14px 16px;overflow-x:auto;font:13px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;margin:10px 0}
+  pre .c{color:#64748b}
+  table{width:100%;border-collapse:collapse;font-size:13.5px;margin:12px 0;background:var(--card)}
+  th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
+  th{background:#f1f5f9;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
+  td b{color:var(--ink)}
+  .gratis td:first-child b{color:var(--acc)}
+  .barato td:first-child b{color:#2563eb}
+  .caro td:first-child b{color:var(--warn)}
+  .fila{display:flex;flex-wrap:wrap;gap:6px 26px;font-size:13.5px;color:var(--mut)}
+  .fila b{color:var(--ink)}
+  .nota{font-size:12.5px;color:var(--mut);margin-top:6px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>La guerra de los agentes de IA: OpenClaw y Nous Research</h1>
+<div class="sub">Resumen de clase + Tarea + Comparativo de modelos · Martes 22 sep 2026 · Electivo FAE USACH</div>
+
+<div class="fila">
+  <span><b>Tema:</b> cómo nacieron dos agentes que cambiaron las reglas</span>
+  <span><b>Concepto central:</b> un agente no chatea, ACTÚA — y el que recuerda, gana</span>
+</div>
+
+<h2>Resumen de la clase</h2>
+
+<h3>1 · OpenClaw: el agente que OpenAI no pudo dejar pasar</h3>
+<div class="card">
+  <p><span class="kicker">Qué es</span></p>
+  <p><b>OpenClaw</b> es un agente autónomo de código abierto que corre en tu propia máquina y <b>hace cosas</b> (abre archivos, maneja el navegador, ejecuta comandos), no solo responde texto. Se maneja por WhatsApp, Telegram o Discord, como si le mandaras un mensaje a un amigo.</p>
+  <p>Lo creó <b>Peter Steinberger</b>, un desarrollador austriaco (fundador de PSPDFKit). Lo lanzó en <b>noviembre de 2025</b> como "proyecto de juguete". En ~3 meses se volvió el proyecto de código abierto de <b>mayor crecimiento en la historia de GitHub</b>: más de <b>140.000 estrellas</b>, superando a React y Linux en conteo. Pasó por tres nombres —Clawdbot → Moltbot → OpenClaw— tras una disputa de marca con Anthropic.</p>
+  <p><span class="kicker">El trato con OpenAI</span></p>
+  <p>El <b>14 de febrero de 2026</b>, Sam Altman anunció que Steinberger se unía a <b>OpenAI</b> para liderar la próxima generación de agentes personales. Fue un <b>"acqui-hire"</b> (compra de talento, estimada en ~US$1.800 millones): OpenAI se quedó con el <b>cerebro y la visión</b>, NO con el código. El código siguió siendo MIT y pasó a la <b>OpenClaw Foundation</b> (una fundación sin fines de lucro con OpenAI, NVIDIA, Microsoft y Tencent como socios).</p>
+  <p>Altman lo resumió así: <i>"El futuro será fuertemente multi-agente, y apoyar el open source es parte importante de eso"</i>.</p>
+</div>
+<div class="idea"><b>Lección 1:</b> los agentes son la próxima guerra de plataformas. Un solo desarrollador + una comunidad forzaron una adquisición de la empresa de IA más grande del mundo — y el código quedó abierto para todos.</div>
+
+<h3>2 · Nous Research y Hermes: el agente que crece contigo</h3>
+<div class="card">
+  <p><span class="kicker">Quién lo hace</span></p>
+  <p><b>Nous Research</b> es el laboratorio de investigación detrás de los modelos <b>Hermes</b>, <b>Nomos</b> y <b>Psyche</b>. No es una empresa de herramientas: son <b>entrenadores de modelos</b>, y ese ADN se nota en su agente.</p>
+  <p><span class="kicker">Qué es Hermes Agent</span></p>
+  <p><b>Hermes Agent</b> (lanzado en febrero de 2026, MIT, gratis) es un agente cuyo lema es <b>"el agente que crece contigo"</b>. Su diferencia frente a ChatGPT no es "ser más listo", es tener un <b>bucle de aprendizaje cerrado</b>:</p>
+  <ul>
+    <li><b>Crea habilidades</b> a partir de lo que hace (guarda cómo resolvió algo).</li>
+    <li><b>Las mejora</b> con el uso, en vez de dejarlas fijas.</li>
+    <li><b>Persiste memoria</b> entre sesiones: no arranca de cero cada vez.</li>
+    <li><b>Busca en sus conversaciones pasadas</b> y construye un modelo de quién eres.</li>
+  </ul>
+  <p>Es <b>independiente del modelo</b> (más de 20 proveedores: Ollama local, Groq, OpenRouter, OpenAI… cambias con <code>hermes model</code>). <b>Vive donde tú vives</b> (Telegram, WhatsApp, Discord, Slack, Signal, Email y terminal, una sola memoria). Y <b>corre donde quieras</b>: tu laptop (Hermes Desktop), un VPS de $5 o serverless — local-first, sin telemetría.</p>
+</div>
+<div class="idea"><b>Lección 2:</b> el diferenciador ya no es "saber responder", es <b>recordar y mejorar</b>. El agente que acumula contexto gana; el que empieza de cero cada vez, se queda atrás.</div>
+
+<h3>3 · Qué nos llevamos (3 ideas)</h3>
+<div class="idea"><b>1.</b> Un agente ≠ un chatbot: actúa (herramientas, archivos, navegador), no solo genera texto.</div>
+<div class="idea"><b>2.</b> La carrera es por <b>agentes personales</b> que hacen cosas en el mundo real — OpenAI pagó ~$1.800M por ese talento.</div>
+<div class="idea"><b>3.</b> El nuevo moat es <b>memoria + aprendizaje</b>: Hermes crece contigo, no parte de cero.</div>
+
+<h2>Tarea</h2>
+
+<div class="card">
+  <p><b>Objetivo:</b> instalar Hermes, conectarlo a un modelo gratis y hacer que ejecute <b>una tarea de verdad</b>. Después, demostrar el loop y notar la memoria.</p>
+
+  <p class="kicker" style="margin-top:10px">1 · Instalar Hermes (los comandos)</p>
+  <p>Mac o Linux — abre una <b>terminal</b> y pega:</p>
+  <pre>curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</pre>
+  <p>Windows — abre <b>PowerShell</b> y pega:</p>
+  <pre>iex (irm https://hermes-agent.nousresearch.com/install.ps1)</pre>
+  <p>¿No quieres tocar la terminal? Descarga <b>Hermes Desktop</b> desde <a href="https://hermes-agent.nousresearch.com/">hermes-agent.nousresearch.com</a> (app para macOS o Windows).</p>
+
+  <p class="kicker" style="margin-top:10px">2 · Configurar el modelo (un solo comando)</p>
+  <pre>hermes setup --portal</pre>
+  <p>Esto abre un login de <b>Nous Portal</b> (gratis): un solo inicio de sesión te deja el modelo <b>y</b> las herramientas (búsqueda web, imágenes, voz, navegador) listas. Alternativa sin Portal: sacar una key gratis de <b>Groq</b> en <a href="https://console.groq.com/keys">console.groq.com/keys</a> y conectarla.</p>
+
+  <p class="kicker" style="margin-top:10px">3 · Abrir el agente y usarlo</p>
+  <pre>hermes</pre>
+  <p>Una vez adentro (slash commands):</p>
+  <pre><span class="c"># dentro de Hermes, escribe estos comandos</span>
+/model     <span class="c"># cambiar de modelo (ver comparativo abajo)</span>
+/help      <span class="c"># ver todos los comandos</span></pre>
+</div>
+
+<div class="card">
+  <p class="kicker">La tarea (paso a paso)</p>
+  <ol class="steps">
+    <li><b>Instala</b> Hermes (comandos de arriba o Desktop).</li>
+    <li><b>Configura el modelo</b> con <code>hermes setup --portal</code>.</li>
+    <li><b>Primera conversación:</b> pregúntale algo de tu mundo, por ejemplo: <i>"Explícame qué es la Ley 21.595 de delitos económicos y qué implica para un auditor"</i>.</li>
+    <li><b>Haz que ACTÚE (no solo chatee):</b> dale un archivo (un PDF o un CSV) y pídele que lo lea y resuma. O pídele que busque algo en la web y te arme un documento. La gracia es que <b>ejecute una acción</b>.</li>
+    <li><b>Observa y registra:</b> ¿qué "pensó"? ¿qué herramienta usó? ¿qué hizo? ¿qué resultado devolvió? Ese es el <b>loop</b>: pensar → actuar → observar.</li>
+    <li><b>Prueba la memoria:</b> cierra Hermes, vuelve a abrirlo y pregúntale algo sobre lo que hicieron antes. ¿Lo recuerda? Anota qué recordó y qué no.</li>
+  </ol>
+</div>
+
+<div class="testeo">
+  <h4>TESTEO — Demostrar (no es nota)</h4>
+  <p>Demuestra Hermes ejecutando una tarea en pantalla y explica en 60 segundos: <b>(1)</b> qué le pediste, <b>(2)</b> qué acción ejecutó (no solo texto), <b>(3)</b> qué observaste del loop, y <b>(4)</b> si recordó algo entre sesiones.</p>
+  <p>Se demuestra que <b>entendiste qué es un agente</b> (actúa + recuerda), no que lo dejaste perfecto.</p>
+</div>
+
+<h2>Comparativo de modelos: precio y para qué usar cada uno</h2>
+
+<div class="nota">Precios en <b>USD por 1 millón de tokens</b> (entrada / salida), verificados a septiembre de 2026. Cambian seguido: revisa antes de pagar. 1 millón de tokens ≈ 750.000 palabras ≈ 3 libros completos.</div>
+
+<h3>Tier 1 — Gratis (sin tarjeta, para empezar)</h3>
+<table>
+  <tr><th>Modelo / Proveedor</th><th>Precio</th><th>Para qué usarlo</th></tr>
+  <tr class="gratis"><td><b>Nous Portal</b> (créditos al registrarte)</td><td>$0</td><td>El camino más fácil: <code>hermes setup --portal</code> te deja modelo + herramientas de una.</td></tr>
+  <tr class="gratis"><td><b>Groq</b> (Llama 3.3 70B y más)</td><td>$0 (~1.000 req/día)</td><td>Muy rápido. Probar agentes, demos y prototipos sin gastar.</td></tr>
+  <tr class="gratis"><td><b>Ollama</b> (Llama, Qwen, Mistral locales)</td><td>$0 (tu hardware)</td><td>Privacidad total, sin internet, sin costo. El modelo corre en tu máquina.</td></tr>
+  <tr class="gratis"><td><b>Google AI Studio</b> (Gemini 2.5 Flash/Pro)</td><td>$0 (cuota diaria)</td><td>El único modelo "frontier" gratis. Bueno para documentación y multimodal.</td></tr>
+  <tr class="gratis"><td><b>NVIDIA NIM</b> (DeepSeek-V4, Nemotron 3, GLM)</td><td>$0 (créditos)</td><td>Razonamiento gratis. Útil para tareas secuenciales.</td></tr>
+  <tr class="gratis"><td><b>OpenRouter :free</b> (19 modelos)</td><td>$0 (50 req/día)</td><td>Muchos proveedores con una sola key. Para experimentar.</td></tr>
+  <tr class="gratis"><td><b>Cerebras / Mistral</b></td><td>$0 (~1M tokens/día · ~1B/mes)</td><td>Volumen gratis diario/mensual para procesar muchas cosas.</td></tr>
+</table>
+
+<h3>Tier 2 — Barato (centavos, para el trabajo de todos los días)</h3>
+<table>
+  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th></tr>
+  <tr class="barato"><td><b>DeepSeek v4-flash</b></td><td>$0.14 / $0.28</td><td><b>El caballo de batalla.</b> Trabajo mecánico, subagentes, procesar muchos archivos. 54× más barato que k3.</td></tr>
+  <tr class="barato"><td><b>DeepSeek v4-pro</b></td><td>$0.435 / $0.87</td><td>Orquestador / chat interactivo de calidad, sin pagar de más.</td></tr>
+  <tr class="barato"><td><b>Kimi k2.6</b></td><td>$0.95 / $4.00</td><td>Traducción y reformateo masivo (muchos documentos a la vez).</td></tr>
+  <tr class="barato"><td><b>Kimi k2.7-code</b></td><td>$0.95 / $4.00</td><td>Escribir código.</td></tr>
+  <tr class="barato"><td><b>Kimi k2.7-code-highspeed</b></td><td>$1.90 / $8.00</td><td>Código rápido (no razona, responde directo). Default para bulk y traducción.</td></tr>
+  <tr class="barato"><td><b>Claude Haiku 4.5</b></td><td>$1.00 / $5.00</td><td>El Claude más barato. Clasificar y tareas simples con calidad Anthropic.</td></tr>
+  <tr class="barato"><td><b>GPT-5.6 Luna</b></td><td>$1.00 / $6.00</td><td>El GPT más barato. Tareas simples con la línea OpenAI.</td></tr>
+</table>
+
+<h3>Tier 3 — Caro (frontier, para lo que de verdad importa)</h3>
+<table>
+  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th></tr>
+  <tr class="caro"><td><b>Kimi k3</b></td><td>$3.00 / $15.00</td><td><b>Razonamiento profundo / segunda opinión.</b> Análisis estratégico. Úsalo 1-2 veces al mes, nunca para trabajo masivo (razona ~5 min por pregunta).</td></tr>
+  <tr class="caro"><td><b>Claude Sonnet 5</b></td><td>$3.00 / $15.00</td><td>Balance calidad-precio de Anthropic. Redacción y análisis cuidado.</td></tr>
+  <tr class="caro"><td><b>Claude Opus 5</b></td><td>$5.00 / $25.00</td><td>Lo mejor de Anthropic. Razonamiento complejo y código difícil.</td></tr>
+  <tr class="caro"><td><b>GPT-5.6 Sol</b></td><td>$5.00 / $30.00</td><td>El flagship de OpenAI. Propósito general de máxima calidad.</td></tr>
+  <tr class="caro"><td><b>Gemini 2.5 Pro</b></td><td>~$2.50 / $5.00</td><td>Contexto gigante (2M tokens) y multimodal. Documentos muy largos.</td></tr>
+  <tr class="caro"><td><b>GPT-5.5 Pro</b></td><td>$30.00 / $180.00</td><td>Razonamiento máximo. Solo si de verdad lo necesitas: es carísimo.</td></tr>
+</table>
+
+<div class="idea"><b>Regla de oro (para no quemar plata):</b><br>
+1. <b>Empieza gratis</b>: Groq, Nous Portal u Ollama.<br>
+2. <b>Trabajo mecánico y masivo</b>: DeepSeek v4-flash ($0.14/$0.28).<br>
+3. <b>Código</b>: Kimi k2.7-code-highspeed.<br>
+4. <b>Pensar profundo / revisar una decisión</b>: Kimi k3 — puntual, 1-2 veces al mes.<br>
+5. <b>Frontier</b> (GPT-5.6 Sol, Claude Opus 5, Gemini 2.5 Pro): solo cuando el resultado lo amerite.</div>
+
+<div class="warn"><b>Ojo con la honestidad:</b> si un modelo no puede hacer algo, debe decirlo — igual que nosotros. Un agente que inventa cifras no sirve en auditoría. Si te responde algo que no cuadra, anótalo: es material para la próxima clase (cero alucinación).</div>
+
+<div class="card">
+  <span class="kicker">Para aprender (links verificados a sep 2026)</span>
+  <ul class="links">
+    <li><a href="https://hermes-agent.nousresearch.com/">Hermes Agent — Nous Research (descarga)</a></li>
+    <li><a href="https://hermes-agent.nousresearch.com/docs/">Documentación oficial de Hermes</a></li>
+    <li><a href="https://github.com/NousResearch/hermes-agent">Código fuente (GitHub)</a></li>
+    <li><a href="https://console.groq.com/keys">Groq (key gratis, sin tarjeta)</a></li>
+    <li><a href="https://ollama.com">Ollama (modelo local, sin costo)</a></li>
+  </ul>
+</div>
+
+</div>
+</body>
+</html>
