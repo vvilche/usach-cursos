@@ -8,7 +8,7 @@
   :root{--bg:#f8fafc;--card:#fff;--line:#e2e8f0;--ink:#0f172a;--mut:#475569;--acc:#0a7a3d;--acc2:#2563eb;--warn:#b45309;--soft:#eefaf1;}
   *{box-sizing:border-box}
   body{font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);margin:0;padding:28px 20px 70px}
-  .wrap{max-width:880px;margin:0 auto}
+  .wrap{max-width:960px;margin:0 auto}
   h1{font-size:26px;margin:0 0 6px;letter-spacing:-.01em}
   .sub{color:var(--mut);font-size:14px;margin-bottom:26px}
   h2{font-size:20px;margin:38px 0 10px;padding-bottom:6px;border-bottom:2px solid var(--ink)}
@@ -34,6 +34,7 @@
   th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;vertical-align:top}
   th{background:#f1f5f9;font-size:11.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--mut)}
   td b{color:var(--ink)}
+  .lk{white-space:nowrap;font-size:13px}
   .gratis td:first-child b{color:var(--acc)}
   .barato td:first-child b{color:#2563eb}
   .caro td:first-child b{color:var(--warn)}
@@ -129,43 +130,44 @@
   <p>Se demuestra que <b>entendiste qué es un agente</b> (actúa + recuerda), no que lo dejaste perfecto.</p>
 </div>
 
-<h2>Comparativo de modelos: precio y para qué usar cada uno</h2>
+<h2>Comparativo de modelos: precio, para qué y cómo cargarlo</h2>
 
-<div class="nota">Precios en <b>USD por 1 millón de tokens</b> (entrada / salida), verificados a septiembre de 2026. Cambian seguido: revisa antes de pagar. 1 millón de tokens ≈ 750.000 palabras ≈ 3 libros completos.</div>
+<div class="nota">Precios en <b>USD por 1 millón de tokens</b> (entrada / salida), verificados a septiembre de 2026. Cambian seguido: revisa antes de pagar. 1 millón de tokens ≈ 750.000 palabras ≈ 3 libros completos. Columna <b>Cargarlo / usarlo</b>: el primer link es dónde obtener la key o instalar; el segundo, su documentación. Todos se conectan a Hermes con <code>hermes setup</code> o <code>/model</code>.</div>
 
 <h3>Tier 1 — Gratis (sin tarjeta, para empezar)</h3>
 <table>
-  <tr><th>Modelo / Proveedor</th><th>Precio</th><th>Para qué usarlo</th></tr>
-  <tr class="gratis"><td><b>Nous Portal</b> (créditos al registrarte)</td><td>$0</td><td>El camino más fácil: <code>hermes setup --portal</code> te deja modelo + herramientas de una.</td></tr>
-  <tr class="gratis"><td><b>Groq</b> (Llama 3.3 70B y más)</td><td>$0 (~1.000 req/día)</td><td>Muy rápido. Probar agentes, demos y prototipos sin gastar.</td></tr>
-  <tr class="gratis"><td><b>Ollama</b> (Llama, Qwen, Mistral locales)</td><td>$0 (tu hardware)</td><td>Privacidad total, sin internet, sin costo. El modelo corre en tu máquina.</td></tr>
-  <tr class="gratis"><td><b>Google AI Studio</b> (Gemini 2.5 Flash/Pro)</td><td>$0 (cuota diaria)</td><td>El único modelo "frontier" gratis. Bueno para documentación y multimodal.</td></tr>
-  <tr class="gratis"><td><b>NVIDIA NIM</b> (DeepSeek-V4, Nemotron 3, GLM)</td><td>$0 (créditos)</td><td>Razonamiento gratis. Útil para tareas secuenciales.</td></tr>
-  <tr class="gratis"><td><b>OpenRouter :free</b> (19 modelos)</td><td>$0 (50 req/día)</td><td>Muchos proveedores con una sola key. Para experimentar.</td></tr>
-  <tr class="gratis"><td><b>Cerebras / Mistral</b></td><td>$0 (~1M tokens/día · ~1B/mes)</td><td>Volumen gratis diario/mensual para procesar muchas cosas.</td></tr>
+  <tr><th>Modelo / Proveedor</th><th>Precio</th><th>Para qué usarlo</th><th>Cargarlo / usarlo</th></tr>
+  <tr class="gratis"><td><b>Nous Portal</b> (créditos al registrarte)</td><td>$0</td><td>El camino más fácil: <code>hermes setup --portal</code> te deja modelo + herramientas de una.</td><td class="lk"><a href="https://portal.nousresearch.com">obtener</a> · <a href="https://hermes-agent.nousresearch.com/docs/integrations/nous-portal">docs</a></td></tr>
+  <tr class="gratis"><td><b>Groq</b> (Llama 3.3 70B y más)</td><td>$0 (~1.000 req/día)</td><td>Muy rápido. Probar agentes, demos y prototipos sin gastar.</td><td class="lk"><a href="https://console.groq.com/keys">obtener</a> · <a href="https://console.groq.com/docs">docs</a></td></tr>
+  <tr class="gratis"><td><b>Ollama</b> (Llama, Qwen, Mistral locales)</td><td>$0 (tu hardware)</td><td>Privacidad total, sin internet, sin costo. El modelo corre en tu máquina.</td><td class="lk"><a href="https://ollama.com/download">instalar</a> · <a href="https://github.com/ollama/ollama">docs</a></td></tr>
+  <tr class="gratis"><td><b>Google AI Studio</b> (Gemini 2.5 Flash/Pro)</td><td>$0 (cuota diaria)</td><td>El único modelo "frontier" gratis. Bueno para documentación y multimodal.</td><td class="lk"><a href="https://aistudio.google.com/apikey">obtener</a> · <a href="https://ai.google.dev">docs</a></td></tr>
+  <tr class="gratis"><td><b>NVIDIA NIM</b> (DeepSeek-V4, Nemotron 3, GLM)</td><td>$0 (créditos)</td><td>Razonamiento gratis. Útil para tareas secuenciales.</td><td class="lk"><a href="https://build.nvidia.com">obtener</a> · <a href="https://docs.api.nvidia.com">docs</a></td></tr>
+  <tr class="gratis"><td><b>OpenRouter :free</b> (19 modelos)</td><td>$0 (50 req/día)</td><td>Muchos proveedores con una sola key. Para experimentar.</td><td class="lk"><a href="https://openrouter.ai/settings/keys">obtener</a> · <a href="https://openrouter.ai/docs">docs</a></td></tr>
+  <tr class="gratis"><td><b>Cerebras</b> (Llama/Qwen)</td><td>$0 (~1M tokens/día)</td><td>El más generoso en volumen gratis diario.</td><td class="lk"><a href="https://cloud.cerebras.ai">obtener</a> · <a href="https://inference-docs.cerebras.ai">docs</a></td></tr>
+  <tr class="gratis"><td><b>Mistral</b> (Codestral, Small/Large)</td><td>$0 (~1B tokens/mes)</td><td>Volumen mensual gratis para procesar muchas cosas.</td><td class="lk"><a href="https://console.mistral.ai/api-keys">obtener</a> · <a href="https://docs.mistral.ai">docs</a></td></tr>
 </table>
 
 <h3>Tier 2 — Barato (centavos, para el trabajo de todos los días)</h3>
 <table>
-  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th></tr>
-  <tr class="barato"><td><b>DeepSeek v4-flash</b></td><td>$0.14 / $0.28</td><td><b>El caballo de batalla.</b> Trabajo mecánico, subagentes, procesar muchos archivos. 54× más barato que k3.</td></tr>
-  <tr class="barato"><td><b>DeepSeek v4-pro</b></td><td>$0.435 / $0.87</td><td>Orquestador / chat interactivo de calidad, sin pagar de más.</td></tr>
-  <tr class="barato"><td><b>Kimi k2.6</b></td><td>$0.95 / $4.00</td><td>Traducción y reformateo masivo (muchos documentos a la vez).</td></tr>
-  <tr class="barato"><td><b>Kimi k2.7-code</b></td><td>$0.95 / $4.00</td><td>Escribir código.</td></tr>
-  <tr class="barato"><td><b>Kimi k2.7-code-highspeed</b></td><td>$1.90 / $8.00</td><td>Código rápido (no razona, responde directo). Default para bulk y traducción.</td></tr>
-  <tr class="barato"><td><b>Claude Haiku 4.5</b></td><td>$1.00 / $5.00</td><td>El Claude más barato. Clasificar y tareas simples con calidad Anthropic.</td></tr>
-  <tr class="barato"><td><b>GPT-5.6 Luna</b></td><td>$1.00 / $6.00</td><td>El GPT más barato. Tareas simples con la línea OpenAI.</td></tr>
+  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th><th>Cargarlo / usarlo</th></tr>
+  <tr class="barato"><td><b>DeepSeek v4-flash</b></td><td>$0.14 / $0.28</td><td><b>El caballo de batalla.</b> Trabajo mecánico, subagentes, procesar muchos archivos. 54× más barato que k3.</td><td class="lk"><a href="https://platform.deepseek.com/api_keys">obtener</a> · <a href="https://api-docs.deepseek.com">docs</a></td></tr>
+  <tr class="barato"><td><b>DeepSeek v4-pro</b></td><td>$0.435 / $0.87</td><td>Orquestador / chat interactivo de calidad, sin pagar de más.</td><td class="lk"><a href="https://platform.deepseek.com/api_keys">obtener</a> · <a href="https://api-docs.deepseek.com">docs</a></td></tr>
+  <tr class="barato"><td><b>Kimi k2.6</b></td><td>$0.95 / $4.00</td><td>Traducción y reformateo masivo (muchos documentos a la vez).</td><td class="lk"><a href="https://platform.moonshot.ai">obtener</a> · <a href="https://platform.moonshot.ai/docs">docs</a></td></tr>
+  <tr class="barato"><td><b>Kimi k2.7-code</b></td><td>$0.95 / $4.00</td><td>Escribir código.</td><td class="lk"><a href="https://platform.moonshot.ai">obtener</a> · <a href="https://platform.moonshot.ai/docs">docs</a></td></tr>
+  <tr class="barato"><td><b>Kimi k2.7-code-highspeed</b></td><td>$1.90 / $8.00</td><td>Código rápido (no razona, responde directo). Default para bulk y traducción.</td><td class="lk"><a href="https://platform.moonshot.ai">obtener</a> · <a href="https://platform.moonshot.ai/docs">docs</a></td></tr>
+  <tr class="barato"><td><b>Claude Haiku 4.5</b></td><td>$1.00 / $5.00</td><td>El Claude más barato. Clasificar y tareas simples con calidad Anthropic.</td><td class="lk"><a href="https://console.anthropic.com/settings/keys">obtener</a> · <a href="https://docs.claude.com">docs</a></td></tr>
+  <tr class="barato"><td><b>GPT-5.6 Luna</b></td><td>$1.00 / $6.00</td><td>El GPT más barato. Tareas simples con la línea OpenAI.</td><td class="lk"><a href="https://platform.openai.com/api-keys">obtener</a> · <a href="https://platform.openai.com/docs">docs</a></td></tr>
 </table>
 
 <h3>Tier 3 — Caro (frontier, para lo que de verdad importa)</h3>
 <table>
-  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th></tr>
-  <tr class="caro"><td><b>Kimi k3</b></td><td>$3.00 / $15.00</td><td><b>Razonamiento profundo / segunda opinión.</b> Análisis estratégico. Úsalo 1-2 veces al mes, nunca para trabajo masivo (razona ~5 min por pregunta).</td></tr>
-  <tr class="caro"><td><b>Claude Sonnet 5</b></td><td>$3.00 / $15.00</td><td>Balance calidad-precio de Anthropic. Redacción y análisis cuidado.</td></tr>
-  <tr class="caro"><td><b>Claude Opus 5</b></td><td>$5.00 / $25.00</td><td>Lo mejor de Anthropic. Razonamiento complejo y código difícil.</td></tr>
-  <tr class="caro"><td><b>GPT-5.6 Sol</b></td><td>$5.00 / $30.00</td><td>El flagship de OpenAI. Propósito general de máxima calidad.</td></tr>
-  <tr class="caro"><td><b>Gemini 2.5 Pro</b></td><td>~$2.50 / $5.00</td><td>Contexto gigante (2M tokens) y multimodal. Documentos muy largos.</td></tr>
-  <tr class="caro"><td><b>GPT-5.5 Pro</b></td><td>$30.00 / $180.00</td><td>Razonamiento máximo. Solo si de verdad lo necesitas: es carísimo.</td></tr>
+  <tr><th>Modelo</th><th>Entrada / Salida</th><th>Para qué usarlo</th><th>Cargarlo / usarlo</th></tr>
+  <tr class="caro"><td><b>Kimi k3</b></td><td>$3.00 / $15.00</td><td><b>Razonamiento profundo / segunda opinión.</b> Análisis estratégico. Úsalo 1-2 veces al mes, nunca para trabajo masivo (razona ~5 min por pregunta).</td><td class="lk"><a href="https://platform.moonshot.ai">obtener</a> · <a href="https://platform.moonshot.ai/docs">docs</a></td></tr>
+  <tr class="caro"><td><b>Claude Sonnet 5</b></td><td>$3.00 / $15.00</td><td>Balance calidad-precio de Anthropic. Redacción y análisis cuidado.</td><td class="lk"><a href="https://console.anthropic.com/settings/keys">obtener</a> · <a href="https://docs.claude.com">docs</a></td></tr>
+  <tr class="caro"><td><b>Claude Opus 5</b></td><td>$5.00 / $25.00</td><td>Lo mejor de Anthropic. Razonamiento complejo y código difícil.</td><td class="lk"><a href="https://console.anthropic.com/settings/keys">obtener</a> · <a href="https://docs.claude.com">docs</a></td></tr>
+  <tr class="caro"><td><b>GPT-5.6 Sol</b></td><td>$5.00 / $30.00</td><td>El flagship de OpenAI. Propósito general de máxima calidad.</td><td class="lk"><a href="https://platform.openai.com/api-keys">obtener</a> · <a href="https://platform.openai.com/docs">docs</a></td></tr>
+  <tr class="caro"><td><b>Gemini 2.5 Pro</b></td><td>~$2.50 / $5.00</td><td>Contexto gigante (2M tokens) y multimodal. Documentos muy largos.</td><td class="lk"><a href="https://aistudio.google.com/apikey">obtener</a> · <a href="https://ai.google.dev">docs</a></td></tr>
+  <tr class="caro"><td><b>GPT-5.5 Pro</b></td><td>$30.00 / $180.00</td><td>Razonamiento máximo. Solo si de verdad lo necesitas: es carísimo.</td><td class="lk"><a href="https://platform.openai.com/api-keys">obtener</a> · <a href="https://platform.openai.com/docs">docs</a></td></tr>
 </table>
 
 <div class="idea"><b>Regla de oro (para no quemar plata):</b><br>
