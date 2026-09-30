@@ -1,0 +1,354 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Instalar Hermes Agent — Paso a paso</title><style>
+:root{--bg:#f8fafc;--card:#ffffff;--ink:#0a1628;--mut:#64748b;--line:#e2e8f0;--ac:#0a7a3d;--acsoft:#eefaf1;--blue:#2456a5;--bluesoft:#eef4fc;--warn:#b45309;--warnsoft:#fffbeb;--code:#0f172a}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:860px;margin:0 auto;padding:44px 24px 90px}
+header{border-bottom:2px solid var(--line);padding-bottom:24px;margin-bottom:8px}
+.kick{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ac);background:var(--acsoft);padding:5px 13px;border-radius:100px}
+h1{font-size:31px;margin:14px 0 10px;letter-spacing:-.6px;line-height:1.2}
+.sub{color:var(--mut);font-size:15.5px;margin:0;max-width:720px}
+.whatami{display:flex;gap:14px;flex-wrap:wrap;margin:24px 0 6px;padding:18px 20px;background:var(--card);border:1px solid var(--line);border-radius:14px}
+.whatami div{flex:1;min-width:150px}
+.whatami b{display:block;font-size:13px;color:var(--ac);text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px}
+.whatami span{font-size:14px;color:#334155}
+h2{font-size:21px;margin:44px 0 8px;letter-spacing:-.3px;display:flex;align-items:center;gap:12px}
+h2 .num{background:var(--ac);color:#fff;width:30px;height:30px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:15px;font-weight:700;flex:0 0 30px}
+h2.plain .num{background:var(--blue)}
+.lead{color:var(--mut);font-size:14.5px;margin:0 0 16px 42px}
+.step{margin-bottom:22px}
+.step p{margin:0 0 10px;color:#334155;font-size:15px}
+.step p b{color:var(--ink)}
+pre{background:var(--code);color:#e2e8f0;padding:16px 18px;border-radius:11px;overflow-x:auto;margin:0 0 10px;font:14px/1.6 ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;position:relative}
+pre code{white-space:pre}
+.cmd{color:#7dd3a0}
+.cmt{color:#8ba3bd}
+.out{color:#94a3b8}
+.copyhint{font-size:12px;color:var(--mut);margin:-4px 0 12px}
+.note{padding:15px 18px;border-radius:11px;margin:14px 0;font-size:14.5px;border-left:3px solid}
+.note.tip{background:var(--acsoft);border-color:var(--ac)}
+.note.warn{background:var(--warnsoft);border-color:var(--warn)}
+.note.info{background:var(--bluesoft);border-color:var(--blue)}
+.note b{color:var(--ink)}
+.after{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:20px 22px;margin-top:14px}
+.after h3{margin:0 0 12px;font-size:16px}
+.after ul{margin:0;padding-left:20px;color:#334155;font-size:14.5px}
+.after li{margin-bottom:8px}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:12px 0;background:var(--card);border-radius:11px;overflow:hidden;border:1px solid var(--line)}
+th{background:var(--bluesoft);color:var(--ink);text-align:left;padding:10px 13px;font-size:12px;text-transform:uppercase;letter-spacing:.6px}
+td{padding:11px 13px;border-top:1px solid var(--line);color:#334155;vertical-align:top}
+td:first-child{color:var(--ink);font-weight:600}
+code.inl{background:#eef2f7;color:#0f172a;padding:2px 6px;border-radius:5px;font:13.5px ui-monospace,Menlo,monospace}
+footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);color:var(--mut);font-size:13px}
+.final{background:linear-gradient(135deg,#eefaf1,#eef4fc);border:1px solid #cde9db;border-radius:14px;padding:22px 24px;margin:34px 0 10px}
+.final h3{margin:0 0 10px;font-size:17px;color:var(--ac)}
+.final p{margin:0;color:#334155;font-size:15px}
+</style></head><body><div class="wrap">
+
+<header>
+<a href="index.html" style="display:inline-block;font-size:12.5px;color:#2563eb;text-decoration:none;font-weight:600;margin-bottom:12px">← Volver al índice de electivos</a><br>
+<span class="kick">Guía de instalación · Terminal</span>
+<h1>Instalar Hermes Agent en tu computador</h1>
+<p class="sub">Hermes es el agente de IA de Nous Research. Se instala desde la terminal en 2 minutos. Funciona igual en Windows, Mac y Linux — solo cambia el primer comando.</p>
+</header>
+
+<div class="whatami">
+<div><b>Qué es</b><span>Un agente de IA que vive en tu computador y ejecuta tareas: lee archivos, busca en internet, corre código.</span></div>
+<div><b>Qué necesitas</b><span>Conexión a internet y una terminal. Nada más — el instalador pone Python solo.</span></div>
+<div><b>Cuánto tarda</b><span>Unos 2 minutos de instalación + 3 de configuración.</span></div>
+</div>
+
+<div class="note info">
+<b>Antes de empezar: ¿dónde está tu terminal?</b><br>
+· <b>Windows:</b> aprieta la tecla Windows, escribe <code class="inl">PowerShell</code> y ábrelo (no uses CMD).<br>
+· <b>Mac:</b> aprieta <code class="inl">Cmd + Espacio</code>, escribe <code class="inl">Terminal</code> y ábrela.<br>
+· <b>Linux:</b> <code class="inl">Ctrl + Alt + T</code>.
+</div>
+
+<h2><span class="num">1</span>Instalar Hermes</h2>
+<p class="lead">Un solo comando. Copia el que corresponda a tu sistema y pégalo en la terminal, luego aprieta <b>Enter</b>.</p>
+
+<div class="step">
+<p><b>Si usas macOS, Linux o WSL2:</b></p>
+<pre><code><span class="cmd">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash</span></code></pre>
+
+<p><b>Si usas Windows (PowerShell):</b></p>
+<pre><code><span class="cmd">iex (irm https://hermes-agent.nousresearch.com/install.ps1)</span></code></pre>
+
+<div class="note tip">
+<b>Qué hace este comando:</b> descarga el instalador oficial desde el sitio de Nous Research y lo ejecuta. Va a instalar todo lo que Hermes necesita (incluido Python, si no lo tienes) dentro de tu carpeta de usuario — <b>no rompe nada de lo que ya tengas instalado</b>.
+</div>
+</div>
+
+<div class="step">
+<p>Vas a ver bastante texto avanzando. Es normal. Al final debería aparecer algo así:</p>
+<pre><code><span class="out">✓ Hermes Agent instalado correctamente
+  Ubicación: ~/.hermes/hermes-agent
+  Comando:   hermes</span></code></pre>
+</div>
+
+<div class="note warn">
+<b>Si aparece "hermes: command not found"</b> justo después de instalar: cierra la terminal y ábrela de nuevo. Si sigue, corre esto según tu sistema:<br>
+· Mac/Linux: <code class="inl">source ~/.zshrc</code> (o <code class="inl">~/.bashrc</code>)<br>
+· Windows: cierra y abre PowerShell de nuevo.
+</div>
+
+<h2><span class="num">2</span>Verificar que quedó instalado</h2>
+<p class="lead">Antes de configurar, confirma que el comando existe.</p>
+
+<div class="step">
+<pre><code><span class="cmd">hermes --version</span></code></pre>
+<p>Debe responder con algo como:</p>
+<pre><code><span class="out">Hermes Agent v0.21.4
+Install directory: /Users/tu-usuario/.hermes/hermes-agent</span></code></pre>
+<p>Si ves un número de versión, <b>está instalado y funcionando</b>. Si no, vuelve al paso 1.</p>
+</div>
+
+<h2><span class="num">3</span>Configurar un modelo: dos caminos</h2>
+<p class="lead">Hermes no trae un modelo adentro — le conectas el que quieras. Hay dos formas, y <b>ninguna es obligatoria</b>.</p>
+
+<div class="note info">
+<b>Lo más importante de toda la guía:</b> <b>NO necesitas cuenta de Nous Research para usar Hermes.</b> El Portal de Nous es una comodidad, no un requisito. Puedes usar Hermes entero con una API key gratuita de otro proveedor (Groq, Gemini, Cerebras…).
+</div>
+
+<h3 style="font-size:17px;margin:30px 0 10px">Camino A — Tu propia API key (gratis, sin cuenta Nous)</h3>
+<p style="color:#334155;font-size:15px;margin:0 0 14px">Este es el camino más liviano: no te registras en ningún lado que no quieras, no pones tarjeta, y sigues siendo dueño de tu configuración.</p>
+
+<div class="step">
+<pre><code><span class="cmd">hermes setup model</span></code></pre>
+<p>Te muestra la lista de proveedores. Elige uno, pega la key cuando la pida, y elige el modelo por defecto. Listo.</p>
+</div>
+
+<h3 style="font-size:17px;margin:30px 0 10px">Camino B — Nous Portal (opcional, de pago)</h3>
+<p style="color:#334155;font-size:15px;margin:0 0 14px">Si preferís pagar una sola suscripción en vez de manejar varias keys, esta es la vía.</p>
+
+<div class="step">
+<pre><code><span class="cmd">hermes setup --portal</span></code></pre>
+<p>Inicia sesión con tu cuenta de Nous Research y te deja configurado de una vez:</p>
+<ul style="color:#334155;font-size:15px;margin:10px 0 0;padding-left:22px">
+<li>El <b>modelo de IA</b> (300+ modelos con una sola suscripción)</li>
+<li>La <b>búsqueda web</b></li>
+<li>La <b>generación de imágenes</b></li>
+<li>La <b>voz</b> (texto a audio)</li>
+<li>El <b>navegador</b> para que el agente navegue solo</li>
+</ul>
+</div>
+
+<div class="note warn">
+<b>Atención — el wizard no siempre lo explica bien.</b> Si corres <code class="inl">hermes setup</code> sin nada más, el asistente arranca por el <b>Portal de Nous</b> y te habla de "una suscripción". No te está diciendo que sea obligatorio: es que el Portal es el camino que Nous recomienda por defecto. Si no lo quieres, cancela y usa <code class="inl">hermes setup model</code> (Camino A) — funciona igual.
+</div>
+
+<h3 style="font-size:17px;margin:30px 0 10px">¿Cuál elegir?</h3>
+<table>
+<tr><th></th><th>Camino A (API propia)</th><th>Camino B (Portal Nous)</th></tr>
+<tr><td>Costo</td><td><b>Gratis</b> con Groq/Gemini/Cerebras</td><td>Suscripción de pago</td></tr>
+<tr><td>Cuenta requerida</td><td>Ninguna de Nous</td><td>Cuenta Nous Research</td></tr>
+<tr><td>Tarjeta</td><td>No (en capas gratuitas)</td><td>Sí</td></tr>
+<tr><td>Configura</td><td>Solo el modelo</td><td>Modelo + búsqueda + imágenes + voz + navegador</td></tr>
+<tr><td>Búsqueda web</td><td>Se configura aparte (<code class="inl">hermes setup tools</code>)</td><td>Incluida</td></tr>
+<tr><td>Para la clase</td><td><b>Recomendado</b> — cero fricción</td><td>Opcional</td></tr>
+</table>
+
+<div class="note tip">
+<b>Para la clase: Camino A.</b> Con Groq o Google AI Studio los alumnos no pagan nada ni ponen tarjeta, y aprenden lo mismo. La búsqueda web se configura aparte cuando la necesiten.
+</div>
+
+<h3 style="font-size:17px;margin:30px 0 10px">Qué es una API key</h3>
+
+<div class="step">
+<p><b>¿Qué es una API key?</b> Es una contraseña larga que le dice al proveedor "esta petición viene de mi cuenta, cóbrale a mí". Se ve así: <code class="inl">sk-abc123...</code>. Nunca la compartas ni la subas a un repositorio público — quien la tenga puede gastar tu saldo.</p>
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Dónde conseguir una</h3>
+<table>
+<tr><th>Proveedor</th><th>Dónde</th><th>Costo</th></tr>
+<tr><td>Nous Portal</td><td>portal.nousresearch.com</td><td>La vía oficial — <code class="inl">hermes setup --portal</code> lo hace solo</td></tr>
+<tr><td>Groq</td><td>console.groq.com/keys</td><td><b>Gratis</b> sin tarjeta — la mejor para empezar</td></tr>
+<tr><td>Google AI Studio</td><td>aistudio.google.com/apikey</td><td><b>Gratis</b> sin tarjeta (Gemini)</td></tr>
+<tr><td>Cerebras</td><td>cloud.cerebras.ai</td><td><b>Gratis</b> — ~1M tokens/día, el más generoso</td></tr>
+<tr><td>OpenRouter</td><td>openrouter.ai/keys</td><td>Gratis con límite (~50/día); cientos de modelos</td></tr>
+<tr><td>NVIDIA NIM</td><td>build.nvidia.com</td><td><b>Gratis</b> — créditos iniciales, sin tarjeta</td></tr>
+<tr><td>DeepSeek</td><td>platform.deepseek.com</td><td>De pago, muy barato (~$0,30 por millón)</td></tr>
+<tr><td>Mistral</td><td>console.mistral.ai</td><td><b>Gratis</b> capa Experiment (~1B tokens/mes)</td></tr>
+</table>
+
+<div class="note tip">
+<b>Recomendación para la clase:</b> empieza con <b>Groq</b> o <b>Google AI Studio</b> — ambas son gratis, no piden tarjeta, y la registración toma un minuto. Cuando quieras más potencia, cambias de proveedor sin reinstalar nada.
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Cuánto cuesta (lo que nadie te dice)</h3>
+<p style="color:#334155;font-size:15px;margin:0 0 12px"><b>Para la clase: $0.</b> Las tres capas gratuitas de arriba alcanzan de sobra para aprender. Pero conviene entender cómo se cobra, porque la factura llega por algo que no se ve: los <b>tokens</b>.</p>
+
+<div class="step">
+<p><b>Un token</b> es un pedacito de palabra. En español, aproximadamente <b>1 token = ¾ de palabra</b>. "Hola, ¿cómo estás?" son unos 6 tokens.</p>
+<p>Se cobra dos veces, y a precios distintos:</p>
+<ul style="color:#334155;font-size:15px;margin:8px 0 0;padding-left:22px">
+<li><b>Input</b> — todo lo que entra: tu pregunta + lo que el agente ya leyó (archivos, resultados de herramientas, historial de la conversación).</li>
+<li><b>Output</b> — solo lo que el modelo escribe de vuelta.</li>
+</ul>
+</div>
+
+<div class="note warn">
+<b>El detalle que sorprende a todos:</b> en una conversación larga con un agente, el input crece solo. Cada vez que el agente lee un archivo o corre un comando, ese resultado <b>vuelve a entrar completo</b> en la siguiente consulta. Diez pasos de trabajo = diez veces el mismo historial. Por eso los agentes gastan más que un chat común: no es el modelo, es el volumen de contexto que arrastra.
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Precios reales (verificados)</h3>
+<table>
+<tr><th>Proveedor / modelo</th><th>Input (por 1M tokens)</th><th>Output (por 1M)</th></tr>
+<tr><td>Groq · Llama 3.1 8B</td><td>$0,05</td><td>$0,08</td></tr>
+<tr><td>Groq · GPT-OSS 20B</td><td>$0,075</td><td>$0,30</td></tr>
+<tr><td>Groq · GPT-OSS 120B</td><td>$0,15</td><td>$0,60</td></tr>
+<tr><td>Groq · Llama 3.3 70B</td><td>$0,59</td><td>$0,79</td></tr>
+<tr><td>DeepSeek · deepseek-flash</td><td>$0,15 – $0,30</td><td>$0,60 – $1,20</td></tr>
+<tr><td>DeepSeek · deepseek-v4-pro</td><td>$0,66 – $1,32</td><td>$1,98 – $3,96</td></tr>
+</table>
+<p style="font-size:13.5px;color:var(--mut);margin:0 0 14px">DeepSeek tiene dos precios: <b>off-peak</b> (más barato) y <b>peak</b> (el doble). Peak = 01:00–04:00 y 06:00–10:00 UTC en días de semana. Además, si el contexto ya estaba en caché, el input baja muchísimo (hasta $0,003 por millón).</p>
+
+<div class="step">
+<p><b>Para dimensionar, con números concretos:</b> un millón de tokens son unas 750.000 palabras — más que un libro de 2.000 páginas.</p>
+<pre><code><span class="cmt"># Lo que significa en la práctica:</span>
+<span class="out">Una conversación normal de clase:    ~10.000 tokens  →  menos de $0,01</span>
+<span class="out">100 preguntas al agente:             ~1 millón tokens →  ~$0,15 – $0,60</span>
+<span class="out">Una sesión pesada de agente:         ~5 millones      →  ~$1 – $3</span></code></pre>
+<p style="margin-top:12px">Traducido: <b>una clase completa trabajando con IA cuesta menos que un café.</b> El miedo al costo es infundado si usas capas gratuitas, y manejable incluso pagando.</p>
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Cómo no pagar sin querer</h3>
+<table>
+<tr><th>Regla</th><th>Por qué</th></tr>
+<tr><td>Empieza en la capa gratuita</td><td>Groq, Gemini, Cerebras y NVIDIA NIM no piden tarjeta. Cero riesgo.</td></tr>
+<tr><td>Configura un límite de gasto</td><td>Los proveedores de pago permiten fijar un tope mensual. Ponlo la primera vez que agregas tarjeta.</td></tr>
+<tr><td>Cambia de modelo según la tarea</td><td>Un modelo chico para clasificar o resumir cuesta 10 veces menos que uno grande. <code class="inl">hermes model</code> cambia sin reinstalar.</td></tr>
+<tr><td>Cuida las sesiones muy largas</td><td>El input crece con cada paso. Si una conversación lleva horas, conviene empezar una nueva para el próximo tema.</td></tr>
+<tr><td>Revisa tu saldo</td><td>DeepSeek y otros permiten consultarlo por API. Si usas capa gratuita, revisa el consumo en la consola del proveedor.</td></tr>
+</table>
+
+<div class="note info">
+<b>La regla de oro del costo:</b> el modelo es el insumo más barato de todo tu trabajo — la parte cara es tu tiempo. Optimizar la factura de IA tiene sentido; dejar de usarla por miedo al costo, no. Con capas gratuitas el gasto es literalmente cero hasta que tu uso sea serio.
+</div>
+
+<div class="note tip">
+<b>Truco que ahorra mucho:</b> los proveedores cobran menos (o nada) por el input que <b>ya estaba en caché</b>. Si repites la misma instrucción o el mismo documento, el sistema lo aprovecha solo — en DeepSeek el input cacheado cuesta 50 veces menos que el normal.
+</div>
+
+<div class="step">
+<p><b>Pasos para conseguirla (ejemplo con Groq):</b></p>
+<ol style="color:#334155;font-size:15px;margin:0 0 12px;padding-left:22px">
+<li>Entra a <b>console.groq.com/keys</b> y crea una cuenta (con Google o email).</li>
+<li>Haz clic en <b>Create API Key</b>, ponle un nombre ("hermes-clase").</li>
+<li>Copia la clave que aparece <b>en ese momento</b> — después ya no se puede volver a ver.</li>
+<li>Guárdala en un lugar seguro (o pégala directo en el paso siguiente).</li>
+</ol>
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Cómo configurarla en Hermes</h3>
+
+<div class="step">
+<p><b>Opción A — el asistente (recomendado):</b></p>
+<pre><code><span class="cmd">hermes setup model</span></code></pre>
+<p>Te muestra la lista de proveedores. Elige el tuyo, pega la key cuando la pida, y al final elige el modelo por defecto. Listo.</p>
+</div>
+<div class="step">
+<p><b>Opción B — directo en el archivo de configuración:</b></p>
+<p>Las claves van en un archivo aparte, <code class="inl">.env</code>, dentro de tu carpeta de Hermes. Para editarlo:</p>
+<pre><code><span class="cmd">hermes config edit</span></code></pre>
+<p>Y agregas una línea con el nombre exacto de la variable del proveedor:</p>
+<pre><code><span class="cmt"># Una línea por proveedor. El nombre debe ser EXACTO.</span>
+<span class="cmd">GROQ_API_KEY=sk-tu-clave-aqui</span>
+<span class="cmd">DEEPSEEK_API_KEY=sk-tu-clave-aqui</span>
+<span class="cmd">OPENROUTER_API_KEY=sk-or-tu-clave-aqui</span></code></pre>
+</div>
+
+<div class="step">
+<p><b>Para cambiar de modelo en cualquier momento:</b></p>
+<pre><code><span class="cmd">hermes model</span></code></pre>
+<p>Muestra un selector interactivo con todos los proveedores y modelos disponibles. Con <code class="inl">--refresh</code> actualiza la lista por si agregaste un proveedor nuevo:</p>
+<pre><code><span class="cmd">hermes model --refresh</span></code></pre>
+</div>
+
+<h3 style="font-size:17px;margin:28px 0 10px">Nombres exactos de las variables</h3>
+<p style="color:#334155;font-size:14.5px;margin:0 0 12px">Si escribes el nombre mal, Hermes no encuentra la clave y te dirá que falta la API key. Estos son los que usa:</p>
+<table>
+<tr><th>Proveedor</th><th>Variable en el .env</th></tr>
+<tr><td>Groq</td><td><code class="inl">GROQ_API_KEY</code></td></tr>
+<tr><td>DeepSeek</td><td><code class="inl">DEEPSEEK_API_KEY</code></td></tr>
+<tr><td>OpenRouter</td><td><code class="inl">OPENROUTER_API_KEY</code></td></tr>
+<tr><td>Google Gemini</td><td><code class="inl">GEMINI_API_KEY</code></td></tr>
+<tr><td>Anthropic (Claude)</td><td><code class="inl">ANTHROPIC_API_KEY</code></td></tr>
+<tr><td>OpenAI</td><td><code class="inl">OPENAI_API_KEY</code></td></tr>
+<tr><td>NVIDIA NIM</td><td><code class="inl">NVIDIA_API_KEY</code></td></tr>
+<tr><td>Mistral</td><td><code class="inl">MISTRAL_API_KEY</code></td></tr>
+</table>
+
+<div class="note info">
+<b>Hermes soporta más de 35 proveedores</b> — entre ellos OpenAI, Anthropic, Google, Groq, DeepSeek, OpenRouter, Mistral, NVIDIA, xAI, Alibaba/Qwen, MiniMax, Azure, AWS Bedrock, Vertex AI y Ollama (modelos locales, sin internet).
+</div>
+
+<div class="note warn">
+<b>Verifica que la clave quedó bien cargada:</b>
+<pre style="margin:10px 0 0"><code><span class="cmd">hermes config check</span></code></pre>
+Si algo falta o está mal escrito, este comando te lo dice.
+</div>
+
+<div class="note tip">
+<b>¿Cuál elegir si no sabes?</b> Empieza con una capa gratuita (Groq o Gemini) para aprender. Cuando necesites razonamiento más fuerte, prueba DeepSeek (muy barato) o un modelo de frontera. <b>Puedes tener varias keys cargadas a la vez</b> y cambiar entre ellas con <code class="inl">hermes model</code> sin borrar nada.
+</div>
+
+<h2 class="plain"><span class="num">4</span>Primera conversación</h2>
+<p class="lead">Ya está listo. Ahora lo usas.</p>
+
+<div class="step">
+<pre><code><span class="cmd">hermes</span></code></pre>
+<p>Se abre una conversación en tu terminal, parecida a un chat pero con superpoderes. Prueba pedirle algo que <b>haga</b>, no que solo responda:</p>
+<pre><code><span class="cmt"># En vez de:</span>
+<span class="out">"Explícame qué es un archivo CSV"</span>
+
+<span class="cmt"># Pídele una acción:</span>
+<span class="cmd">"Créame un archivo CSV de ejemplo con 10 filas y muéstrame su contenido"</span></code></pre>
+<p>Si el agente <b>crea el archivo de verdad</b> en vez de solo explicarte cómo hacerlo, entendiste la diferencia entre un modelo y un agente.</p>
+</div>
+
+<div class="note info">
+<b>Para salir:</b> escribe <code class="inl">/exit</code> o aprieta <code class="inl">Ctrl + C</code>. Para volver a entrar: <code class="inl">hermes</code>.
+</div>
+
+<h2 class="plain"><span class="num">5</span>Comprobar que funciona</h2>
+<div class="after">
+<h3>Los tres comandos que más vas a usar</h3>
+<table>
+<tr><th>Comando</th><th>Qué hace</th></tr>
+<tr><td>hermes</td><td>Abre la conversación con el agente (Modo CLI).</td></tr>
+<tr><td>hermes setup</td><td>Vuelve a abrir el asistente de configuración si algo quedó mal.</td></tr>
+<tr><td>hermes --help</td><td>Lista todos los comandos disponibles.</td></tr>
+</table>
+</div>
+
+<div class="step" style="margin-top:20px">
+<p>Verificación final — pídele al agente algo que requiera buscar en internet:</p>
+<pre><code><span class="cmd">"Busca en la web cuántas clases tiene el curso de la USACH y dime la fecha de la primera"</span></code></pre>
+<p>Si te responde con información real y su fuente, entonces <b>el agente tiene herramientas funcionando</b>, no solo el modelo.</p>
+</div>
+
+<h2 class="plain"><span class="num">?</span>Si algo falla</h2>
+<table>
+<tr><th>Problema</th><th>Solución</th></tr>
+<tr><td>hermes: command not found</td><td>Cierra la terminal y ábrela de nuevo. Persiste si no recarga el PATH.</td></tr>
+<tr><td>Pide una API key</td><td>Corre <code class="inl">hermes setup model</code> y pega tu key, o revisa que el nombre de la variable en el <code class="inl">.env</code> sea exacto.</td></tr>
+<tr><td>El setup me manda al Portal de Nous</td><td>No es obligatorio. Cancela (<code class="inl">Ctrl+C</code>) y corre <code class="inl">hermes setup model</code> para usar tu propia API key gratis.</td></tr>
+<tr><td>La key no funciona / error 401</td><td>Revisa que no tenga espacios al copiar y que sea del proveedor correcto. <code class="inl">hermes config check</code> lo detecta.</td></tr>
+<tr><td>Error 429 (demasiadas peticiones)</td><td>Llegaste al límite de la capa gratuita. Espera o cambia de modelo con <code class="inl">hermes model</code>.</td></tr>
+<tr><td>El navegador no abre solo</td><td>Copia la URL que aparece en la terminal y pégala en tu navegador a mano.</td></tr>
+<tr><td>Error tras actualizar</td><td><code class="inl">hermes config check</code> y luego <code class="inl">hermes config migrate</code>.</td></tr>
+</table>
+
+<div class="final">
+<h3>La idea que importa</h3>
+<p>No instalaste un "chat con IA". Instalaste un <b>agente</b>: un programa que decide qué hacer, usa herramientas y ejecuta tareas hasta cumplirlas. La diferencia la vas a notar la primera vez que le pidas algo y te devuelva el resultado hecho, no un consejo.</p>
+</div>
+
+<footer>
+Documentación oficial: <b>hermes-agent.nousresearch.com/docs</b> — guía de instalación completa, plataformas soportadas y solución de problemas.<br>
+Hermes Agent es un producto de Nous Research. La instalación vive en tu carpeta de usuario (<code class="inl">~/.hermes/</code>) y no requiere permisos de administrador.
+</footer>
+</div></body></html>
