@@ -66,6 +66,14 @@ footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);color:v
 · <b>Linux:</b> <code class="inl">Ctrl + Alt + T</code>.
 </div>
 
+<div class="note warn">
+<b>Requisito en Mac: Intel no sirve.</b> El soporte de Hermes en macOS es solo para chips <b>Apple Silicon</b> (M1 en adelante). Si tu Mac es Intel (2019 o anterior), esta instalación no te va a funcionar: usa Windows, Linux o una máquina virtual. En Windows, en cambio, corre en cualquier equipo con Windows 10 u 11.
+</div>
+
+<div class="note tip">
+<b>¿Por qué instalamos por terminal y no con la app de escritorio?</b> Porque es la vía más liviana. El instalador de terminal baja <b>solo lo que el agente necesita</b> (Python fijado, Node, ripgrep y FFmpeg) dentro de tu carpeta de usuario. La app de escritorio, en cambio, arrastra un runtime completo empaquetado (Electron + Chromium) que pesa cientos de megas y no aporta nada si vas a trabajar en la terminal. Misma potencia, menos disco, y <b>aprendes los comandos de verdad</b> — que es lo que sirve fuera del curso.
+</div>
+
 <h2><span class="num">1</span>Instalar Hermes</h2>
 <p class="lead">Un solo comando. Copia el que corresponda a tu sistema y pégalo en la terminal, luego aprieta <b>Enter</b>.</p>
 
@@ -79,6 +87,19 @@ footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);color:v
 <div class="note tip">
 <b>Qué hace este comando:</b> descarga el instalador oficial desde el sitio de Nous Research y lo ejecuta. Va a instalar todo lo que Hermes necesita (incluido Python, si no lo tienes) dentro de tu carpeta de usuario — <b>no rompe nada de lo que ya tengas instalado</b>.
 </div>
+</div>
+
+<div class="step">
+<p><b>Instalación para un curso completo (sin preguntas).</b> Si vas a instalar en varias máquinas o prefieres que no te haga nada interactivo, agrega este modificador:</p>
+<pre><code><span class="cmd">curl -fsSL https://hermes-agent.nousresearch.com/install.sh | bash -s -- --non-interactive</span></code></pre>
+
+<p style="color:#334155;font-size:15px;margin:12px 0 14px">En Windows el equivalente es <code class="inl">iex (irm https://hermes-agent.nousresearch.com/install.ps1)</code> y luego responder No a las preguntas de configuración. Otros dos modificadores útiles:</p>
+<table>
+<tr><th>Modificador</th><th>Para qué sirve</th></tr>
+<tr><td><code class="inl">--skip-browser</code></td><td>No instala el navegador automatizado (Chromium). Úsalo si la máquina es de laboratorio y quieres una instalación mínima.</td></tr>
+<tr><td><code class="inl">--skip-computer-use</code></td><td>No instala el controlador que permite al agente manejar el escritorio.</td></tr>
+</table>
+<p style="color:#475569;font-size:14px;margin:12px 0 0">Ambos modificadores se recuerdan: <code class="inl">hermes update</code> no los vuelve a agregar después. Si más adelante los quieres, se instalan con <code class="inl">hermes pm install agent-browser</code>.</p>
 </div>
 
 <div class="step">
@@ -103,6 +124,12 @@ footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);color:v
 <pre><code><span class="out">Hermes Agent v0.21.4
 Install directory: /Users/tu-usuario/.hermes/hermes-agent</span></code></pre>
 <p>Si ves un número de versión, <b>está instalado y funcionando</b>. Si no, vuelve al paso 1.</p>
+</div>
+
+<div class="step">
+<p><b>Si algo no cuadra, Hermes se autodiagnostica.</b> Este comando revisa la instalación completa y te dice exactamente qué falta y cómo arreglarlo:</p>
+<pre><code><span class="cmd">hermes doctor</span></code></pre>
+<p style="color:#475569;font-size:14px;margin:12px 0 0">Úsalo siempre antes de escribir por ayuda: en la mayoría de los casos el problema viene con su solución al lado.</p>
 </div>
 
 <h2><span class="num">3</span>Configurar un modelo: dos caminos</h2>
