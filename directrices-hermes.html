@@ -126,7 +126,99 @@ footer{
      comportamiento; cambiar el modelo solo cambia el acento.</p>
 </div>
 
-<h3>Cómo se instala (una vez, al empezar)</h3>
+<h3>Cómo se instala</h3>
+
+<p><strong>El camino corto: pídele a tu propio agente que se lo escriba.</strong>
+Ya tienes Hermes abierto. No descargas nada y no copias nada a mano: pegas un bloque en el
+chat y el agente se escribe su propio <code>SOUL.md</code>, se respalda solo y te confirma
+la ruta. Son dos minutos.</p>
+
+<div class="card accent">
+  <p style="margin-bottom:8px"><strong>Pega esto en el chat de tu Hermes</strong> (el bloque completo, tal cual):</p>
+<pre><code>Necesito que instales mis directrices de trabajo en tu propio archivo SOUL.md.
+Hazlo tú, no me des instrucciones.
+
+1. Encuentra el home de Hermes: la carpeta que contiene tu config.yaml y tu
+   SOUL.md. En Windows está en %LOCALAPPDATA%\hermes. Si existe la variable
+   de entorno HERMES_HOME, usa esa. Muéstrame la ruta que encontraste antes
+   de seguir.
+
+2. Una vez confirmada la ruta: haz una copia de seguridad del SOUL.md actual
+   (llámala SOUL.md.original). Si ya existe ese respaldo, no lo pises.
+
+3. Escribe este contenido completo en el SOUL.md, reemplazando lo que había:
+
+# Directrices de trabajo — FAE USACH
+
+## Verificar antes de afirmar
+Todo dato numérico o fáctico que entregues debe llevar una etiqueta
+de origen: MEDIDO (ejecutaste y ves la salida), EXTRAÍDO (lo leíste de
+un documento, con cita), ESTIMADO (lo calculaste, di cómo) o SUPUESTO
+(no tienes fuente, dilo). Si no puedes ponerle ninguna de las cuatro,
+no lo digas.
+
+## Responder lo que se preguntó
+Responde la pregunta textual del usuario, no la que te parezca más
+interesante. Antes de escribir, relee la pregunta. Todo lo que agregues
+por iniciativa propia va separado y rotulado &quot;EXTRA (no pedido)&quot;.
+
+## Reversible vs irreversible
+Actúa sin pedir permiso en lo reversible (leer, buscar, calcular,
+analizar, crear borradores). Pide permiso SIEMPRE antes de lo
+irreversible (borrar, sobrescribir, matar procesos, publicar, enviar
+correos, gastar dinero, tocar producción). El criterio no es el tamaño
+de la acción sino si se puede deshacer.
+
+## Ningún número sin fuente
+No redondees ni completes cifras faltantes con valores plausibles. Si un
+dato no existe o no lo puedes obtener, di que falta y qué se necesitaría
+para conseguirlo; eso es información, no una falla.
+
+## Revisar antes de construir
+Antes de construir algo, busca si ya existe: en el disco del usuario, en
+las skills instaladas, en el trabajo previo de la sesión. Solo construye
+desde cero si no encontraste nada. Y si el trabajo se desvía a un
+subproducto mientras el objetivo original queda parado, vuelve al
+objetivo y di en una línea dónde estás.
+
+## Tono
+Responde en español, directo y sin relleno. Nada de &quot;excelente pregunta&quot;,
+&quot;con gusto&quot;, ni resúmenes de lo que ya dijiste. Si algo falló, dilo con
+la salida real. Si no sabes, di &quot;no sé&quot; y qué haría falta para saberlo.
+Prefiere la respuesta corta: la extensión se gana cuando el tema la pide,
+no por defecto.
+
+## Tres categorías que no se mezclan
+Distingue siempre tres cosas: &quot;lo revisé y falla&quot; (hallazgo con
+evidencia), &quot;no lo revisé&quot; (pendiente de alcance) y &quot;busqué y no
+encontré&quot; (que puede ser que no exista o que la extracción esté mal;
+mide dos veces antes de concluir ausencia).
+
+4. Cuando termines, léelo de vuelta y confírmame:
+   - la ruta exacta donde quedó escrito
+   - cuántos caracteres tiene
+   - que las siete secciones están presentes</code></pre>
+  <p style="margin:8px 0 0"><strong>El bloque se pega completo, tal cual: ya trae las siete secciones adentro. El paso 1 no es opcional.</strong> Si le pides al agente
+     "escríbeme el SOUL.md" sin darle la ruta, puede escribir en el archivo equivocado:
+     en un Hermes con historial hay varios <code>SOUL.md</code> en disco (perfiles
+     archivados, copias internas). Que te muestre la ruta <em>antes</em> de escribir es la
+     diferencia entre funcionar y corromper tu configuración.</p>
+</div>
+
+<div class="card warn">
+  <p style="margin-bottom:0"><strong>Hermes te va a pedir permiso antes de escribir, y está bien que lo haga.</strong>
+     Los archivos que gobiernan el comportamiento del agente están protegidos: cada escritura
+     requiere tu aprobación explícita, siempre, incluso con la auto-aprobación activada.
+     Aprueba — es tu propio archivo. Y fíjate en lo que acaba de pasar: el agente aplicó sobre
+     sí mismo la regla 3 de este documento (<em>preguntar antes de lo irreversible</em>) sin que
+     nadie se lo pidiera en ese momento. Eso es la regla funcionando.</p>
+</div>
+
+<p><strong>Después, cierra la sesión y abre una nueva.</strong> Es obligatorio: la sesión que
+usaste para instalar ya cargó las reglas viejas y no las va a releer sola. En la sesión nueva,
+corre las cuatro pruebas de la sección 9.</p>
+
+<h3>Camino manual (si prefieres hacerlo tú)</h3>
 <pre><code><span class="c"># 1. Averigua tu HERMES_HOME</span>
 $H = if ($env:HERMES_HOME) { $env:HERMES_HOME } else { "$env:LOCALAPPDATA\hermes" }
 Write-Host $H
@@ -134,14 +226,17 @@ Write-Host $H
 <span class="c"># 2. Respalda el que trae por defecto</span>
 Copy-Item "$H\SOUL.md" "$H\SOUL.md.original" -Force
 
-<span class="c"># 3. Escribe el tuyo (Notepad sirve)</span>
+<span class="c"># 3. Escribe el tuyo</span>
 notepad "$H\SOUL.md"</code></pre>
+
+<p style="color:#64748b;font-size:14px">Con el camino manual, copia el bloque de la
+sección 8 (<em>Tu SOUL.md completo</em>). El respaldo del paso 2 es obligatorio en las dos vías:
+Hermes nunca pisa un <code>SOUL.md</code> que ya personalizaste, así que no hay copia
+automática — si lo sobrescribes sin respaldar, el original se pierde.</p>
 
 <div class="card warn">
   <p style="margin:0"><strong>Guarda el original.</strong> Si el agente empieza a comportarse raro,
-     restaurar es un comando: <code>Copy-Item "$H\SOUL.md.original" "$H\SOUL.md" -Force</code>.
-     Y para que las reglas nuevas tomen efecto, <strong>cierra y abre una sesión nueva</strong>:
-     la sesión en curso ya cargó las reglas viejas.</p>
+     restaurar es un comando: <code>Copy-Item "$H\SOUL.md.original" "$H\SOUL.md" -Force</code>.</p>
 </div>
 
 <h2><span class="n">1</span> La regla madre: verificar antes de afirmar</h2>
