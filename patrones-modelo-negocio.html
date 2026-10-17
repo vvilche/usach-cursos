@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>60 patrones de modelo de negocio · en español</title>
+<meta name="description" content="Catálogo en español de los patrones de modelo de negocio del Business Model Navigator (Universidad de St. Gallen).">
+<style>
+:root{--bg:#f8fafc;--ink:#0f172a;--muted:#5b6878;--line:#dbe3ec;--card:#fff;
+      --acc:#0a7a3d;--acc-soft:#e7f4ec;--acc2:#7c3aed;--acc2-soft:#f2ecfd}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);
+     font-family:"Inter","Helvetica Neue",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+     font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+header{background:#0f172a;color:#fff;padding:22px 32px;display:flex;align-items:center;
+       justify-content:space-between;gap:16px;flex-wrap:wrap}
+header h1{margin:0;font-size:1.16rem;font-weight:650;letter-spacing:.01em}
+header .back{color:#a7f3c9;text-decoration:none;font-size:.87rem;border:1px solid rgba(167,243,201,.35);
+             padding:7px 13px;border-radius:7px;white-space:nowrap}
+header .back:hover{background:rgba(167,243,201,.12)}
+main{max-width:1120px;margin:0 auto;padding:34px 26px 70px}
+.lead{font-size:1.02rem;color:#334155;max-width:76ch;margin:0 0 10px}
+.note{background:var(--acc-soft);border-left:3px solid var(--acc);border-radius:0 7px 7px 0;
+      padding:13px 17px;font-size:.9rem;color:#14532d;margin:20px 0 26px;max-width:88ch}
+.note b{color:#0a5f30}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;position:sticky;top:0;z-index:20;
+     background:var(--bg);padding:12px 0 14px;border-bottom:1px solid var(--line);margin-bottom:22px}
+#q{flex:1;min-width:230px;padding:11px 15px;font-size:.95rem;border:1px solid #c7d2de;
+   border-radius:9px;background:#fff;font-family:inherit;color:var(--ink)}
+#q:focus{outline:none;border-color:var(--acc);box-shadow:0 0 0 3px rgba(10,122,61,.12)}
+#cuenta{font-size:.83rem;color:var(--muted);white-space:nowrap;font-variant-numeric:tabular-nums}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:15px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:11px;padding:17px 19px 16px;
+      display:flex;flex-direction:column;transition:box-shadow .15s,border-color .15s}
+.card:hover{border-color:#b9cadb;box-shadow:0 3px 14px rgba(15,23,42,.07)}
+.card .top{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap;margin-bottom:3px}
+.card .num{font-size:.72rem;color:#94a3b8;font-variant-numeric:tabular-nums;font-weight:600;
+           min-width:20px}
+.card h2{margin:0;font-size:1.02rem;font-weight:660;letter-spacing:-.005em;line-height:1.32}
+.card .en{font-size:.75rem;color:var(--acc2);background:var(--acc2-soft);border-radius:5px;
+          padding:2px 7px;font-weight:600;white-space:nowrap}
+.card p{margin:8px 0 12px;font-size:.895rem;color:#3d4a5c;line-height:1.58;flex:1}
+.card .src{font-size:.765rem;color:var(--muted);text-decoration:none;border-top:1px solid #eef2f7;
+           padding-top:9px}
+.card .src:hover{color:var(--acc)}
+.vacio{padding:40px 0;text-align:center;color:var(--muted);font-size:.92rem;display:none}
+footer{max-width:1120px;margin:0 auto;padding:0 26px 60px;font-size:.82rem;color:var(--muted);
+       border-top:1px solid var(--line);padding-top:20px}
+footer a{color:var(--acc)}
+@media(max-width:560px){main{padding:22px 15px 50px}.grid{grid-template-columns:1fr}
+  header{padding:16px 18px}}
+</style>
+</head>
+<body>
+<header>
+  <h1>60 patrones de modelo de negocio</h1>
+  <a class="back" href="innovacion-disruptiva.html">← Plan de clases</a>
+</header>
+<main>
+<p class="lead">Los <b>patrones de modelo de negocio</b> son recetas probadas: la forma en que una empresa crea, entrega y captura valor. Más del 90% de los modelos de negocio nuevos son recombinaciones de patrones que ya existen — no inventos desde cero. Esta es la lista del <b>Business Model Navigator</b> (Universidad de St. Gallen), traducida al español.</p>
+<div class="note">
+  <b>Nota sobre el conteo:</b> el libro y el sitio hablan de <b>55 patrones</b>. Al revisar la lista publicada el <b>17 de octubre de 2026</b> aparecen <b>60</b>: el sitio agregó después los cinco últimos (Sensor como servicio, Virtualización, Objeto con autoservicio, Objeto como punto de venta y Prosumidor). Están los 60 aquí, y las 55 fichas del libro original quedan identificadas por su número.
+</div>
+<div class="bar">
+  <input id="q" type="search" placeholder="Buscar patrón… (ej: suscripción, licencia, gratis)" autocomplete="off" aria-label="Buscar patrón">
+  <span id="cuenta">60 de 60 patrones</span>
+</div>
+<div class="grid">
+<article class="card" data-nombre="Add-on" data-en="Add-on">
+  <div class="top"><span class="num">1</span><h2>Add-on</h2><span class="en">Add-on</span></div>
+  <p>La oferta principal se vende a precio competitivo, pero hay numerosos extras que elevan el precio final. Al final el cliente paga más de lo que supuso al principio. El cliente se beneficia de una oferta variable, que puede adaptar a sus necesidades específicas.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=1" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Afiliación" data-en="Affiliation">
+  <div class="top"><span class="num">2</span><h2>Afiliación</h2><span class="en">Affiliation</span></div>
+  <p>El foco está en ayudar a otros a vender sus productos con éxito y beneficiarse directamente de las transacciones logradas. Los afiliados suelen ganar por comisión por venta o por exhibición. La empresa, por su parte, accede a una base de clientes potenciales más diversa sin esfuerzo adicional de venta ni de marketing.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=2" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Aikido" data-en="Aikido">
+  <div class="top"><span class="num">3</span><h2>Aikido</h2><span class="en">Aikido</span></div>
+  <p>El aikido es un arte marcial japonés en el que la fuerza del atacante se usa contra él mismo. Como modelo de negocio, permite a una empresa ofrecer algo diametralmente opuesto a la imagen y la mentalidad de la competencia. Esta nueva propuesta de valor atrae a clientes que prefieren ideas o conceptos contrarios a la corriente principal.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=3" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Subasta" data-en="Auction">
+  <div class="top"><span class="num">4</span><h2>Subasta</h2><span class="en">Auction</span></div>
+  <p>Subastar significa vender un producto o servicio al mejor postor. El precio final se alcanza cuando llega la hora de cierre de la subasta o cuando no se reciben ofertas mayores. Así la empresa vende al precio más alto que el cliente está dispuesto a aceptar. El cliente se beneficia de la oportunidad de influir en el precio del producto.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=4" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Trueque" data-en="Barter">
+  <div class="top"><span class="num">5</span><h2>Trueque</h2><span class="en">Barter</span></div>
+  <p>El trueque es un método de intercambio en el que los bienes se entregan a los clientes sin una transacción de dinero real. A cambio, ellos entregan algo de valor a la organización patrocinadora. El intercambio no tiene que mostrar una relación directa, y cada parte lo valora de forma distinta.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=5" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Máquina de efectivo" data-en="Cash Machine">
+  <div class="top"><span class="num">6</span><h2>Máquina de efectivo</h2><span class="en">Cash Machine</span></div>
+  <p>En el concepto de máquina de efectivo, el cliente paga por adelantado los productos que se le venden, antes de que la empresa tenga que cubrir los gastos asociados. Esto genera mayor liquidez, que puede usarse para amortizar deuda o financiar inversiones en otras áreas.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=6" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Venta cruzada" data-en="Cross Selling">
+  <div class="top"><span class="num">7</span><h2>Venta cruzada</h2><span class="en">Cross Selling</span></div>
+  <p>En este modelo se agregan a la oferta servicios o productos de una industria antes excluida, aprovechando habilidades y recursos clave que ya existen. Sobre todo en el retail, las empresas pueden ofrecer con facilidad productos adicionales no ligados a la industria principal en la que estaban enfocadas. Así se generan ingresos extra con cambios relativamente pocos a la infraestructura y los activos existentes, porque se cubren más necesidades del cliente.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=7" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Financiamiento colectivo" data-en="Crowdfunding">
+  <div class="top"><span class="num">8</span><h2>Financiamiento colectivo</h2><span class="en">Crowdfunding</span></div>
+  <p>Un producto, un proyecto o una startup completa se financia con una multitud de inversionistas que quieren apoyar la idea, normalmente por internet. Si se alcanza la masa crítica, la idea se realiza y los inversionistas reciben beneficios especiales, por lo general proporcionales al dinero que aportaron.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=8" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Conocimiento colectivo" data-en="Crowdsourcing">
+  <div class="top"><span class="num">9</span><h2>Conocimiento colectivo</h2><span class="en">Crowdsourcing</span></div>
+  <p>La solución de una tarea o problema la adopta una multitud anónima, normalmente por internet. Quienes contribuyen reciben una recompensa pequeña o la chance de ganar un premio si su solución es elegida para producción o venta. La interacción y la inclusión del cliente pueden favorecer una relación positiva con la empresa y, con eso, aumentar ventas e ingresos.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=9" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Lealtad del cliente" data-en="Customer Loyalty">
+  <div class="top"><span class="num">10</span><h2>Lealtad del cliente</h2><span class="en">Customer Loyalty</span></div>
+  <p>Se retiene al cliente y se asegura su lealtad entregando valor más allá del producto o servicio mismo, es decir, mediante programas basados en incentivos. El objetivo es aumentar la lealtad creando una conexión emocional o simplemente premiándola con ofertas especiales. El cliente queda ligado a la empresa de forma voluntaria, lo que protege los ingresos futuros.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=10" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Digitalización" data-en="Digitization">
+  <div class="top"><span class="num">11</span><h2>Digitalización</h2><span class="en">Digitization</span></div>
+  <p>Este patrón se apoya en la capacidad de convertir productos o servicios existentes en variantes digitales, y así ofrecer ventajas frente a los productos tangibles, por ejemplo una distribución más fácil y rápida. Lo ideal es digitalizar sin sacrificar la propuesta de valor que se entrega al cliente. En otras palabras: la eficiencia y la multiplicación por digitalización no reducen el valor percibido por el cliente.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=11" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Venta directa" data-en="Direct Selling">
+  <div class="top"><span class="num">12</span><h2>Venta directa</h2><span class="en">Direct Selling</span></div>
+  <p>La venta directa se refiere a un escenario en el que los productos de una empresa no se venden a través de canales intermediarios, sino que están disponibles directamente del fabricante o proveedor del servicio. Así la empresa se salta el margen del retail o cualquier costo adicional asociado a los intermediarios. Esos ahorros pueden traspasarse al cliente y establecer una experiencia de venta estandarizada. Además, ese contacto cercano puede mejorar la relación con el cliente.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=12" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Comercio electrónico" data-en="E-commerce">
+  <div class="top"><span class="num">13</span><h2>Comercio electrónico</h2><span class="en">E-commerce</span></div>
+  <p>Los productos o servicios tradicionales se entregan solo por canales en línea, eliminando los costos asociados a operar una red de sucursales físicas. El cliente se beneficia de mayor disponibilidad y comodidad, mientras la empresa puede integrar su venta y distribución con otros procesos internos.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=13" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Venta de experiencias" data-en="Experience Selling">
+  <div class="top"><span class="num">14</span><h2>Venta de experiencias</h2><span class="en">Experience Selling</span></div>
+  <p>El valor de un producto o servicio aumenta con la experiencia de cliente que se ofrece junto a él. Esto abre la puerta a mayor demanda y a un alza de precios acorde. Significa que la experiencia de cliente debe adaptarse en consecuencia, por ejemplo ajustando la promoción o el diseño del local.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=14" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Tarifa plana" data-en="Flat Rate">
+  <div class="top"><span class="num">15</span><h2>Tarifa plana</h2><span class="en">Flat Rate</span></div>
+  <p>En este modelo se cobra una sola tarifa fija por un producto o servicio, independiente del uso real o de restricciones de tiempo. El usuario se beneficia de una estructura de costos simple, y la empresa de un flujo de ingresos constante.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=15" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Propiedad fraccionada" data-en="Fractional Ownership">
+  <div class="top"><span class="num">16</span><h2>Propiedad fraccionada</h2><span class="en">Fractional Ownership</span></div>
+  <p>La propiedad fraccionada describe el reparto de una determinada clase de activo entre un grupo de propietarios. Por lo general el activo es intensivo en capital pero solo se necesita de forma ocasional. El cliente se beneficia de los derechos como propietario sin tener que aportar solo todo el capital.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=16" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Franquicia" data-en="Franchising">
+  <div class="top"><span class="num">17</span><h2>Franquicia</h2><span class="en">Franchising</span></div>
+  <p>El franquiciante es dueño de la marca, los productos y la identidad corporativa, y los licencia a franquiciados independientes que asumen el riesgo de la operación local. Los ingresos se generan como parte de las ventas y pedidos de los franquiciados. Ellos se benefician del uso de marcas conocidas, del know-how y del apoyo.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=17" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Freemium" data-en="Freemium">
+  <div class="top"><span class="num">18</span><h2>Freemium</h2><span class="en">Freemium</span></div>
+  <p>La versión básica de una oferta se entrega gratis con la esperanza de convencer al cliente de pagar por la versión premium. La oferta gratuita permite atraer el mayor volumen posible de clientes. El volumen, normalmente menor, de clientes de pago genera los ingresos, que además cofinancian la oferta gratuita.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=18" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="De empujar a atraer" data-en="From Push-to-pull">
+  <div class="top"><span class="num">19</span><h2>De empujar a atraer</h2><span class="en">From Push-to-pull</span></div>
+  <p>Este patrón describe la estrategia de una empresa que descentraliza y flexibiliza sus procesos para estar más centrada en el cliente. Para responder rápido y flexible a necesidades nuevas del cliente, puede verse afectada cualquier parte de la cadena de valor, incluida la producción o incluso la investigación y el desarrollo.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=19" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Disponibilidad garantizada" data-en="Guaranteed Availability">
+  <div class="top"><span class="num">20</span><h2>Disponibilidad garantizada</h2><span class="en">Guaranteed Availability</span></div>
+  <p>En este modelo se garantiza la disponibilidad de un producto o servicio, con una caída casi nula. El cliente puede usar la oferta cuando la necesita, lo que minimiza las pérdidas por detención. La empresa usa conocimiento experto y economías de escala para bajar los costos de operación y alcanzar esos niveles de disponibilidad.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=20" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Ingresos ocultos" data-en="Hidden Revenue">
+  <div class="top"><span class="num">21</span><h2>Ingresos ocultos</h2><span class="en">Hidden Revenue</span></div>
+  <p>Se abandona la lógica de que el usuario es responsable de los ingresos del negocio. En cambio, la fuente principal de ingresos viene de un tercero, que cofinancia la oferta gratuita o de bajo precio que atrae a los usuarios. Un caso muy común de este modelo es el financiamiento por publicidad, donde los clientes atraídos son valiosos para los anunciantes que financian la oferta. Este concepto facilita la idea de la separación entre ingresos y cliente.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=21" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Marca del ingrediente" data-en="Ingredient Branding">
+  <div class="top"><span class="num">22</span><h2>Marca del ingrediente</h2><span class="en">Ingredient Branding</span></div>
+  <p>La marca del ingrediente describe la selección específica de un ingrediente, componente o marca de un proveedor determinado, que se incluirá en otro producto. Ese producto se marca y publicita además con el producto ingrediente, sumando valor para el cliente de forma conjunta. Así se proyectan las asociaciones y propiedades positivas de la marca sobre el producto, lo que puede aumentar el atractivo del producto final.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=22" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Integrador" data-en="Integrator">
+  <div class="top"><span class="num">23</span><h2>Integrador</h2><span class="en">Integrator</span></div>
+  <p>Un integrador controla la mayor parte de los pasos de un proceso que agrega valor. El control de todos los recursos y capacidades en la creación de valor está en la empresa. Las ganancias de eficiencia, las economías de alcance y una menor dependencia de proveedores reducen los costos y pueden aumentar la estabilidad de la creación de valor.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=23" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Jugador de capa" data-en="Layer Player">
+  <div class="top"><span class="num">24</span><h2>Jugador de capa</h2><span class="en">Layer Player</span></div>
+  <p>Un jugador de capa concentra su oferta en una sola capa específica de la cadena de valor, siguiendo el principio de especialización. Así puede ofrecer la mejor solución posible en esa actividad y servir a muchos clientes distintos, incluidos competidores suyos en otras capas, aprovechando economías de escala y conocimiento experto profundo.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=24" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Aprovechar los datos del cliente" data-en="Leverage Customer Data">
+  <div class="top"><span class="num">25</span><h2>Aprovechar los datos del cliente</h2><span class="en">Leverage Customer Data</span></div>
+  <p>En este modelo una empresa usa los datos que genera su base de clientes para crear valor adicional. Los datos permiten afinar la oferta, segmentar mejor y vender información o servicios analíticos a terceros. La clave es que la empresa reconoce el valor de los datos como activo propio y los procesa de forma sistemática.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=25" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Licencia" data-en="License">
+  <div class="top"><span class="num">26</span><h2>Licencia</h2><span class="en">License</span></div>
+  <p>En este modelo una empresa otorga a otra el derecho de usar su propiedad intelectual, como patentes, marcas o tecnología, a cambio de una regalía. La empresa evita así las inversiones y los riesgos de operar por su cuenta, y accede a mercados o capacidades que no tiene. Para el licenciatario, la licencia da acceso a tecnología o marcas probadas sin el costo de desarrollarlas.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=26" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Bloqueo del cliente" data-en="Lock-in">
+  <div class="top"><span class="num">27</span><h2>Bloqueo del cliente</h2><span class="en">Lock-in</span></div>
+  <p>El bloqueo del cliente fideliza a los usuarios a través de barreras que dificultan el cambio a otro proveedor. Esas barreras pueden ser técnicas, económicas o contractuales, por ejemplo formatos propietarios, costos de cambio o contratos de largo plazo. El efecto es un flujo de ingresos recurrente y una base de clientes protegida.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=27" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Cola larga" data-en="Long Tail">
+  <div class="top"><span class="num">28</span><h2>Cola larga</h2><span class="en">Long Tail</span></div>
+  <p>La cola larga ofrece una gran cantidad de productos de nicho, cada uno con poca demanda, en lugar de concentrarse en pocos éxitos de venta. La suma de muchos nichos pequeños puede superar a los pocos éxitos masivos. Funciona mejor cuando los costos de almacenamiento y distribución son bajos, como ocurre en el comercio digital.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=28" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Sacar más provecho" data-en="Make More Of It">
+  <div class="top"><span class="num">29</span><h2>Sacar más provecho</h2><span class="en">Make More Of It</span></div>
+  <p>En este modelo la empresa aprovecha habilidades, capacidades o activos que ya posee para ofrecer servicios adicionales a terceros. Conocimiento que se desarrolló para el negocio propio se convierte en una oferta externa: consultoría, formación, mantenimiento o fabricación por encargo. Se generan ingresos sin construir una capacidad nueva desde cero.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=29" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Personalización masiva" data-en="Mass Customization">
+  <div class="top"><span class="num">30</span><h2>Personalización masiva</h2><span class="en">Mass Customization</span></div>
+  <p>La personalización masiva combina la eficiencia de la producción en serie con la flexibilidad de la producción individual. El cliente configura el producto según sus necesidades, y la empresa produce esa variante a costos cercanos a los de la producción en masa, gracias a módulos y procesos flexibles.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=30" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Sin lujos" data-en="No Frills">
+  <div class="top"><span class="num">31</span><h2>Sin lujos</h2><span class="en">No Frills</span></div>
+  <p>El modelo sin lujos reduce la oferta a lo esencial para bajar el precio lo máximo posible. Se eliminan servicios y extras que el cliente no valora de forma prioritaria, y se enfoca el negocio en un segmento sensible al precio. La propuesta es simple y transparente.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=31" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Modelo de negocio abierto" data-en="Open Business Model">
+  <div class="top"><span class="num">32</span><h2>Modelo de negocio abierto</h2><span class="en">Open Business Model</span></div>
+  <p>En un modelo de negocio abierto la empresa integra ideas y capacidades externas a su propio proceso de innovación, y a la vez deja que otros usen parte de sus desarrollos. Se aprovechan así fuentes de conocimiento que están fuera de la organización, y se reduce el costo y el tiempo de desarrollo.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=32" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Código abierto" data-en="Open Source">
+  <div class="top"><span class="num">33</span><h2>Código abierto</h2><span class="en">Open Source</span></div>
+  <p>En el modelo de código abierto el código o el conocimiento del producto se libera para que una comunidad lo use y lo mejore. La empresa gana con servicios asociados: soporte, implementación, formación o versiones empresariales. La comunidad asume parte del desarrollo y la difusión.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=33" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Orquestador" data-en="Orchestrator">
+  <div class="top"><span class="num">34</span><h2>Orquestador</h2><span class="en">Orchestrator</span></div>
+  <p>El orquestador coordina y dirige una red de socios que aportan las distintas partes de la propuesta de valor, sin ejecutar él mismo la mayor parte de las actividades. Su fortaleza está en el control de la arquitectura del sistema, la marca y la relación con el cliente, mientras los socios aportan la operación.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=34" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Pago por uso" data-en="Pay Per Use">
+  <div class="top"><span class="num">35</span><h2>Pago por uso</h2><span class="en">Pay Per Use</span></div>
+  <p>En el modelo de pago por uso el cliente paga solo por lo que efectivamente utiliza. El servicio suele estar disponible de forma conjunta o compartida, y el proveedor asume la inversión en el activo. El cliente evita el costo fijo y convierte el gasto en variable, y el proveedor gana con la utilización intensiva del activo.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=35" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Paga lo que quieras" data-en="Pay What You Want">
+  <div class="top"><span class="num">36</span><h2>Paga lo que quieras</h2><span class="en">Pay What You Want</span></div>
+  <p>En este modelo el cliente decide cuánto pagar por el producto o servicio. La empresa renuncia a fijar el precio y apuesta a que el cliente pague un monto justo, normalmente guiado por valores como la confianza, la reciprocidad o el deseo de sostener el proyecto. Funciona mejor cuando el costo marginal es bajo y la relación con la comunidad es fuerte.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=36" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Entre pares" data-en="Peer-to-peer">
+  <div class="top"><span class="num">37</span><h2>Entre pares</h2><span class="en">Peer-to-peer</span></div>
+  <p>El modelo entre pares conecta directamente a usuarios que ofrecen un activo o servicio con usuarios que lo necesitan, sin un intermediario tradicional que posea el activo. La plataforma facilita el encuentro, el pago y la confianza. Aprovecha capacidad ociosa que ya existe y la empresa gana una comisión por la transacción.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=37" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Contrato por desempeño" data-en="Performance-based Contracting">
+  <div class="top"><span class="num">38</span><h2>Contrato por desempeño</h2><span class="en">Performance-based Contracting</span></div>
+  <p>El precio de un producto no se basa en su valor físico, sino en el desempeño o el resultado valioso que entrega como servicio. Los contratistas por desempeño suelen estar fuertemente integrados en el proceso de creación de valor de sus clientes. El conocimiento experto y las economías de escala reducen los costos de producción y mantenimiento, y ese ahorro puede traspasarse al cliente. Las variantes extremas de este modelo son los distintos esquemas de operación en los que el producto sigue siendo propiedad de la empresa y es operado por ella.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=38" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Máquina de afeitar y hoja" data-en="Razor And Blade">
+  <div class="top"><span class="num">39</span><h2>Máquina de afeitar y hoja</h2><span class="en">Razor And Blade</span></div>
+  <p>El producto básico es barato o se entrega gratis. Los consumibles necesarios para usarlo u operarlo, en cambio, son caros y se venden con márgenes altos. El precio bajo del producto inicial reduce las barreras de compra del cliente, y las ventas recurrentes posteriores cofinancian ese precio. Normalmente estos productos están ligados tecnológicamente entre sí para reforzar ese efecto.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=39" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Arrendar en vez de comprar" data-en="Rent Instead Of Buy">
+  <div class="top"><span class="num">40</span><h2>Arrendar en vez de comprar</h2><span class="en">Rent Instead Of Buy</span></div>
+  <p>En este modelo el cliente arrienda un producto en lugar de comprarlo. El proveedor conserva la propiedad del activo y el cliente paga por su uso durante un período. El cliente evita una inversión alta y la empresa obtiene ingresos recurrentes con un activo que puede reutilizar para varios clientes.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=40" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Reparto de ingresos" data-en="Revenue Sharing">
+  <div class="top"><span class="num">41</span><h2>Reparto de ingresos</h2><span class="en">Revenue Sharing</span></div>
+  <p>En el reparto de ingresos dos o más partes se dividen los ingresos que genera una actividad conjunta. Una parte aporta el activo, la marca, el local o la plataforma, y la otra aporta el producto, el trabajo o la clientela. El reparto alinea los incentivos: ambos ganan cuando el negocio vende.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=41" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Ingeniería inversa" data-en="Reverse Engineering">
+  <div class="top"><span class="num">42</span><h2>Ingeniería inversa</h2><span class="en">Reverse Engineering</span></div>
+  <p>La ingeniería inversa consiste en analizar un producto existente para comprender cómo está hecho y reproducir su funcionamiento o mejorarlo. En un modelo de negocio, permite entrar a un mercado con una versión propia de una solución ya validada, reduciendo el riesgo y el costo de desarrollo, siempre respetando el marco legal de propiedad intelectual.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=42" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Innovación inversa" data-en="Reverse Innovation">
+  <div class="top"><span class="num">43</span><h2>Innovación inversa</h2><span class="en">Reverse Innovation</span></div>
+  <p>La innovación inversa desarrolla primero productos simples y de bajo costo para mercados emergentes, y luego los lleva a mercados desarrollados. La restricción inicial de precio y simplicidad genera soluciones que también resultan atractivas en mercados más ricos. El flujo de innovación se invierte respecto del tradicional.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=43" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Robin Hood" data-en="Robin Hood">
+  <div class="top"><span class="num">44</span><h2>Robin Hood</h2><span class="en">Robin Hood</span></div>
+  <p>El modelo Robin Hood cobra más a los clientes de mayor capacidad de pago y usa ese margen para ofrecer el producto o servicio a precio bajo o gratis a quienes no pueden pagarlo. La rentabilidad se sostiene con el segmento de mayores ingresos, y la empresa combina resultado económico con un propósito social explícito.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=44" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Autoservicio" data-en="Self-service">
+  <div class="top"><span class="num">45</span><h2>Autoservicio</h2><span class="en">Self-service</span></div>
+  <p>En el autoservicio el cliente realiza por sí mismo la mayor parte de las actividades que antes hacía la empresa, como seleccionar, armar el pedido, hacer el check-in o pagar. El cliente gana rapidez, control y menor costo, y la empresa reduce sus costos de personal y aumenta el volumen de atención simultánea.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=45" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Tienda dentro de la tienda" data-en="Shop-in-shop">
+  <div class="top"><span class="num">46</span><h2>Tienda dentro de la tienda</h2><span class="en">Shop-in-shop</span></div>
+  <p>En la tienda dentro de la tienda un proveedor instala y opera su propio espacio dentro del local de otro comercio. El comercio anfitrión suma surtido y atrae nuevos clientes, y el proveedor accede a la clientela del anfitrión sin abrir un local propio. La marca, la exhibición y muchas veces el personal son del proveedor.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=46" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Proveedor de soluciones" data-en="Solution Provider">
+  <div class="top"><span class="num">47</span><h2>Proveedor de soluciones</h2><span class="en">Solution Provider</span></div>
+  <p>El proveedor de soluciones vende la solución completa a un problema del cliente, y no solo un producto. Combina productos, servicios y conocimiento para resolver la necesidad entera, y asume responsabilidad por el resultado. Suele significar una relación más profunda y estable con el cliente que la venta de un producto aislado.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=47" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Suscripción" data-en="Subscription">
+  <div class="top"><span class="num">48</span><h2>Suscripción</h2><span class="en">Subscription</span></div>
+  <p>En el modelo de suscripción el cliente paga un monto periódico por acceso continuo a un producto o servicio, en lugar de pagar cada vez que lo usa. La empresa obtiene ingresos recurrentes y previsibles, y el cliente se beneficia de la disponibilidad constante sin decisiones repetidas de compra.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=48" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Supermercado" data-en="Supermarket">
+  <div class="top"><span class="num">49</span><h2>Supermercado</h2><span class="en">Supermarket</span></div>
+  <p>En el modelo supermercado se ofrece una amplia variedad de productos bajo un mismo techo, con precios competitivos y con el cliente sirviéndose a sí mismo. La variedad y la cercanía del surtido permiten al cliente resolver varias necesidades en una sola visita, y la empresa gana por volumen y rotación.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=49" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Apuntar a los de menores ingresos" data-en="Target The Poor">
+  <div class="top"><span class="num">50</span><h2>Apuntar a los de menores ingresos</h2><span class="en">Target The Poor</span></div>
+  <p>Este modelo dirige la oferta a segmentos de bajos ingresos que normalmente no son atendidos por el mercado formal. Se logra con productos de bajo precio unitario, formatos pequeños, distribución capilar y mecanismos de pago adaptados a ingresos irregulares. El negocio es rentable por volumen y por eficiencia en la distribución.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=50" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="De la basura al valor" data-en="Trash-to-cash">
+  <div class="top"><span class="num">51</span><h2>De la basura al valor</h2><span class="en">Trash-to-cash</span></div>
+  <p>El modelo de la basura al valor convierte residuos o desechos en un producto o servicio con valor comercial. La materia prima es de bajo costo o incluso representa un problema que otro quiere resolver, y el proceso de transformación es la ventaja competitiva. Genera ingresos y a la vez reduce un pasivo ambiental.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=51" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Mercado de dos lados" data-en="Two-sided Market">
+  <div class="top"><span class="num">52</span><h2>Mercado de dos lados</h2><span class="en">Two-sided Market</span></div>
+  <p>Un mercado de dos lados reúne a dos grupos de participantes distintos que se necesitan entre sí: compradores y vendedores, usuarios y anunciantes, postulantes y contratistas. La plataforma facilita el encuentro y captura valor de uno o de ambos lados. El desafío clásico es resolver el problema del huevo y la gallina para que ambos lados estén presentes.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=52" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Lujo extremo" data-en="Ultimate Luxury">
+  <div class="top"><span class="num">53</span><h2>Lujo extremo</h2><span class="en">Ultimate Luxury</span></div>
+  <p>Este patrón describe la estrategia de una empresa que se enfoca en la parte alta de la pirámide social. Así puede distinguir sus productos o servicios con fuerza de los demás. Los estándares altos de calidad o los privilegios exclusivos son el foco para atraer a este tipo de clientes. Las inversiones necesarias para esas diferenciaciones se cubren con los precios relativamente altos que se logran, los que normalmente permiten márgenes muy altos.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=53" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Diseñado por el usuario" data-en="User Designed">
+  <div class="top"><span class="num">54</span><h2>Diseñado por el usuario</h2><span class="en">User Designed</span></div>
+  <p>En la fabricación por el usuario, el cliente es a la vez fabricante y consumidor. Por ejemplo, una plataforma en línea le da al cliente el apoyo necesario para diseñar y comercializar el producto: software de diseño, servicios de fabricación o una tienda en línea para venderlo. Así la empresa solo apoya al cliente en su emprendimiento y se beneficia de su creatividad. El cliente se beneficia de la posibilidad de realizar ideas emprendedoras sin tener que aportar la infraestructura requerida. Los ingresos se generan como parte de las ventas reales.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=54" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Marca blanca" data-en="Whitelabel">
+  <div class="top"><span class="num">55</span><h2>Marca blanca</h2><span class="en">Whitelabel</span></div>
+  <p>Un productor de marca blanca permite que otras empresas distribuyan sus bienes bajo sus propias marcas, de modo que parezca que los fabricaron ellas. El mismo producto o servicio suele venderlo varios comercializadores y bajo marcas distintas. Así se pueden satisfacer varios segmentos de clientes con el mismo producto.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=55" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Sensor como servicio" data-en="Sensor As A Service">
+  <div class="top"><span class="num">56</span><h2>Sensor como servicio</h2><span class="en">Sensor As A Service</span></div>
+  <p>El uso de sensores habilita servicios adicionales para ofertas físicas, o servicios independientes completamente nuevos. No es el sensor el que genera el ingreso principal, sino el análisis de los datos que ese sensor produce. Las posibilidades de información en tiempo real pueden reforzar aún más la propuesta de valor.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=56" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Virtualización" data-en="Virtualization">
+  <div class="top"><span class="num">57</span><h2>Virtualización</h2><span class="en">Virtualization</span></div>
+  <p>Este patrón describe la imitación de un proceso tradicionalmente físico en un entorno virtual, por ejemplo un espacio de trabajo virtual. La ventaja para el cliente es poder interactuar con el proceso desde cualquier lugar o dispositivo. A cambio, el cliente paga por el acceso al servicio virtual.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=57" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Objeto con autoservicio" data-en="Object Self-service">
+  <div class="top"><span class="num">58</span><h2>Objeto con autoservicio</h2><span class="en">Object Self-service</span></div>
+  <p>Mediante el uso de sensores y su inclusión en una estructura de TI, un objeto puede generar pedidos por sí mismo. Esto permite procesos totalmente automatizados, como la reposición de stock, y aumenta la velocidad de interacción con el objeto. El cliente queda bloqueado, lo que da lugar a ingresos recurrentes.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=58" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Objeto como punto de venta" data-en="Object As Point-of-sale">
+  <div class="top"><span class="num">59</span><h2>Objeto como punto de venta</h2><span class="en">Object As Point-of-sale</span></div>
+  <p>El punto de venta de los consumibles se traslada al punto de consumo. Esto genera un bloqueo más fuerte del cliente y mejora la retención. Cuando el punto de venta se aleja de los productos de la competencia, el cliente se vuelve menos sensible al precio.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=59" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+<article class="card" data-nombre="Prosumidor" data-en="Prosumer">
+  <div class="top"><span class="num">60</span><h2>Prosumidor</h2><span class="en">Prosumer</span></div>
+  <p>Las empresas permiten que los clientes se conviertan ellos mismos en productores. El cliente se integra a la cadena de valor y puede aprovechar el producto resultante, mientras la empresa tiene menos costos de inversión en producción y en gastos generales. Como el consumidor participa en la producción, el valor percibido del producto aumenta.</p>
+  <a class="src" href="https://www.businessmodelnavigator.com/pattern?id=60" target="_blank" rel="noopener">Ficha original en inglés →</a>
+</article>
+</div>
+<p class="vacio" id="vacio">Ningún patrón coincide con esa búsqueda. Prueba con otra palabra.</p>
+</main>
+<footer>
+  <p><b>Fuente:</b> Business Model Navigator, Universidad de St. Gallen — <a href="https://www.businessmodelnavigator.com/explore" target="_blank" rel="noopener">businessmodelnavigator.com/explore</a>. Patrones descritos en <i>The Business Model Navigator</i> (Gassmann, Frankenberger &amp; Csik).<br>
+  Textos traducidos al español para el electivo <i>Innovación: Ideas Disruptivas para el Éxito</i> (FAE USACH). La traducción sigue el sentido del original; el enlace a cada ficha en inglés está en cada tarjeta.</p>
+  <p><a href="innovacion-disruptiva.html">← Volver al plan del electivo</a></p>
+</footer>
+<script>
+(function(){
+  var q=document.getElementById('q'), cards=[].slice.call(document.querySelectorAll('.card')),
+      cta=document.getElementById('cuenta'), vacio=document.getElementById('vacio');
+  function normalize(s){return (s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+  cards.forEach(function(c){c.dataset.buscar=normalize(c.dataset.nombre+' '+c.dataset.en+' '+c.textContent);});
+  function filtrar(){
+    var t=normalize(q.value.trim()), n=0;
+    cards.forEach(function(c){
+      var ok = !t || c.dataset.buscar.indexOf(t)>-1;
+      c.style.display = ok ? '' : 'none';
+      if(ok) n++;
+    });
+    cta.textContent = n+' de '+cards.length+' patrones';
+    vacio.style.display = n ? 'none' : 'block';
+  }
+  q.addEventListener('input',filtrar);
+  filtrar();
+})();
+</script>
+</body>
+</html>
