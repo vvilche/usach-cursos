@@ -10,6 +10,22 @@
 <body>
 
 <div class="layout">
+<nav>
+  <div class="brand">Innovación: Ideas Disruptivas</div>
+  <h1>Tarea · Clases 1 a 4</h1>
+  <div class="sub">Del job to be done a dos modelos de negocio. Electivo VI · FAE USACH · grupos de hasta 2 personas.</div>
+  <div class="grp">Las cuatro partes</div>
+  <a href="#c1t"><span class="n">1</span>El trabajo del cliente</a>
+  <a href="#c2t"><span class="n">2</span>La curva de valor</a>
+  <a href="#c3t"><span class="n">3</span>El Canvas</a>
+  <a href="#c4t"><span class="n">4</span>Dos modelos con patrones</a>
+  <div class="grp">Cierre</div>
+  <a href="#entregable"><span class="n">·</span>Entregable final</a>
+  <a href="#testeo"><span class="n">·</span>Testeo de 8 preguntas</a>
+  <div class="grp">Material</div>
+  <a href="@@CATALOGO@@"><span class="n">·</span>Catálogo de patrones</a>
+  <a href="@@PLAN@@" class="foot">← Plan del electivo</a>
+</nav>
 <main>
 
 <div class="brand">Innovación: Ideas Disruptivas · Electivo VI · FAE USACH</div>
@@ -153,7 +169,7 @@
 </section>
 
 <!-- ══ ENTREGABLE FINAL ══ -->
-<section>
+<section id="entregable">
   <div class="sec-num">Cierre</div>
   <h2>Entregable final de las clases 1 a 4</h2>
   <p class="lead">Una sola pieza sobre una sola idea, entregada en el formato que elijas. Lo importante es que las cuatro partes se lean como una historia y no como cuatro trabajos pegados.</p>
