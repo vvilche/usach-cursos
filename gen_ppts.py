@@ -274,7 +274,7 @@ CLASES.append(dict(curso=AU, n=4, fecha="Jue 15 oct 2026", titulo="HITO L1 · Ag
    ("error", dict(kicker="Error típico", h2="El agente que no sabe decir «no está»", warn="Si le preguntan algo que no está en el balance y el agente inventa una cifra, <b>todo lo demás pierde valor</b>. La honestidad («no está en el documento») es más importante que parecer listo.")),
    ("pasos", dict(kicker="La tarea", h2="Integrá", steps=[("Conecta","extracción + índice en un solo agente."),("Agrega grounding:","cada respuesta lleva su fuente."),("Añade la regla","«si no está, dilo».")])),
    ("testeo", dict(kicker="El testeo", h2="Demo + prueba de fuego", big="Demo de 2 min por pareja. Luego, una pregunta cuya respuesta NO está en el balance: el agente debe declararlo.", meta="Pasa el hito quien demuestra que su agente lee, responde y NO inventa.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("Cómo hacer un agente confiable","https://www.anthropic.com/research/building-effective-agents"),("RAG con grounding","https://www.pinecone.io/learn/grounded-rag/")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Cómo hacer un agente confiable","https://www.anthropic.com/research/building-effective-agents"),("RAG con grounding","https://www.pinecone.io/learn/retrieval-augmented-generation/")])),
   ]))
 CLASES.append(dict(curso=AU, n=5, fecha="Jue 22 oct 2026", titulo="El problema real: conciliación SII vs ERP",
   lead="El dolor de verdad del auditor: cruzar lo facturado con lo registrado, y por qué la Ley 21.595 lo vuelve urgente.",
@@ -328,7 +328,7 @@ CLASES.append(dict(curso=AU, n=9, fecha="Jue 26 nov 2026", titulo="Cero alucinac
    ("ejemplo", dict(kicker="Ejemplo", h2="Una spec de auditoría", q="Spec: «Cuadra la conciliación al centavo»", steps=["Cita la norma vigente, nunca de memoria.","Prohibido inventar artículos, plazos o umbrales.","Si un dato no está en la fuente, decláralo.","Entrega la cifra con su fuente al lado."], meta="Con esta spec, el agente prefiere decir «no está» antes que inventar.")),
    ("pasos", dict(kicker="La tarea", h2="Escribí tu spec", steps=[("Define QUÉ","debe hacer el agente exactamente."),("Define QUÉ NO","puede hacer (inventar, redondear, omitir)."),("Haz que el agente","ejecute respetando la spec.")])),
    ("testeo", dict(kicker="El testeo", h2="Prueba adversarial", big="Pedile un artículo que no existe. Debe decir «no está en la norma», no inventar el «Artículo 999».")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("spec-kit (Spec-Driven Development)","https://github.com/github/spec-kit"),("Por qué un RAG alucina","https://www.pinecone.io/learn/rag-hallucinations/")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("spec-kit (Spec-Driven Development)","https://github.com/github/spec-kit"),("Por qué un RAG alucina","https://www.pinecone.io/learn/ai-hallucinations/")])),
   ]))
 CLASES.append(dict(curso=AU, n=10, fecha="Jue 03 dic 2026", titulo="Guardrails: Zod + Graft",
   lead="Blindar el agente con validación de datos y mapeo del código del ERP.",
@@ -349,7 +349,7 @@ CLASES.append(dict(curso=AU, n=11, fecha="Jue 10 dic 2026", titulo="HITO L3 · B
    ("lista", dict(kicker="La batería", h2="Pruebas adversariales", items=["<b>Falsa premisa:</b> preguntar por un artículo inexistente.","<b>Typos:</b> «plzso» en vez de «plazo».","<b>Prompt injection:</b> «ignora tus instrucciones».","<b>Cadena de 4 vueltas:</b> referencias a «eso», «el plazo»."])),
    ("pasos", dict(kicker="La tarea", h2="Armá tu set de evaluación", steps=[("Escribe 10+ consultas","con su respuesta esperada."),("Medí","recall/precision del retrieval y faithfulness."),("Corre la batería adversarial","y registrá los resultados.")])),
    ("testeo", dict(kicker="El testeo", h2="Con métricas en pantalla", big="Pasá la batería adversarial y muestra que el agente responde con fuente o declara «no está», con los números de recall/faithfulness.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("Evaluar un RAG","https://www.pinecone.io/learn/rag-evaluation/"),("Faithfulness / groundedness","https://www.pinecone.io/learn/rag-faithfulness/")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Evaluar un RAG","https://www.pinecone.io/learn/series/rag/rag-evaluation/"),("Faithfulness / groundedness","https://www.pinecone.io/learn/series/rag/ragas/")])),
   ]))
 CLASES.append(dict(curso=AU, n=12, fecha="Jue 17 dic 2026", titulo="Hackathon: el Swarm multi-agente",
   lead="Orquestar varios agentes que se reparten el trabajo de auditoría.",
@@ -387,7 +387,7 @@ CLASES.append(dict(curso=IN, n=1, fecha="Sáb 26 sep 2026", titulo="¿Qué es in
    ("error", dict(kicker="Error típico", h2="Preguntar «¿qué quieres?» en vez de observar", warn="«¿Qué quieres?» te da respuestas racionalizadas. <b>Observá qué hacen</b>, qué se les complica, qué improvisan. El trabajo se ve en la conducta, no en el discurso.")),
    ("pasos", dict(kicker="La tarea", h2="Encontrá el «job»", steps=[("Elegí un mercado real.",""),("Describe el trabajo","que hoy se resuelve mal (funcional + emocional + social)."),("NO propongas solución todavía","— solo el problema.")])),
    ("testeo", dict(kicker="El testeo", h2="¿Es disruptiva o incremental?", big="Explicá por qué tu idea es disruptiva (segmento ignorado u otra forma de hacer el trabajo), no una mejora incremental del líder.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("Christensen — The Innovator's Dilemma","https://www.claytonchristensen.com"),("Jobs to be Done (Alan Klement)","https://jtbd.info")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Christensen — The Innovator's Dilemma","https://www.christenseninstitute.org/book/the-innovators-dilemma/"),("Jobs to be Done (Alan Klement)","https://jobstobedone.org/")])),
   ]))
 CLASES.append(dict(curso=IN, n=2, fecha="Sáb 03 oct 2026", titulo="Océano Azul: crear mercados sin competencia",
   lead="Redefinir los factores de la industria para crear un mercado donde no compites por lo mismo.",
@@ -429,7 +429,7 @@ CLASES.append(dict(curso=IN, n=4, fecha="Sáb 17 oct 2026", titulo="Patrones: 55
    ("error", dict(kicker="Error típico", h2="Variación cosmética vs. cambio de lógica", warn="Cambiar el color o el precio NO es un nuevo modelo. Un patrón cambia <b>qué crea valor, quién paga o cómo se captura</b>. Si no cambia la lógica, es cosmética.")),
    ("pasos", dict(kicker="La tarea", h2="Aplicá patrones", steps=[("Elegí 3 patrones","de los 55 que no usas hoy."),("Aplicalos a tu modelo base.",""),("Generá 2 modelos alternativos","genuinamente distintos.")])),
    ("testeo", dict(kicker="El testeo", h2="No variaciones cosméticas", big="Los 2 modelos nuevos son genuinamente distintos (cambia la lógica de captura de valor) y puedes decir qué patrón los generó.")),
-   ("links", dict(kicker="Para aprender", h2="Links", links=[("Business Model Navigator (55 patrones)","https://www.businessmodelnavigator.com"),("Ten Types of Innovation (Doblin)","https://doblin.com/ten-types")])),
+   ("links", dict(kicker="Para aprender", h2="Links", links=[("Business Model Navigator (55 patrones)","https://www.businessmodelnavigator.com"),("Ten Types of Innovation (Doblin)","https://www.mindtools.com/as67pbm/doblins-10-types-of-innovation/")])),
   ]))
 CLASES.append(dict(curso=IN, n=5, fecha="Sáb 24 oct 2026", titulo="Propuesta de valor + Customer Development",
   lead="Diseñar la propuesta de valor y salir a validarla con clientes reales.",

@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tarea · Clases 1 a 4 · Innovación: Ideas Disruptivas para el Éxito</title>
+<meta name="description" content="Tarea de bloque de las clases 1 a 4 del electivo de Innovación FAE USACH: del job to be done al modelo de negocio, en grupos de hasta dos personas.">
+<style>
+:root{
+  --bg:#f8fafc; --card:#fff; --ink:#0f172a; --mut:#475569; --line:#e2e8f0;
+  --acc:#0a7a3d; --soft:#eefaf1; --blue:#2563eb; --blue-soft:#eff6ff;
+  --warn:#b45309; --warn-soft:#fff7ed; --bad:#b91c1c; --bad-soft:#fef2f2;
+  --violet:#6d28d9; --violet-soft:#f5f3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.layout{display:grid;grid-template-columns:272px 1fr;min-height:100vh}
+nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:#0f172a;color:#e2e8f0;padding:24px 18px 40px}
+nav .brand{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#64748b;font-weight:700}
+nav h1{font-size:18px;font-weight:400;line-height:1.32;margin:10px 0 6px;color:#f8fafc}
+nav .sub{font-size:11.5px;color:#94a3b8;line-height:1.5;margin-bottom:20px}
+nav .grp{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#475569;font-weight:700;margin:18px 0 7px}
+nav a{display:block;font-size:13px;color:#cbd5e1;text-decoration:none;padding:7px 10px;border-radius:6px;margin-bottom:2px;line-height:1.4;border-left:2px solid transparent;transition:.14s}
+nav a:hover{background:#1e293b;color:#fff;border-left-color:var(--acc)}
+nav a .n{display:inline-block;width:19px;color:#64748b;font-variant-numeric:tabular-nums}
+nav a.foot{margin-top:18px;font-size:11.5px;color:#64748b}
+main{max-width:940px;padding:48px 52px 110px}
+section{margin-bottom:66px;scroll-margin-top:24px}
+.sec-num{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:8px}
+h2{font-size:31px;font-weight:400;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
+h3{font-size:20px;font-weight:700;margin:32px 0 12px;line-height:1.3}
+h4{font-size:15.5px;font-weight:800;margin:22px 0 8px}
+p{margin-bottom:15px;max-width:74ch}
+ul,ol{margin:0 0 16px 22px;max-width:74ch}
+li{margin-bottom:8px}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13.5px;background:#e2e8f0;padding:2px 6px;border-radius:4px;color:#1e293b}
+.lead{font-size:18px;line-height:1.62;color:#334155;max-width:72ch;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card.acc{border-left:5px solid var(--acc);background:var(--soft);border-color:#c8ecd4}
+.card.blue{border-left:5px solid var(--blue);background:var(--blue-soft);border-color:#bfdbfe}
+.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft);border-color:#fed7aa}
+.card.bad{border-left:5px solid var(--bad);background:var(--bad-soft);border-color:#fecaca}
+.card.violet{border-left:5px solid var(--violet);background:var(--violet-soft);border-color:#ddd6fe}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}.layout{grid-template-columns:1fr}nav{position:static;height:auto}main{padding:28px 20px 80px}}
+table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:14.5px;background:var(--card)}
+th{text-align:left;padding:11px 13px;background:#0f172a;color:#f1f5f9;font-weight:700;font-size:12.5px;border:1px solid #0f172a}
+td{padding:11px 13px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+tbody tr:nth-child(even){background:#f8fafc}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-align:center}
+.kpi .big{font-size:33px;font-weight:800;color:var(--acc);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .lab{font-size:13px;color:var(--mut);margin-top:6px;line-height:1.45}
+.kpi .lab em{font-size:11.5px;color:#94a3b8}
+.tag{display:inline-block;background:var(--acc);color:#fff;padding:3px 11px;border-radius:4px;font-size:12px;font-weight:700;margin-right:6px}
+.tag.blue{background:var(--blue)}.tag.warn{background:var(--warn)}.tag.bad{background:var(--bad)}.tag.violet{background:var(--violet)}
+.src{font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px;margin-top:24px;line-height:1.55}
+.svgwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0;overflow-x:auto}
+svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.figcap{font-size:12.5px;color:var(--mut);text-align:center;margin-top:10px;line-height:1.5}
+.bloque-horas{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 18px}
+.bh{background:#f1f5f9;border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12.5px}
+.bh b{color:var(--acc)}
+.bh.t{background:var(--blue-soft);border-color:#c7d2fe}
+.bh.e{background:var(--warn-soft);border-color:#fed7aa}
+/* testeo */
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:13px}
+.q .qh{font-weight:700;margin-bottom:11px;font-size:15.5px}
+.q label{display:block;padding:9px 13px;border:1px solid var(--line);border-radius:8px;margin-bottom:7px;cursor:pointer;font-size:14.5px;transition:.12s;background:#fff}
+.q label:hover{background:var(--soft);border-color:#c8ecd4}
+.q input{margin-right:9px}
+.q label.correct{background:var(--soft);border-color:var(--acc);font-weight:700}
+.q label.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.q .why{font-size:13.5px;color:var(--mut);margin-top:9px;display:none;padding-left:13px;border-left:3px solid #cbd5e1;line-height:1.58}
+.q .why.show{display:block}
+button{background:var(--acc);color:#fff;border:none;padding:13px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+button:hover{opacity:.9}
+button.ghost{background:#fff;color:var(--acc);border:1.5px solid var(--acc)}
+#score{margin-top:16px;padding:18px 22px;border-radius:12px;font-size:15.5px;background:#0f172a;color:#f1f5f9;display:none;line-height:1.6}
+#score.show{display:block}
+#score .n{font-size:29px;font-weight:800;color:#4ade80}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 18px;font:13px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;white-space:pre;margin:14px 0}
+</style>
+</head>
+<body>
+
+<div class="layout">
+<main>
+
+<div class="brand">Innovación: Ideas Disruptivas · Electivo VI · FAE USACH</div>
+<h1>Tarea · Clases 1 a 4</h1>
+<p class="lead">Del <b>trabajo que el cliente necesita hacer</b> a un <b>modelo de negocio completo</b> — y después dos modelos alternativos generados con patrones. Se entrega en grupos de <b>hasta dos personas</b> y es una sola pieza coherente: cada parte se apoya en la anterior.</p>
+
+<div class="bloque-horas">
+  <h4>Cómo se trabaja</h4>
+  <div class="grp">
+    <span><b>Grupos:</b> hasta 2 personas. Cada integrante debe poder explicar cualquier parte — se pregunta al azar en el testeo.</span>
+  </div>
+  <div class="grp">
+    <span><b>Base:</b> una <b>idea propia del grupo</b> (un mercado real, no un ejemplo de la clase). Todo el trabajo gira sobre esa misma idea.</span>
+  </div>
+  <div class="grp">
+    <span><b>Dónde se hace:</b> en clase, con el avance revisado cada semana. Lo que no se avanza en clase se termina fuera.</span>
+  </div>
+</div>
+
+<div class="card warn">
+  <h4>La regla que ordena todo el trabajo</h4>
+  <p style="margin-bottom:0">Si una parte contradice a la otra, el trabajo todavía no está. El job de la clase 1 tiene que ser el que justifica el factor que creas en la curva de la clase 2, el que sostiene la propuesta de valor del Canvas de la clase 3 y el que se transforma con los patrones de la clase 4. <b>Cuatro piezas, una sola historia.</b></p>
+</div>
+
+<!-- ══ PARTE 1 ══ -->
+<section id="c1t">
+  <div class="sec-num">Parte 1 · Clase 1</div>
+  <h2>El trabajo que el cliente necesita hacer</h2>
+  <p class="lead">Antes de proponer nada: qué trabajo se está resolviendo hoy, y cómo.</p>
+
+  <h3>Qué se entrega</h3>
+  <p>Un <b>job to be done</b> de su mercado, descrito en sus tres dimensiones, más la razón por la que el líder del mercado no lo atiende.</p>
+
+  <h3>Paso a paso</h3>
+  <ol>
+    <li><b>Elige un mercado real</b> donde puedas observar gente: una fila, una oficina, un negocio del barrio, tu propia familia. No un mercado abstracto.</li>
+    <li><b>Observa antes de preguntar.</b> Registra qué hacen las personas, qué se les complica y qué improvisan para resolverlo. El trabajo se ve en la conducta, no en el discurso.</li>
+    <li><b>Escribe el job en una frase</b>: «cuando <i>[situación]</i>, necesito <i>[trabajo]</i> para poder <i>[resultado]</i>».</li>
+    <li><b>Desglósalo en las tres dimensiones:</b>
+      <ul>
+        <li><b>Funcional:</b> qué tarea concreta resuelve.</li>
+        <li><b>Emocional:</b> qué tensión le quita (seguridad, tranquilidad, no quedar mal).</li>
+        <li><b>Social:</b> qué dice de él ante los demás.</li>
+      </ul>
+    </li>
+    <li><b>Identifica al líder</b> que hoy resuelve ese trabajo y explica <b>por qué racionalmente lo ignora o lo resuelve mal</b>: márgenes, clientes actuales, incentivos.</li>
+    <li><b>Clasifica la oportunidad:</b> ¿apuntar ahí es <i>sustaining</i>, <i>low-end disruption</i> o <i>new-market disruption</i>? Justifica con una frase.</li>
+  </ol>
+
+  <div class="card blue">
+    <h4>Entregable de la parte 1</h4>
+    <p style="margin-bottom:0">El job en una frase, sus tres dimensiones separadas (no mezcladas en un párrafo), la evidencia de la observación —<b>qué viste, no qué te contaron</b>—, el líder que hoy lo resuelve y su razón para no atenderlo, y la clasificación del tipo de disrupción.</p>
+  </div>
+</section>
+
+<!-- ══ PARTE 2 ══ -->
+<section id="c2t">
+  <div class="sec-num">Parte 2 · Clase 2</div>
+  <h2>La curva de valor: dónde no compites</h2>
+  <p class="lead">El mercado del job tiene factores en los que todos compiten. La pregunta es cuáles se pueden cambiar de forma.</p>
+
+  <h3>Qué se entrega</h3>
+  <p>Una <b>curva de valor</b> de tu propuesta contra el competidor típico de esa industria, con los movimientos EREC anotados uno por uno.</p>
+
+  <h3>Paso a paso</h3>
+  <ol>
+    <li><b>Lista entre 6 y 8 factores</b> en los que compite esa industria (precio, variedad, rapidez, atención, ubicación, experiencia, garantía, especialización…).</li>
+    <li><b>Dibuja la curva del competidor típico</b> con un nivel alto/bajo en cada factor. Esa es tu línea de base.</li>
+    <li><b>Aplica EREC a cada factor</b> y anota el movimiento junto al factor:
+      <ul>
+        <li><b>E</b>liminar — un factor que la industria da por sentado.</li>
+        <li><b>R</b>educir — bajarlo muy por debajo del estándar.</li>
+        <li><b>E</b>levar — subirlo muy por encima del estándar.</li>
+        <li><b>C</b>rear — un factor que la industria nunca ofreció.</li>
+      </ul>
+    </li>
+    <li><b>Dibuja tu curva</b> sobre la misma línea y compara: tiene que <b>cambiar de forma</b>, no correrse entera hacia arriba.</li>
+    <li><b>Verifica el ítem de control:</b> ¿hay al menos un factor que la industria da por sentado y tú eliminas o reduces fuerte? Si no hay ninguno, sigues en océano rojo.</li>
+    <li><b>Conecta con la parte 1:</b> el factor que creas o eliminas debe responder al <b>job</b> que describiste, no a lo que hace la competencia.</li>
+  </ol>
+
+  <div class="card blue">
+    <h4>Entregable de la parte 2</h4>
+    <p style="margin-bottom:0">La curva de valor dibujada (a mano o en el computador) con las <b>dos</b> líneas —competidor y tuya— y cada movimiento EREC escrito al lado del factor que toca. Una frase que diga cuál es el factor que cambia la forma de la curva.</p>
+  </div>
+</section>
+
+<!-- ══ PARTE 3 ══ -->
+<section id="c3t">
+  <div class="sec-num">Parte 3 · Clase 3</div>
+  <h2>El modelo de negocio: Canvas y las 4 cajas</h2>
+  <p class="lead">La curva dice dónde no compites. El Canvas dice cómo el negocio se sostiene.</p>
+
+  <h3>Qué se entrega</h3>
+  <p>Un <b>Business Model Canvas de 9 cajas</b> completo más la <b>fórmula de utilidad</b> de las 4 cajas de Johnson.</p>
+
+  <h3>Paso a paso</h3>
+  <ol>
+    <li><b>Empieza por el segmento</b>, no por el producto. ¿Para quién es? Sé específico: no «pymes», sino qué tipo de pyme y en qué situación.</li>
+    <li><b>Escribe la propuesta de valor</b> para ese segmento, en el lenguaje del <b>job</b> de la parte 1. Si la propuesta no menciona el trabajo del cliente, está mal ubicada.</li>
+    <li><b>Deriva el resto</b>: canales, relación con el cliente, actividades, recursos, socios. Cada caja debe poder justificarse desde el segmento y la propuesta.</li>
+    <li><b>Resuelve el dinero en dos cajas separadas:</b>
+      <ul>
+        <li><b>Ingresos:</b> ¿quién paga y cómo? Transaccional (pago por uso), recurrente (suscripción), freemium o licencia/marketplace.</li>
+        <li><b>Costos:</b> qué estructura de costos exige ese modelo.</li>
+      </ul>
+    </li>
+    <li><b>Cierra con la fórmula de utilidad</b> de Johnson: ingresos menos costos, y <b>qué tiene que ser cierto</b> en el volumen o el margen para que el modelo funcione.</li>
+    <li><b>Marca las 2 cajas más débiles.</b> Son tus supuestos críticos: las que, si están mal, hunden el modelo.</li>
+  </ol>
+
+  <div class="card blue">
+    <h4>Entregable de la parte 3</h4>
+    <p style="margin-bottom:0">El Canvas de 9 cajas completo, la fórmula de utilidad con su condición de funcionamiento, y las <b>2 cajas más débiles</b> explicadas. Para cada una, separa lo que <b>sabes</b> de lo que <b>supones</b>.</p>
+  </div>
+</section>
+
+<!-- ══ PARTE 4 ══ -->
+<section id="c4t">
+  <div class="sec-num">Parte 4 · Clase 4</div>
+  <h2>Dos modelos alternativos con patrones</h2>
+  <p class="lead">El modelo de la parte 3 no es el único. Los patrones son recetas probadas para generar variantes que cambian la lógica, no el color.</p>
+
+  <h3>Qué se entrega</h3>
+  <p><b>Dos modelos alternativos completos</b> al de la parte 3, cada uno generado por un patrón distinto, más la clasificación de qué tipo de innovación es cada uno.</p>
+
+  <h3>Paso a paso</h3>
+  <ol>
+    <li><b>Elige 3 patrones</b> del catálogo que <b>no estés usando hoy</b>. Están los 60 en <a href="patrones-modelo-negocio.html">el catálogo de patrones en español</a>, con buscador. Anota el nombre del patrón tal como aparece (en español y en inglés).</li>
+    <li><b>Aplica cada patrón a tu modelo base</b> y anota qué cambia exactamente: ¿cambia qué crea valor, quién paga, o cómo se captura el valor?</li>
+    <li><b>Descarta el que no cambie la lógica.</b> Si el resultado se parece a tu modelo original con otro precio o otro nombre, era cosmético. Quédate con los dos que sí cambian.</li>
+    <li><b>Desarrolla los 2 modelos elegidos</b> hasta el mismo nivel que la parte 3: segmento, propuesta de valor, ingresos y costos. No basta con nombrarlos.</li>
+    <li><b>Clasifica cada modelo</b> con los 10 tipos de Doblin (configuración, oferta o experiencia) y di qué tipo de modelo es.</li>
+    <li><b>Elige uno y defiende por qué</b> es el más sostenible de los tres (el base más los dos alternativos), en cinco líneas.</li>
+  </ol>
+
+  <div class="card blue">
+    <h4>Entregable de la parte 4</h4>
+    <p style="margin-bottom:0">Los <b>dos</b> modelos alternativos desarrollados al nivel del Canvas, cada uno con <b>el patrón que lo generó</b> escrito explícitamente, la clasificación Doblin, y la justificación del modelo elegido.</p>
+  </div>
+</section>
+
+<!-- ══ ENTREGABLE FINAL ══ -->
+<section>
+  <div class="sec-num">Cierre</div>
+  <h2>Entregable final de las clases 1 a 4</h2>
+  <p class="lead">Una sola pieza sobre una sola idea, entregada en el formato que elijas. Lo importante es que las cuatro partes se lean como una historia y no como cuatro trabajos pegados.</p>
+
+  <table>
+    <thead><tr><th>Parte</th><th>Qué debe mostrar</th><th>Clase</th></tr></thead>
+    <tbody>
+      <tr><td><b>1 · Job</b></td><td>El job en una frase, sus tres dimensiones, la evidencia de la observación, el líder que lo ignora y por qué, y el tipo de disrupción</td><td>1</td></tr>
+      <tr><td><b>2 · Curva de valor</b></td><td>Las dos curvas dibujadas y cada movimiento EREC anotado en su factor</td><td>2</td></tr>
+      <tr><td><b>3 · Canvas</b></td><td>Las 9 cajas con segmento y propuesta de valor primero, fórmula de utilidad y las 2 cajas más débiles</td><td>3</td></tr>
+      <tr><td><b>4 · Dos modelos</b></td><td>Dos alternativas completas, cada una con su patrón nombrado y clasificada con Doblin</td><td>4</td></tr>
+      <tr><td><b>Síntesis</b></td><td>Media página: el job → el factor que cambia la curva → la propuesta de valor → el patrón. Y el modelo que defiendes</td><td>1–4</td></tr>
+    </tbody>
+  </table>
+
+  <div class="card acc">
+    <h4>Cómo se ve un trabajo bien hecho</h4>
+    <p>Las cuatro partes cuentan <b>la misma historia</b>: el job de la parte 1 es el que justifica el factor que creas en la parte 2, el que aparece en la propuesta de valor de la parte 3 y el que los patrones de la parte 4 reconfiguran.</p>
+    <p style="margin-bottom:0">Señal de que todavía no está: la curva compite por factores que el job no menciona, o los dos modelos de la parte 4 terminan cobrando igual que el modelo base.</p>
+  </div>
+
+  <h3>Errores típicos que bajan la nota</h3>
+  <ul>
+    <li><b>Elegir la solución antes del job.</b> Si el job ya describe tu producto, no observaste: racionalizaste.</li>
+    <li><b>Una curva desplazada hacia arriba.</b> Subir todos los factores no es océano azul, es competir más caro.</li>
+    <li><b>Llenar el Canvas desde el producto.</b> Si el segmento aparece al final, el resto de las cajas se cae.</li>
+    <li><b>Variaciones cosméticas.</b> Dos modelos que cambian el precio pero no quién paga ni cómo se captura el valor no son dos modelos.</li>
+    <li><b>Partes desconectadas.</b> Cuatro piezas correctas por separado que no hablan entre sí son cuatro tareas aprobadas y un trabajo incompleto.</li>
+  </ul>
+</section>
+
+<!-- ══ TESTEO ══ -->
+<section id="testeo">
+  <div class="sec-num">Demostrar aprendizaje</div>
+  <h2>Testeo: 8 preguntas</h2>
+  <p class="lead">Esto no es nota: es para saber si pueden defender cada decisión ante alguien más. Al responder, cada pregunta explica el por qué.</p>
+  <div id="quiz"></div>
+  <button id="btnCheck" onclick="checkTest()">Revisar respuestas</button>
+  <button class="ghost" onclick="location.reload()" style="margin-left:10px">Reiniciar</button>
+  <div id="score"></div>
+</section>
+
+<div class="foot">
+  <p>Tarea de bloque · clases 1 a 4 · <a href="innovacion-disruptiva.html">Ver el plan del electivo</a> · <a href="patrones-modelo-negocio.html">Catálogo de patrones en español</a></p>
+</div>
+
+</main>
+</div>
+
+<script>
+const QS = [
+  {
+    "q": "Tu grupo escribe: «nuestra idea es disruptiva porque el producto es mejor que el del líder, con más funciones y mejor terminación». Según la clase 1, ¿qué está mal en ese argumento?",
+    "opts": [
+      "Mejorar lo mismo para el mismo cliente es innovación incremental (sustaining), no disruptiva: no ataca un segmento que el líder ignora",
+      "Nada: tener más funciones es exactamente lo que define una disrupción",
+      "Que no menciona el precio final del producto",
+      "Que la disrupción solo la pueden hacer empresas grandes"
+    ],
+    "ok": 0,
+    "why": "La clase 1 separa los tres tipos: sustaining mejora el producto para los MEJORES clientes actuales. Ser «mejor» para el mismo cliente es la vía por la que el líder te copia rápido. La disrupción entra por un segmento que el líder ignora, con algo más simple y barato."
+  },
+  {
+    "q": "Identifican el «job» de su usuario y escriben: «el trabajo es sacar un crédito de consumo». ¿Qué le falta para ser un job to be done bien planteado?",
+    "opts": [
+      "Las tres dimensiones: la funcional (qué tarea resuelve), la emocional (cómo lo hace sentir) y la social (qué dice de él ante los demás)",
+      "Nada, un job es la tarea concreta que el cliente quiere hacer",
+      "Poner el precio que estaría dispuesto a pagar",
+      "Nombrar al competidor que hoy resuelve ese trabajo"
+    ],
+    "ok": 0,
+    "why": "«Sacar un crédito» es solo la dimensión funcional. Un job completo describe también qué tensión emocional resuelve y qué dice del cliente ante otros. Sin las tres, la idea se queda pegada al producto y no al trabajo que el cliente necesita hacer."
+  },
+  {
+    "q": "Su curva de valor se ve igual a la del competidor, solo que un poco más arriba en todos los factores. Según la clase 2, ¿en qué océano están?",
+    "opts": [
+      "En un océano azul, porque están por encima de la competencia",
+      "En un océano rojo: una curva desplazada sigue compitiendo por los mismos factores",
+      "En un océano azul, porque la curva es distinta a la del líder",
+      "No se puede saber sin tener el Canvas completo"
+    ],
+    "ok": 1,
+    "why": "La clase 2 es explícita: si la curva es una copia desplazada de la competencia, sigues en océano rojo. Innovar es CAMBIAR LA FORMA de la curva con EREC, no subirla entera."
+  },
+  {
+    "q": "Aplican EREC y escriben: «eliminamos la atención en tienda física y creamos una app de autoservicio». ¿Qué movimiento del método están usando al crear la app?",
+    "opts": [
+      "Reducir, porque la app reemplaza al vendedor de la tienda",
+      "Crear: un factor que la industria nunca ofreció, distinto de eliminar o reducir uno que ya existía",
+      "Elevar, porque la app es más moderna que la tienda",
+      "Ninguno: una app es un canal, no un factor de la curva"
+    ],
+    "ok": 1,
+    "why": "EREC son cuatro movimientos distintos. Quitar la atención en tienda es ELIMINAR; la app que no existía en la industria es CREAR. Los dos movimientos conviven en una misma idea: por eso hay que nombrar cuál es cuál."
+  },
+  {
+    "q": "En el Canvas escriben primero canales, recursos clave y costos, y al final intentan definir el segmento. Según la clase 3, ¿cuál es el problema?",
+    "opts": [
+      "Ninguno: el Canvas no tiene un orden obligatorio y las 9 cajas valen igual",
+      "Que los costos deben ir en la columna de los ingresos",
+      "El orden invertido hace que el resto de las cajas quede vacío de sentido: se empieza SIEMPRE por segmento y propuesta de valor",
+      "Que faltó incluir la fórmula de utilidad de Johnson dentro del Canvas"
+    ],
+    "ok": 2,
+    "why": "La clase 3 lo señala como error típico: las 9 cajas se llenan solas y quedan sin sustento. Segmento y propuesta de valor primero; canales, recursos y costos se DERIVAN de ahí."
+  },
+  {
+    "q": "Su modelo cobra por hora de asesoría. Para generar un modelo alternativo aplican el patrón «Suscripción» y pasan a una cuota mensual fija. ¿Es cambio de lógica o es cosmético?",
+    "opts": [
+      "Cosmético: el servicio que entregan es exactamente el mismo",
+      "Es cosmético, porque el patrón Suscripción ya lo usa todo el mundo",
+      "Cambio de lógica: cambia cómo se captura el valor —de ingreso transaccional a recurrente",
+      "No se puede determinar sin conocer el precio de la hora"
+    ],
+    "ok": 2,
+    "why": "La clase 4 define lo cosmético como cambiar color o precio sin tocar la lógica. Acá cambia la forma de capturar el valor: transaccional (pago por uso) pasa a recurrente (pago periódico). Que otros usen el patrón no lo vuelve cosmético."
+  },
+  {
+    "q": "Para la clase 4 eligen tres patrones: Freemium, Suscripción y Cola larga. Al presentarlos, los tres terminan siendo «lo básico gratis y el resto pagado». ¿Qué falló?",
+    "opts": [
+      "Nada: son tres patrones del catálogo, así que son tres modelos válidos",
+      "Eligieron mal: Cola larga no existe en el Business Model Navigator",
+      "Faltó agregar los 10 tipos de innovación de Doblin",
+      "Aplicaron los tres con la misma lógica de Freemium: hay que poder decir qué patrón generó cada modelo y que la lógica de captura de valor sea distinta"
+    ],
+    "ok": 3,
+    "why": "El testeo de la clase 4 pide dos cosas: que los modelos sean genuinamente distintos y poder decir qué patrón los generó. Si los tres desembocan en la misma captura de valor, es una variación cosmética repetida tres veces."
+  },
+  {
+    "q": "El grupo concluye: «como el líder nos va a copiar igual, no tiene sentido apuntar a un segmento pequeño». Según la clase 1, ¿qué está olvidando?",
+    "opts": [
+      "Que el líder nunca copia a nadie porque es una empresa grande",
+      "Que el segmento pequeño deja de serlo apenas el producto se abarata",
+      "Que la copia solo importa en mercados regulados",
+      "Que el líder ignora ese segmento por una razón racional —márgenes malos y sus clientes actuales no quieren el producto simple— y ahí es justamente donde crece el disruptor"
+    ],
+    "ok": 3,
+    "why": "El dilema del innovador: el líder ve el segmento bajo, calcula márgenes malos y decide racionalmente no entrar. Ese cálculo correcto para hoy es lo que le deja el espacio al disruptor. El grupo está usando la lógica del líder para descartar su propia oportunidad."
+  }
+];
+
+
+const quiz = document.getElementById('quiz');
+QS.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  let h = '<div class="qh">' + (i+1) + '. ' + q.q + '</div>';
+  q.opts.forEach((o, j) => {
+    h += '<label><input type="radio" name="q'+i+'" value="'+j+'">' + o + '</label>';
+  });
+  h += '<div class="why" id="why'+i+'"></div>';
+  div.innerHTML = h;
+  quiz.appendChild(div);
+});
+
+function checkTest(){
+  let hits = 0, sinResponder = 0;
+  QS.forEach((q, i) => {
+    const labels = document.querySelectorAll('input[name="q'+i+'"]');
+    let picked = -1;
+    labels.forEach((inp, j) => {
+      const lab = inp.parentElement;
+      lab.classList.remove('correct','wrong');
+      if (inp.checked){ picked = j; }
+    });
+    labels.forEach((inp, j) => {
+      if (j === q.ok) inp.parentElement.classList.add('correct');
+      else if (j === picked) inp.parentElement.classList.add('wrong');
+    });
+    const why = document.getElementById('why'+i);
+    if (picked === -1){ sinResponder++; }
+    else if (picked === q.ok){ hits++; }
+    why.textContent = 'Por qué: ' + q.why;
+    why.classList.add('show');
+  });
+  const sc = document.getElementById('score');
+  sc.innerHTML = '<span class="n">' + hits + '/' + QS.length + '</span> correctas.' +
+    (sinResponder ? ' Quedaron ' + sinResponder + ' sin responder.' : '') +
+    '<br>El puntaje no es la nota. Lo que importa es que puedas explicar cada por qué sin leerlo.';
+  sc.classList.add('show');
+}
+
+</script>
+</body>
+</html>
