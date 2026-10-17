@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarea clase 7 · Innovación: Desarrollando Ideas Disruptivas</title>
+<style>
+:root{
+  --bg:#f8fafc; --card:#fff; --ink:#0f172a; --mut:#475569; --line:#e2e8f0;
+  --acc:#0a7a3d; --soft:#eefaf1; --blue:#2563eb; --blue-soft:#eff6ff;
+  --warn:#b45309; --warn-soft:#fff7ed; --bad:#b91c1c; --bad-soft:#fef2f2;
+  --violet:#6d28d9; --violet-soft:#f5f3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.layout{display:grid;grid-template-columns:272px 1fr;min-height:100vh}
+nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:#0f172a;color:#e2e8f0;padding:24px 18px 40px}
+nav .brand{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#64748b;font-weight:700}
+nav h1{font-size:18px;font-weight:400;line-height:1.32;margin:10px 0 6px;color:#f8fafc}
+nav .sub{font-size:11.5px;color:#94a3b8;line-height:1.5;margin-bottom:20px}
+nav .grp{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#475569;font-weight:700;margin:18px 0 7px}
+nav a{display:block;font-size:13px;color:#cbd5e1;text-decoration:none;padding:7px 10px;border-radius:6px;margin-bottom:2px;line-height:1.4;border-left:2px solid transparent;transition:.14s}
+nav a:hover{background:#1e293b;color:#fff;border-left-color:var(--acc)}
+nav a .n{display:inline-block;width:19px;color:#64748b;font-variant-numeric:tabular-nums}
+nav a.foot{margin-top:18px;font-size:11.5px;color:#64748b}
+main{max-width:940px;padding:48px 52px 110px}
+section{margin-bottom:66px;scroll-margin-top:24px}
+.sec-num{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:8px}
+h2{font-size:31px;font-weight:400;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
+h3{font-size:20px;font-weight:700;margin:32px 0 12px;line-height:1.3}
+h4{font-size:15.5px;font-weight:800;margin:22px 0 8px}
+p{margin-bottom:15px;max-width:74ch}
+ul,ol{margin:0 0 16px 22px;max-width:74ch}
+li{margin-bottom:8px}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13.5px;background:#e2e8f0;padding:2px 6px;border-radius:4px;color:#1e293b}
+.lead{font-size:18px;line-height:1.62;color:#334155;max-width:72ch;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card.acc{border-left:5px solid var(--acc);background:var(--soft);border-color:#c8ecd4}
+.card.blue{border-left:5px solid var(--blue);background:var(--blue-soft);border-color:#bfdbfe}
+.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft);border-color:#fed7aa}
+.card.bad{border-left:5px solid var(--bad);background:var(--bad-soft);border-color:#fecaca}
+.card.violet{border-left:5px solid var(--violet);background:var(--violet-soft);border-color:#ddd6fe}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}.layout{grid-template-columns:1fr}nav{position:static;height:auto}main{padding:28px 20px 80px}}
+table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:14.5px;background:var(--card)}
+th{text-align:left;padding:11px 13px;background:#0f172a;color:#f1f5f9;font-weight:700;font-size:12.5px;border:1px solid #0f172a}
+td{padding:11px 13px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+tbody tr:nth-child(even){background:#f8fafc}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-align:center}
+.kpi .big{font-size:33px;font-weight:800;color:var(--acc);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .lab{font-size:13px;color:var(--mut);margin-top:6px;line-height:1.45}
+.kpi .lab em{font-size:11.5px;color:#94a3b8}
+.tag{display:inline-block;background:var(--acc);color:#fff;padding:3px 11px;border-radius:4px;font-size:12px;font-weight:700;margin-right:6px}
+.tag.blue{background:var(--blue)}.tag.warn{background:var(--warn)}.tag.bad{background:var(--bad)}.tag.violet{background:var(--violet)}
+.src{font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px;margin-top:24px;line-height:1.55}
+.svgwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0;overflow-x:auto}
+svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.figcap{font-size:12.5px;color:var(--mut);text-align:center;margin-top:10px;line-height:1.5}
+.bloque-horas{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 18px}
+.bh{background:#f1f5f9;border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12.5px}
+.bh b{color:var(--acc)}
+.bh.t{background:var(--blue-soft);border-color:#c7d2fe}
+.bh.e{background:var(--warn-soft);border-color:#fed7aa}
+/* testeo */
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:13px}
+.q .qh{font-weight:700;margin-bottom:11px;font-size:15.5px}
+.q label{display:block;padding:9px 13px;border:1px solid var(--line);border-radius:8px;margin-bottom:7px;cursor:pointer;font-size:14.5px;transition:.12s;background:#fff}
+.q label:hover{background:var(--soft);border-color:#c8ecd4}
+.q input{margin-right:9px}
+.q label.correct{background:var(--soft);border-color:var(--acc);font-weight:700}
+.q label.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.q .why{font-size:13.5px;color:var(--mut);margin-top:9px;display:none;padding-left:13px;border-left:3px solid #cbd5e1;line-height:1.58}
+.q .why.show{display:block}
+button{background:var(--acc);color:#fff;border:none;padding:13px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+button:hover{opacity:.9}
+button.ghost{background:#fff;color:var(--acc);border:1.5px solid var(--acc)}
+#score{margin-top:16px;padding:18px 22px;border-radius:12px;font-size:15.5px;background:#0f172a;color:#f1f5f9;display:none;line-height:1.6}
+#score.show{display:block}
+#score .n{font-size:29px;font-weight:800;color:#4ade80}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 18px;font:13px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;white-space:pre;margin:14px 0}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Innovación: Ideas Disruptivas</div>
+  <h1>Tarea · Clase 7</h1>
+  <div class="sub">HITO mitad — Presenta tu modelo disruptivo. Electivo VI · FAE USACH · sábado 11:25–14:20.</div>
+  <div class="grp">La clase</div>
+  <a href="#c"><span class="n">·</span>Resumen de la clase</a>
+  <div class="grp">La tarea</div>
+  <a href="#ct"><span class="n">·</span>Qué se pide</a>
+  <a href="#ct"><span class="n">·</span>Paso a paso</a>
+  <div class="grp">Cierre</div>
+  <a href="#ct"><span class="n">·</span>Testeo: demostrar</a>
+  <a href="#testeo"><span class="n">·</span>Preguntas de repaso</a>
+  <a class="foot" href="innovacion-disruptiva.html">← Plan de clases del curso</a>
+</nav>
+<main>
+
+<section id="c">
+  <div class="sec-num">Clase 7 · Sáb 21 nov 2026</div>
+  <h2>HITO mitad — Presenta tu modelo disruptivo</h2>
+  <p class="lead">A mitad de curso toca poner todo junto y aguantar preguntas duras. El punto no es presentar bonito: es descubrir qué parte del modelo no aguanta y salir con una lista de cambios concreta.</p>
+  <h3>Lo que hay que entender</h3>
+    <div class="card"><h4>Qué se presenta</h4><p style="margin-bottom:0">Canvas + curva de valor + hipótesis. Tres piezas que deben contar la misma historia: el factor que creas en la curva es el que sostiene tu propuesta de valor en el Canvas.</p></div>
+  <div class="card"><h4>Crítica estructurada</h4><p style="margin-bottom:0">La audiencia no opina de todo: se le asignan preguntas. Cada equipo recibe un veredicto por pieza y, sobre todo, el punto exacto donde el modelo se cae.</p></div>
+  <div class="card"><h4>El entregable real</h4><p style="margin-bottom:0">No es la presentación: es la lista de cambios. Lo que se evalúa es si el equipo sale sabiendo qué reescribir, no si defendió bien lo que tenía.</p></div>
+  <div class="src">Plan de clases: <a href="innovacion-disruptiva.html">Innovación: Ideas Disruptivas · 2S 2026</a></div>
+</section>
+
+<section id="ct">
+  <div class="sec-num">Clase 7 · La tarea</div>
+  <h2>Qué hay que entregar</h2>
+  <div class="card acc">
+    <h4>Qué entregar</h4>
+    <p style="margin-bottom:0">Presentar el modelo (Canvas + curva de valor + hipótesis) en <b>4 minutos</b>, recibir crítica estructurada y anotar <b>qué van a cambiar</b>.</p>
+  </div>
+  <h3>Paso a paso</h3>
+  <ol>
+    <li>Armen <b>4 láminas máximo</b>: curva de valor, Canvas, hipótesis + experimento, y qué es lo que los tiene menos tranquilos.</li>
+    <li>Ensayen con cronómetro, 4 minutos reales. El resumen no se hace en vivo.</li>
+    <li>Preparen las 2 preguntas que <b>más miedo</b> les dan y tengan la respuesta lista.</li>
+    <li>Durante la crítica, anoten todo sin defenderse. Una persona del equipo escribe, la otra responde.</li>
+    <li>Cierren con una <b>lista de 3 cambios concretos</b> y qué van a re-testear de aquí al hito final.</li>
+  </ol>
+  <div class="card warn">
+    <h4>Ojo con esto</h4>
+    <ul style="margin-bottom:0">
+      <li>Presentar 15 láminas y correr: lo que se cae es la explicación, no el modelo.</li>
+      <li>Defender cada crítica en el momento en vez de anotarla: se pierde el feedback y el tiempo.</li>
+      <li>Salir sin lista de cambios: el hito se hizo, la idea quedó igual, no hubo iteración.</li>
+      <li>Contradicción entre piezas: la curva dice una cosa y el Canvas sostiene otra.</li>
+    </ul>
+  </div>
+  <div class="card blue">
+    <h4>Testeo — Demostrar, no es nota</h4>
+    <p style="margin-bottom:0">Defienden el modelo ante preguntas duras y <b>explicitan qué feedback van a incorporar</b> — no solo presentar, iterar.</p>
+  </div>
+</section>
+
+<section id="testeo">
+  <div class="sec-num">Demostrar aprendizaje</div>
+  <h2>Testeo: 6 preguntas</h2>
+  <p class="lead">Al responder, cada una explica el por qué. El objetivo no es la nota: es poder explicar cada decisión a alguien más.</p>
+  <div id="quiz"></div>
+  <button id="btnCheck" onclick="checkTest()">Revisar respuestas</button>
+  <button class="ghost" onclick="location.reload()" style="margin-left:10px">Reiniciar</button>
+  <div id="score"></div>
+</section>
+
+</main>
+</div>
+<script>
+const QS = [
+  {
+    "q": "Un equipo presenta su modelo y todas sus piezas se contradicen entre sí: el Canvas dice un segmento y la curva de valor apunta a otro. ¿Qué evaluación le corresponde?",
+    "opts": [
+      "Está bien: son herramientas distintas y no tienen por qué coincidir",
+      "Es un problema de formato: falta un índice al principio",
+      "Falta la parte más importante: las piezas deben contar la misma historia, así que el factor que se crea en la curva es el que sostiene la propuesta de valor del Canvas",
+      "Es aceptable mientras el pitch dure menos de 4 minutos"
+    ],
+    "ok": 0,
+    "why": "La coherencia entre piezas es exactamente lo que el hito evalúa: la curva redefinida y el Canvas son la misma apuesta vista en dos planos. Si contradicen, el trabajo no está terminado, aunque cada parte se vea bien por separado."
+  },
+  {
+    "q": "El ensayo da 9 minutos y el pase tiene 4. ¿Cuál es la respuesta correcta?",
+    "opts": [
+      "Reducir las láminas y ensayar con cronómetro hasta que quepa, resumiendo en vivo",
+      "Mostrar 9 minutos: si el contenido es bueno, el tiempo se ajusta",
+      "Presentar solo el Canvas y saltarse la curva de valor para ahorrar tiempo",
+      "Pedir a la audiencia que no haga preguntas"
+    ],
+    "ok": 1,
+    "why": "El tiempo es parte del ejercicio: la mitad del valor del hito está en priorizar qué es esencial. Se rediseña el pase (menos láminas, ideas más cortas) y se ensaya, en vez de recortar contenido en vivo. Y la curva no es opcional: es una de las tres piezas evaluadas."
+  },
+  {
+    "q": "¿Cuál es el entregable REAL del hito de mitad de curso?",
+    "opts": [
+      "El archivo con las diapositivas de la presentación",
+      "La lista de cambios concretos que el equipo sale a aplicar, más lo que va a re-testear",
+      "La nota que le pone el profesor a cada equipo",
+      "El video de la presentación subido a la nube"
+    ],
+    "ok": 2,
+    "why": "El hito existe para iterar: se recibe crítica estructurada y se sale con una lista de cambios y su re-testeo. Una defensa impecable que deja el modelo intacto no cumplió el objetivo, y la nota es solo el registro de ese trabajo."
+  },
+  {
+    "q": "Durante la crítica, un compañero del público hace una pregunta que incomoda al equipo. ¿Qué conviene hacer?",
+    "opts": [
+      "Defender la posición de inmediato con los datos que se tengan a mano",
+      "Anotarla sin responderla y sacarla de la conversación",
+      "Contestarla brevemente y anotar la pregunta: es la señal de la pieza más débil del modelo",
+      "Pedir que otro equipo decida quién tiene razón"
+    ],
+    "ok": 3,
+    "why": "Las preguntas incómodas marcan dónde está el punto débil, que es justo lo que el equipo necesita saber a mitad de camino. Se responde corto y se anota; se defiende después, con datos. Una persona del equipo escribe mientras la otra responde."
+  },
+  {
+    "q": "¿Cuál es la mejor lámina final de un pase de 4 minutos?",
+    "opts": [
+      "La lista de links para aprender sobre el tema",
+      "El agradecimiento con los nombres del equipo",
+      "La parte del modelo con la que el equipo está menos tranquilo: expone el supuesto más frágil y abre la crítica útil",
+      "El organigrama de la empresa imaginaria"
+    ],
+    "ok": 0,
+    "why": "Declarar tú mismo el punto frágil convierte a la audiencia en verificadora de lo que más importa, en vez de dejarla adivinando. Y en el hito se evalúa iteración, no autobombo: el equipo que esconde su debilidad no recibe la crítica que necesitaba."
+  },
+  {
+    "q": "¿Qué relación debe tener la curva de valor con el Canvas en esta presentación?",
+    "opts": [
+      "Ninguna: son herramientas de clases distintas, se presentan en el orden del programa",
+      "La curva muestra qué factor nuevo creas y el Canvas muestra cómo eso sostiene la propuesta de valor: una explica a la otra",
+      "La curva reemplaza a la propuesta de valor del Canvas para ahorrar espacio",
+      "El Canvas va primero y la curva se anexa solo si sobra tiempo"
+    ],
+    "ok": 1,
+    "why": "La curva y el Canvas son la misma apuesta en dos vistas: la curva dice qué factor del mercado redefines y el Canvas dice quién es ese cliente y con qué promesa se sostiene. Presentarlos desconectados suele ser la señal más rápida de un modelo que aún no se entiende."
+  }
+];
+
+const quiz = document.getElementById('quiz');
+QS.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  let h = '<div class="qh">' + (i+1) + '. ' + q.q + '</div>';
+  q.opts.forEach((o, j) => {
+    h += '<label><input type="radio" name="q'+i+'" value="'+j+'">' + o + '</label>';
+  });
+  h += '<div class="why" id="why'+i+'"></div>';
+  div.innerHTML = h;
+  quiz.appendChild(div);
+});
+
+function checkTest(){
+  let hits = 0, sinResponder = 0;
+  QS.forEach((q, i) => {
+    const labels = document.querySelectorAll('input[name="q'+i+'"]');
+    let picked = -1;
+    labels.forEach((inp, j) => {
+      const lab = inp.parentElement;
+      lab.classList.remove('correct','wrong');
+      if (inp.checked){ picked = j; }
+    });
+    labels.forEach((inp, j) => {
+      if (j === q.ok) inp.parentElement.classList.add('correct');
+      else if (j === picked) inp.parentElement.classList.add('wrong');
+    });
+    const why = document.getElementById('why'+i);
+    if (picked === -1){ sinResponder++; }
+    else if (picked === q.ok){ hits++; }
+    why.textContent = 'Por qué: ' + q.why;
+    why.classList.add('show');
+  });
+  const sc = document.getElementById('score');
+  sc.innerHTML = '<span class="n">' + hits + '/' + QS.length + '</span> correctas.' +
+    (sinResponder ? ' Quedaron ' + sinResponder + ' sin responder.' : '') +
+    '<br>El puntaje no es la nota. Lo que importa es que puedas explicar cada por qué sin leerlo.';
+  sc.classList.add('show');
+}
+</script>
+</body>
+</html>

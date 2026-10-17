@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarea clase 6 · Innovación: Desarrollando Ideas Disruptivas</title>
+<style>
+:root{
+  --bg:#f8fafc; --card:#fff; --ink:#0f172a; --mut:#475569; --line:#e2e8f0;
+  --acc:#0a7a3d; --soft:#eefaf1; --blue:#2563eb; --blue-soft:#eff6ff;
+  --warn:#b45309; --warn-soft:#fff7ed; --bad:#b91c1c; --bad-soft:#fef2f2;
+  --violet:#6d28d9; --violet-soft:#f5f3ff;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.layout{display:grid;grid-template-columns:272px 1fr;min-height:100vh}
+nav{position:sticky;top:0;align-self:start;height:100vh;overflow-y:auto;background:#0f172a;color:#e2e8f0;padding:24px 18px 40px}
+nav .brand{font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:#64748b;font-weight:700}
+nav h1{font-size:18px;font-weight:400;line-height:1.32;margin:10px 0 6px;color:#f8fafc}
+nav .sub{font-size:11.5px;color:#94a3b8;line-height:1.5;margin-bottom:20px}
+nav .grp{font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:#475569;font-weight:700;margin:18px 0 7px}
+nav a{display:block;font-size:13px;color:#cbd5e1;text-decoration:none;padding:7px 10px;border-radius:6px;margin-bottom:2px;line-height:1.4;border-left:2px solid transparent;transition:.14s}
+nav a:hover{background:#1e293b;color:#fff;border-left-color:var(--acc)}
+nav a .n{display:inline-block;width:19px;color:#64748b;font-variant-numeric:tabular-nums}
+nav a.foot{margin-top:18px;font-size:11.5px;color:#64748b}
+main{max-width:940px;padding:48px 52px 110px}
+section{margin-bottom:66px;scroll-margin-top:24px}
+.sec-num{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:8px}
+h2{font-size:31px;font-weight:400;letter-spacing:-.015em;line-height:1.2;margin-bottom:14px}
+h3{font-size:20px;font-weight:700;margin:32px 0 12px;line-height:1.3}
+h4{font-size:15.5px;font-weight:800;margin:22px 0 8px}
+p{margin-bottom:15px;max-width:74ch}
+ul,ol{margin:0 0 16px 22px;max-width:74ch}
+li{margin-bottom:8px}
+code{font-family:"SF Mono",Menlo,Consolas,monospace;font-size:13.5px;background:#e2e8f0;padding:2px 6px;border-radius:4px;color:#1e293b}
+.lead{font-size:18px;line-height:1.62;color:#334155;max-width:72ch;margin-bottom:24px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.card.acc{border-left:5px solid var(--acc);background:var(--soft);border-color:#c8ecd4}
+.card.blue{border-left:5px solid var(--blue);background:var(--blue-soft);border-color:#bfdbfe}
+.card.warn{border-left:5px solid var(--warn);background:var(--warn-soft);border-color:#fed7aa}
+.card.bad{border-left:5px solid var(--bad);background:var(--bad-soft);border-color:#fecaca}
+.card.violet{border-left:5px solid var(--violet);background:var(--violet-soft);border-color:#ddd6fe}
+.card h4{margin-top:0}
+.card p:last-child,.card ul:last-child,.card ol:last-child{margin-bottom:0}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:18px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:18px}
+@media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}.layout{grid-template-columns:1fr}nav{position:static;height:auto}main{padding:28px 20px 80px}}
+table{width:100%;border-collapse:collapse;margin:16px 0 22px;font-size:14.5px;background:var(--card)}
+th{text-align:left;padding:11px 13px;background:#0f172a;color:#f1f5f9;font-weight:700;font-size:12.5px;border:1px solid #0f172a}
+td{padding:11px 13px;border:1px solid var(--line);vertical-align:top;line-height:1.55}
+tbody tr:nth-child(even){background:#f8fafc}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;text-align:center}
+.kpi .big{font-size:33px;font-weight:800;color:var(--acc);line-height:1.1;font-variant-numeric:tabular-nums}
+.kpi .lab{font-size:13px;color:var(--mut);margin-top:6px;line-height:1.45}
+.kpi .lab em{font-size:11.5px;color:#94a3b8}
+.tag{display:inline-block;background:var(--acc);color:#fff;padding:3px 11px;border-radius:4px;font-size:12px;font-weight:700;margin-right:6px}
+.tag.blue{background:var(--blue)}.tag.warn{background:var(--warn)}.tag.bad{background:var(--bad)}.tag.violet{background:var(--violet)}
+.src{font-size:12.5px;color:var(--mut);border-top:1px solid var(--line);padding-top:10px;margin-top:24px;line-height:1.55}
+.svgwrap{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:20px;margin:20px 0;overflow-x:auto}
+svg{display:block;margin:0 auto;max-width:100%;height:auto}
+.figcap{font-size:12.5px;color:var(--mut);text-align:center;margin-top:10px;line-height:1.5}
+.bloque-horas{display:flex;flex-wrap:wrap;gap:6px;margin:12px 0 18px}
+.bh{background:#f1f5f9;border:1px solid var(--line);border-radius:8px;padding:6px 11px;font-size:12.5px}
+.bh b{color:var(--acc)}
+.bh.t{background:var(--blue-soft);border-color:#c7d2fe}
+.bh.e{background:var(--warn-soft);border-color:#fed7aa}
+/* testeo */
+.q{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;margin-bottom:13px}
+.q .qh{font-weight:700;margin-bottom:11px;font-size:15.5px}
+.q label{display:block;padding:9px 13px;border:1px solid var(--line);border-radius:8px;margin-bottom:7px;cursor:pointer;font-size:14.5px;transition:.12s;background:#fff}
+.q label:hover{background:var(--soft);border-color:#c8ecd4}
+.q input{margin-right:9px}
+.q label.correct{background:var(--soft);border-color:var(--acc);font-weight:700}
+.q label.wrong{background:var(--bad-soft);border-color:var(--bad)}
+.q .why{font-size:13.5px;color:var(--mut);margin-top:9px;display:none;padding-left:13px;border-left:3px solid #cbd5e1;line-height:1.58}
+.q .why.show{display:block}
+button{background:var(--acc);color:#fff;border:none;padding:13px 26px;border-radius:8px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;transition:.15s}
+button:hover{opacity:.9}
+button.ghost{background:#fff;color:var(--acc);border:1.5px solid var(--acc)}
+#score{margin-top:16px;padding:18px 22px;border-radius:12px;font-size:15.5px;background:#0f172a;color:#f1f5f9;display:none;line-height:1.6}
+#score.show{display:block}
+#score .n{font-size:29px;font-weight:800;color:#4ade80}
+pre.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:16px 18px;font:13px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;white-space:pre;margin:14px 0}
+</style>
+</head>
+<body>
+<div class="layout">
+<nav>
+  <div class="brand">Innovación: Ideas Disruptivas</div>
+  <h1>Tarea · Clase 6</h1>
+  <div class="sub">Lean Startup + MVP. Electivo VI · FAE USACH · sábado 11:25–14:20.</div>
+  <div class="grp">La clase</div>
+  <a href="#c"><span class="n">·</span>Resumen de la clase</a>
+  <div class="grp">La tarea</div>
+  <a href="#ct"><span class="n">·</span>Qué se pide</a>
+  <a href="#ct"><span class="n">·</span>Paso a paso</a>
+  <div class="grp">Cierre</div>
+  <a href="#ct"><span class="n">·</span>Testeo: demostrar</a>
+  <a href="#testeo"><span class="n">·</span>Preguntas de repaso</a>
+  <a class="foot" href="innovacion-disruptiva.html">← Plan de clases del curso</a>
+</nav>
+<main>
+
+<section id="c">
+  <div class="sec-num">Clase 6 · Sáb 07 nov 2026</div>
+  <h2>Lean Startup + MVP</h2>
+  <p class="lead">La idea no se defiende con argumentos, se testea con un experimento. Y un experimento sin umbral de fracaso no es un experimento: es una esperanza con gráfico.</p>
+  <h3>Lo que hay que entender</h3>
+    <div class="card"><h4>Construir-Medir-Aprender (Ries)</h4><p style="margin-bottom:0">Ciclo de Lean Startup: se construye lo mínimo, se mide lo que el cliente hace, se aprende si la hipótesis vive o muere. Cada vuelta es más rápida y más barata que la anterior.</p></div>
+  <div class="card"><h4>MVP</h4><p style="margin-bottom:0">La versión más pequeña que genera <b>aprendizaje válido</b> — no la versión más pequeña que funciona bonito. Sirve un video, una landing, una hoja de cálculo, un servicio hecho a mano.</p></div>
+  <div class="card"><h4>Hipótesis → experimento</h4><p style="margin-bottom:0">Se escribe como: si [acción], entonces [métrica] cambia a [umbral] en [plazo]. Si no puedes escribir el umbral, no tienes experimento.</p></div>
+  <div class="card"><h4>Pivotar o perseverar</h4><p style="margin-bottom:0">Al cerrar el ciclo, la decisión es binaria: mantener el rumbo o cambiar una pieza del modelo (segmento, propuesta, canal, ingresos). Cambiar de idea cada semana no es pivotar, es no decidir.</p></div>
+  <div class="src">Plan de clases: <a href="innovacion-disruptiva.html">Innovación: Ideas Disruptivas · 2S 2026</a></div>
+</section>
+
+<section id="ct">
+  <div class="sec-num">Clase 6 · La tarea</div>
+  <h2>Qué hay que entregar</h2>
+  <div class="card acc">
+    <h4>Qué entregar</h4>
+    <p style="margin-bottom:0">Definir la <b>hipótesis más riesgosa</b>, el <b>MVP mínimo</b> para testearla y el <b>experimento</b> con métrica, plazo y umbral de éxito/fracaso.</p>
+  </div>
+  <h3>Paso a paso</h3>
+  <ol>
+    <li>Tomen los supuestos de la clase 3 y elijan el <b>más riesgoso</b>: el que, si es falso, se cae todo el modelo.</li>
+    <li>Escriban la hipótesis en la forma «si…, entonces…, en…»: una sola frase, sin adornos.</li>
+    <li>Definan el <b>MVP más chico posible</b> que aún permita aprender eso. Si necesita 3 meses de desarrollo, no es mínimo.</li>
+    <li>Elijan la <b>métrica</b> que el cliente deja al actuar (no lo que dice): cuántos piden el demo, cuántos pagan, cuántos vuelven.</li>
+    <li>Fijen el <b>umbral</b> de éxito Y el de fracaso, y el plazo. Escríbanlos antes de correr el experimento, no después.</li>
+    <li>Corran el experimento y anoten el resultado real, aunque sea malo. Un MVP que no refuta nada no enseñó nada.</li>
+  </ol>
+  <div class="card warn">
+    <h4>Ojo con esto</h4>
+    <ul style="margin-bottom:0">
+      <li>MVP que en realidad es el producto completo: si no se puede construir en días, no testea nada a tiempo.</li>
+      <li>Métrica de vanidad (visitas, likes, «me dijeron que estaba bueno») en vez de una acción que cuesta algo al cliente.</li>
+      <li>Fijar el umbral después de ver los resultados: así todo experimento «funciona».</li>
+      <li>Confundir pivotar con abandonar: pivotar es cambiar una pieza del modelo y volver a testear la misma hipótesis.</li>
+    </ul>
+  </div>
+  <div class="card blue">
+    <h4>Testeo — Demostrar, no es nota</h4>
+    <p style="margin-bottom:0">Explican qué métrica <b>validaría o refutaría</b> la hipótesis. Si no hay métrica que pueda refutarla, el experimento está mal diseñado.</p>
+  </div>
+</section>
+
+<section id="testeo">
+  <div class="sec-num">Demostrar aprendizaje</div>
+  <h2>Testeo: 6 preguntas</h2>
+  <p class="lead">Al responder, cada una explica el por qué. El objetivo no es la nota: es poder explicar cada decisión a alguien más.</p>
+  <div id="quiz"></div>
+  <button id="btnCheck" onclick="checkTest()">Revisar respuestas</button>
+  <button class="ghost" onclick="location.reload()" style="margin-left:10px">Reiniciar</button>
+  <div id="score"></div>
+</section>
+
+</main>
+</div>
+<script>
+const QS = [
+  {
+    "q": "¿Cuál de estos es un MVP en el sentido de Lean Startup?",
+    "opts": [
+      "La versión 1.0 completa, publicada, con todas las funciones pero con menos usuarios",
+      "Una landing que explica la oferta y mide cuántos dejan su correo, publicada antes de construir el producto",
+      "El diseño en Figma terminado y aprobado por el equipo",
+      "El pitch de la idea presentado a 10 personas en la sala de clases"
+    ],
+    "ok": 0,
+    "why": "El MVP existe para generar aprendizaje válido, no para lucirse: una landing con inscripción real revela si alguien quiere lo que ofreces, cuesta poco y se mide. La versión completa no es mínima, el diseño bonito no la ejercita, y el pitch mide cortesía, no intención. Sí sirven también un video, un servicio hecho a mano o una hoja de cálculo."
+  },
+  {
+    "q": "¿Cuál de estas métricas SÍ puede refutar tu hipótesis?",
+    "opts": [
+      "Cantidad de «me gusta» en la publicación de la idea",
+      "«El 40% de los que probaron el demo pidieron pagar por el plan completo», medido en 2 semanas",
+      "Cuántas personas escucharon la idea en una reunión familiar",
+      "Qué tan entusiastas se mostraron los entrevistados del 1 al 10"
+    ],
+    "ok": 1,
+    "why": "Solo una métrica con cliente actuando, número y plazo puede refutarte: el 40% existe o no existe, y con ese umbral escrito antes, el resultado decide. Likes, audiencia y entusiasmo no pueden fracasar nunca, y por eso no enseñan nada."
+  },
+  {
+    "q": "«Si el umbral se fija después de ver el resultado, el experimento siempre gana». ¿Por qué es un error?",
+    "opts": [
+      "Porque el umbral tiene que estar en el Canvas desde el principio",
+      "Porque dejar de ser refutable: cualquier resultado se acomoda para que parezca éxito, y no aprendes nada",
+      "Porque lo exige la ley de sociedades anónimas",
+      "Porque el umbral debe fijarlo el cliente y no el equipo"
+    ],
+    "ok": 2,
+    "why": "Un experimento vale porque puede perder. Si el criterio se ajusta a lo que salió, ya no hay forma de que la hipótesis muera y el MVP se vuelve teatro. El umbral de éxito y el de fracaso se escriben antes, junto con la métrica y el plazo."
+  },
+  {
+    "q": "En el ciclo Construir-Medir-Aprender, ¿qué se mide?",
+    "opts": [
+      "Lo que el cliente dice que haría si el producto existiera",
+      "Lo que el cliente hace: acciones observables que cuestan tiempo, datos o dinero",
+      "La opinión del equipo sobre la calidad del MVP",
+      "El tiempo que demoró construir el MVP"
+    ],
+    "ok": 3,
+    "why": "La medida es la conducta, no la opinión: se registra lo que la gente efectivamente hace con lo que le pusiste delante. La opinión es la materia prima del Aprender, y solo vale si está anclada en una acción que se pueda contar."
+  },
+  {
+    "q": "Un equipo cambia de idea completa cada semana porque «pivotó». ¿Qué falta?",
+    "opts": [
+      "Nada: así trabaja Lean Startup",
+      "Un plan de marketing que acompañe cada cambio",
+      "Registrar qué se aprendió en cada ciclo y mantener la hipótesis bajo prueba: pivotar es cambiar una pieza del modelo y volver a testear, no partir de cero",
+      "Más presupuesto para probar todas las ideas en paralelo"
+    ],
+    "ok": 0,
+    "why": "Pivotar es una decisión informada sobre una pieza (segmento, propuesta, canal, ingresos) después de un ciclo con resultado. Reiniciar desde cero cada semana no acumula aprendizaje, y el ciclo Construir-Medir-Aprender existe justo para que el equipo no dependa de la suerte."
+  },
+  {
+    "q": "¿Cómo se escribe correctamente una hipótesis de esta clase?",
+    "opts": [
+      "«Nuestra app va a ser un éxito porque el mercado de mascotas crece 12% anual»",
+      "«Vamos a tener 10.000 usuarios el primer año»",
+      "«Si mostramos el demo a 30 talleres, entonces al menos 6 dejarán su correo para la versión paga, en 3 semanas»",
+      "«La gente hoy pierde tiempo con el proceso manual y odia eso»"
+    ],
+    "ok": 1,
+    "why": "La hipótesis de trabajo tiene acción, métrica, umbral y plazo: así se puede saber si murió. El dato del mercado y la queja general describen contexto (útiles como supuesto, no como hipótesis testeable), y la meta de 10.000 usuarios es un deseo sin experimento asociado."
+  }
+];
+
+const quiz = document.getElementById('quiz');
+QS.forEach((q, i) => {
+  const div = document.createElement('div');
+  div.className = 'q';
+  let h = '<div class="qh">' + (i+1) + '. ' + q.q + '</div>';
+  q.opts.forEach((o, j) => {
+    h += '<label><input type="radio" name="q'+i+'" value="'+j+'">' + o + '</label>';
+  });
+  h += '<div class="why" id="why'+i+'"></div>';
+  div.innerHTML = h;
+  quiz.appendChild(div);
+});
+
+function checkTest(){
+  let hits = 0, sinResponder = 0;
+  QS.forEach((q, i) => {
+    const labels = document.querySelectorAll('input[name="q'+i+'"]');
+    let picked = -1;
+    labels.forEach((inp, j) => {
+      const lab = inp.parentElement;
+      lab.classList.remove('correct','wrong');
+      if (inp.checked){ picked = j; }
+    });
+    labels.forEach((inp, j) => {
+      if (j === q.ok) inp.parentElement.classList.add('correct');
+      else if (j === picked) inp.parentElement.classList.add('wrong');
+    });
+    const why = document.getElementById('why'+i);
+    if (picked === -1){ sinResponder++; }
+    else if (picked === q.ok){ hits++; }
+    why.textContent = 'Por qué: ' + q.why;
+    why.classList.add('show');
+  });
+  const sc = document.getElementById('score');
+  sc.innerHTML = '<span class="n">' + hits + '/' + QS.length + '</span> correctas.' +
+    (sinResponder ? ' Quedaron ' + sinResponder + ' sin responder.' : '') +
+    '<br>El puntaje no es la nota. Lo que importa es que puedas explicar cada por qué sin leerlo.';
+  sc.classList.add('show');
+}
+</script>
+</body>
+</html>

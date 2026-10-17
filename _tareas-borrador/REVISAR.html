@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Borradores · Tareas detalladas clases 4 a 7 · Innovación FAE USACH</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#0a7a3d;--blue:#2563eb;--warn:#b45309}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--ink);font:16px/1.68 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:40px 24px 90px}
+.brand{font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700}
+h1{font-size:30px;font-weight:400;letter-spacing:-.015em;margin:8px 0 10px}
+.lead{font-size:17px;color:#334155;max-width:78ch;margin-bottom:22px}
+.aviso{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:16px 20px;margin-bottom:26px;font-size:14.5px}
+.aviso b{color:var(--warn)}
+.clase{background:var(--card);border:1px solid var(--line);border-left:5px solid var(--acc);border-radius:12px;padding:20px 22px;margin-bottom:16px}
+.clase h3{font-size:19px;margin:0 0 2px}
+.clase .fecha{color:var(--acc);font-weight:600;font-size:13px;margin-bottom:10px}
+.clase p{font-size:14.5px;color:var(--mut);margin-bottom:10px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.pill{background:#f1f5f9;border:1px solid var(--line);border-radius:8px;padding:5px 10px;font-size:12.5px;color:var(--mut)}
+.pill b{color:var(--ink)}
+.btn{display:inline-block;background:var(--acc);color:#fff;padding:10px 18px;border-radius:8px;text-decoration:none;font-size:13.5px;font-weight:700;margin-top:6px}
+.btn.alt{background:var(--blue);margin-left:8px}
+hr{border:none;border-top:1px solid var(--line);margin:34px 0}
+.nota{font-size:13.5px;color:var(--mut);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 20px;margin-top:26px}
+</style>
+</head>
+<body>
+<div class="wrap">
+<div class="brand">Innovación: Ideas Disruptivas · Electivo VI · FAE USACH</div>
+<h1>Estado de las tareas: clases 4 a 7</h1>
+<p class="lead">Misma estructura y mismo formato que la página de las clases 2 y 3 que ya está publicada: resumen de la clase, qué hay que entregar, paso a paso, errores típicos, testeo y un repaso de 6 preguntas con corrección.</p>
+<div class="aviso"><b>Estado al 17 de octubre de 2026.</b> La <b>clase 4 ya no tiene tarea propia</b>: quedó reemplazada por la <b>tarea de bloque de las clases 1 a 4</b> (<code>tarea-innovacion-clases-1-4.html</code>, publicada y enlazada desde el plan). Su borrador se conserva en <code>_tareas-borrador/reemplazados/</code> y no debe publicarse. Las tareas de las <b>clases 5, 6 y 7 sí están publicadas</b> en la raíz del repositorio, con su botón en el plan, y su quiz ya fue balanceado (cuota exacta por posición: ninguna opción concentra las respuestas correctas).</div>
+
+<div id="lista"></div>
+
+<hr>
+<div class="nota">
+<b>Cómo se habilitan cuando toque.</b> Para cada clase son dos pasos: copiar el archivo del borrador a la raíz del repositorio y agregar el botón «Ver tarea detallada» bajo el bloque Tarea de esa clase en el plan de clases. Los nombres de archivo ya están puestos como van a quedar publicados, así que el enlace no cambia entre el borrador y la versión final. Avisame qué clase sale y lo subo.
+</div>
+</div>
+<script>
+const CLASES = [
+ {
+  "n": 4,
+  "file": "tarea-innovacion-clase-4-patrones-55-patrones-10-tipos-de-innovacion.html",
+  "titulo": "Patrones: 55 patrones + 10 tipos de innovación",
+  "fecha": "Sáb 17 oct 2026",
+  "lead": "Cuatro casos que se comportan igual sin parecerse: Uber, Airbnb, Nespresso y Cirque du Soleil. Ninguno inventó tecnología nueva. Lo que hicieron fue <b>cambiar una pieza del modelo</b> — y esa pieza, repetida, es un patrón.",
+  "tarea": "Aplicar al menos <b>3 patrones distintos</b> a su modelo base y producir <b>2 modelos alternativos</b> completos — no dos variaciones cosméticas del mismo.",
+  "preguntas": 6
+ },
+ {
+  "n": 5,
+  "file": "tarea-innovacion-clase-5-propuesta-de-valor-customer-development.html",
+  "titulo": "Propuesta de valor + Customer Development",
+  "fecha": "Sáb 24 oct 2026",
+  "lead": "El cliente no compra tu producto: contrata una solución para un trabajo que tiene que hacer. Si no sabes cuál es ese trabajo, estás diseñando a ciegas.",
+  "tarea": "Llenar el Value Proposition Canvas de su idea y redactar un <b>guión de entrevista con mínimo 5 preguntas</b> que validen el dolor del cliente.",
+  "preguntas": 6
+ },
+ {
+  "n": 6,
+  "file": "tarea-innovacion-clase-6-lean-startup-mvp.html",
+  "titulo": "Lean Startup + MVP",
+  "fecha": "Sáb 07 nov 2026",
+  "lead": "La idea no se defiende con argumentos, se testea con un experimento. Y un experimento sin umbral de fracaso no es un experimento: es una esperanza con gráfico.",
+  "tarea": "Definir la <b>hipótesis más riesgosa</b>, el <b>MVP mínimo</b> para testearla y el <b>experimento</b> con métrica, plazo y umbral de éxito/fracaso.",
+  "preguntas": 6
+ },
+ {
+  "n": 7,
+  "file": "tarea-innovacion-clase-7-hito-mitad-presenta-tu-modelo-disruptivo.html",
+  "titulo": "HITO mitad — Presenta tu modelo disruptivo",
+  "fecha": "Sáb 21 nov 2026",
+  "lead": "A mitad de curso toca poner todo junto y aguantar preguntas duras. El punto no es presentar bonito: es descubrir qué parte del modelo no aguanta y salir con una lista de cambios concreta.",
+  "tarea": "Presentar el modelo (Canvas + curva de valor + hipótesis) en <b>4 minutos</b>, recibir crítica estructurada y anotar <b>qué van a cambiar</b>.",
+  "preguntas": 6
+ }
+];
+const cont = document.getElementById('lista');
+CLASES.forEach(c => {
+  const d = document.createElement('div');
+  d.className = 'clase';
+  d.innerHTML =
+    '<h3>' + c.n + ' · ' + c.titulo + '</h3>' +
+    '<div class="fecha">' + c.fecha + '</div>' +
+    '<p>' + c.lead + '</p>' +
+    '<div class="meta">' +
+      '<span class="pill"><b>' + c.preguntas + '</b> preguntas de repaso</span>' +
+      '<span class="pill">resumen + paso a paso + errores + testeo</span>' +
+      '<span class="pill">estado: <b>borrador</b></span>' +
+    '</div>' +
+    '<a class="btn" href="borradores/' + c.file + '">Abrir la tarea</a>';
+  cont.appendChild(d);
+});
+</script>
+</body>
+</html>
