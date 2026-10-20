@@ -1,0 +1,120 @@
+<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Cómo se construyó el Estado de Resultados — paso a paso</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:-apple-system,'Segoe UI',system-ui,sans-serif;background:#0d1117;color:#c9d1d9;line-height:1.65;font-size:14px}
+.wrap{max-width:960px;margin:0 auto;padding:34px 24px 90px}
+h1{font-size:26px;font-weight:600;color:#f0f6fc;letter-spacing:-.4px;margin-bottom:6px}
+.sub{color:#8b949e;font-size:13px;margin-bottom:26px}
+.anon{background:#bb800915;border:1px solid #bb800955;border-radius:8px;padding:10px 14px;margin-bottom:26px;font-size:12.5px;color:#d29922}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:32px}
+.kpi{background:#161b22;border:1px solid #21262d;border-radius:9px;padding:13px 15px}
+.kpi .l{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:#8b949e;margin-bottom:5px}
+.kpi .v{font-size:17px;font-weight:600;color:#f0f6fc;font-variant-numeric:tabular-nums}
+.kpi .v.pos{color:#3fb950}.kpi .v.neg{color:#f85149}
+.etapa{background:#161b22;border:1px solid #21262d;border-radius:11px;margin-bottom:13px;overflow:hidden}
+.etapa.err{border-left:3px solid #f85149}
+.etapa.norm{border-left:3px solid #1f6feb}
+.hd{display:flex;gap:13px;padding:15px 18px;cursor:pointer;align-items:flex-start;user-select:none}
+.hd:hover{background:#1c212833}
+.num{background:#21262d;color:#58a6ff;width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;flex:none;margin-top:1px}
+.etapa.err .num{background:#da363333;color:#f85149}
+.tt{font-weight:600;color:#f0f6fc;font-size:14px}
+.preg{color:#8b949e;font-style:italic;font-size:12.5px;margin-top:3px}
+.bd{padding:0 18px 16px 57px;display:none}
+.etapa.open .bd{display:block}
+.lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.7px;color:#6e7681;margin:12px 0 4px;font-weight:600}
+.lbl.ap{color:#3fb950}
+.txt{font-size:13.2px;color:#c9d1d9}
+.txt code{background:#0d1117;border:1px solid #21262d;padding:1px 6px;border-radius:4px;font-family:ui-monospace,Menlo,monospace;font-size:11.5px;color:#79c0ff}
+.ap{background:#23863612;border:1px solid #23863640;border-radius:7px;padding:10px 13px;font-size:13px;color:#b7e4c7;margin-top:6px}
+.ap b{color:#56d364}
+footer{margin-top:44px;padding-top:18px;border-top:1px solid #21262d;color:#6e7681;font-size:11.5px}
+table{width:100%;border-collapse:collapse;background:#161b22;border:1px solid #21262d;border-radius:9px;overflow:hidden;font-size:12.5px;margin-top:10px}
+th{background:#1c2128;text-align:left;padding:8px 12px;font-size:10.5px;text-transform:uppercase;letter-spacing:.6px;color:#8b949e;border-bottom:1px solid #21262d}
+td{padding:7px 12px;border-bottom:1px solid #21262d22}
+td.r{text-align:right;font-variant-numeric:tabular-nums}
+.cc{font-family:ui-monospace,Menlo,monospace;color:#79c0ff;font-size:11.5px}
+.tot td{background:#1c2128;font-weight:600;color:#f0f6fc;border-top:1px solid #30363d}
+</style></head><body><div class="wrap">
+
+<h1>Cómo se construyó este Estado de Resultados</h1>
+<div class="sub">El registro del proceso real: qué se preguntó, qué se midió, en qué nos equivocamos y cómo se detectó.</div>
+
+<div class="anon"><b>Datos anonimizados.</b> Las cifras provienen de un export real de Business Central, pero los nombres de empresas, bancos y contrapartes fueron reemplazados. Las cifras se mantienen porque el ejercicio es sobre la mecánica contable.</div>
+
+<div class="grid">
+<div class="kpi"><div class="l">Movimientos</div><div class="v">4,550</div></div>
+<div class="kpi"><div class="l">Cuentas</div><div class="v">98</div></div>
+<div class="kpi"><div class="l">Ingresos</div><div class="v pos">3.797.700.378</div></div>
+<div class="kpi"><div class="l">Gastos</div><div class="v neg">3.794.902.962</div></div>
+<div class="kpi"><div class="l">Resultado</div><div class="v pos">2.797.416</div></div>
+</div>
+
+<div class="lbl">El proceso, en orden</div>
+<div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">1</div>
+<div><div class="tt">Qué nos pidieron (y qué respondimos)</div><div class="preg">«Busca todo lo que te permita convertirte en experto en Estado de Resultados, tengo Business Central»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">Antes de buscar en la web, revisamos qué había en el disco. Un proyecto vacío y una carpeta contable sin contenido: no había nada previo.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> El primer reflejo no es buscar: es ver qué ya existe. Nos ahorró construir sobre arena.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">2</div>
+<div><div class="tt">La pregunta que cambió el ejercicio</div><div class="preg">«Mientras buscas material de cómo se construyen los balances»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">Se amplió de Estado de Resultados a Balance. Son dos estados distintos y el segundo obliga a entender el cierre de ejercicio.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> Un pedido de una línea puede redefinir el alcance. Repetir el objetivo en voz alta antes de seguir evitó horas perdidas.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">3</div>
+<div><div class="tt">La taxonomía: ¿qué norma rige esto?</div><div class="preg">«Puede ser el SII o alguna normativa IFRS»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">Se identificaron TRES capas que conviven y colisionan: NIIF (estructura del estado, IFRS Foundation), tributaria (SII, arts. 29-33 LIR) y regulatoria (CMF).</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> Un contador puede tener utilidad NIIF y pérdida tributaria el mismo año. Son dos resultados y ambos deben reconciliarse. Colapsarlos en una sola cifra es el error de base.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">4</div>
+<div><div class="tt">Verificar vigencia — no citar de memoria</div><div class="preg">«Checa que sean las normas vigentes, po weón»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">Se consultó IFRS Foundation (IFRS 18 reemplaza a NIC 1 desde el 1-ene-2027) y el SII. Apareció la Ley 21.850, publicada el 17-oct-2026 — tres días antes de la clase: el IDPC baja a 25,5% en 2027, 24% en 2028 y 23% desde 2029.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> La norma cambió mientras preparábamos la clase. Citar «27%» de memoria habría sido un error de $ millones en cualquier proyección.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">5</div>
+<div><div class="tt">El dato real: la sábana de movimientos</div><div class="preg">«Con esta sábana de datos se debe trabajar»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">4.550 movimientos, 98 cuentas, export `Movs. contabilidad` de Business Central. Se inspeccionaron las 23 columnas antes de calcular nada.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> `Importe ($)` ya viene con signo (debe positivo / haber negativo): es la columna que se suma para saldos. Usar `debe` o `haber` por separado obliga a reconstruir el signo y ahí se cuelan los errores.</div></div></div><div class="etapa err">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">6</div>
+<div><div class="tt">El error que casi se publica</div><div class="preg">— (este paso no lo pidieron: lo encontramos al verificar)</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">El primer cálculo sumó solo las cuentas `4xxx` como gasto y dio resultado $132.877.213. Al cruzar con el balance apareció un «descuadre» de $130.079.797 — que era EXACTAMENTE el total de las clases `6xxx` y `7xxx` omitidas.</div><div class="lbl">Evidencia — gasto por clase de cuenta</div><table><thead><tr><th>Clase de cuenta</th><th class="r" style="width:170px">Monto</th></tr></thead>
+<tbody><tr><td class="cc">4xxx</td><td class="r">3.664.823.165</td></tr><tr><td class="cc">5xxx</td><td class="r">0</td></tr><tr><td class="cc">6xxx</td><td class="r">2.165.467</td></tr><tr><td class="cc">7xxx</td><td class="r">127.914.330</td></tr><tr class="tot"><td>Total gastos</td><td class="r">3.794.902.962</td></tr></tbody></table>
+<div class="lbl">El chequeo que falla si te falta una clase</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> El plan de cuentas chileno usa clases 4, 5, 6 y 7 para gastos. Sumar solo `4` infla el resultado en el monto exacto de las otras clases. Resultado real: $2.797.416.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">7</div>
+<div><div class="tt">Cómo se detectó: el segundo camino</div><div class="preg">— (control interno)</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">Se calculó el total de gastos por dos métodos independientes: (a) suma de clases 4-9, (b) negativos de clase 3. Si no coinciden, hay un error. Coincidieron recién al corregir.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> Nunca dar por bueno un número que sale por un solo camino. Dos métodos que deben coincidir convierten un error silencioso en un error visible.</div></div></div><div class="etapa err">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">8</div>
+<div><div class="tt">La segunda trampa: el prefijo</div><div class="preg">— (control interno)</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">El patrimonio salía $0 porque se filtró con `startswith("23")`, que en Python NO matchea `2301001`. Corregido a `c[:3] == "230"`.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> El patrimonio es el subgrupo `230x` (capital, revalorización, utilidades acumuladas). Una comparación de prefijo mal puesta devuelve cero en silencio, sin lanzar error.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">9</div>
+<div><div class="tt">El chequeo fuerte no es el que uno cree</div><div class="preg">— (control interno)</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">`Activo = Pasivo + Patrimonio + Resultado` NO daba: faltaban $400.568.938. Pero `Activo − Pasivo = Resultado` cuadraba exacto.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> El patrimonio venía de una apertura del ejercicio anterior (documento BCEAPERTURAVT, 31-05-2025) sin cierre intermedio: el archivo mezcla dos ejercicios. No es un error de captura y no hay que «arreglarlo»: hay que correr el cierre y exportar sin cruzar el corte.</div></div></div><div class="etapa">
+<div class="hd" onclick="this.parentElement.classList.toggle('open')">
+<div class="num">10</div>
+<div><div class="tt">Entregar a otro: convertirlo en skill</div><div class="preg">«Pásales a los alumnos cómo hicimos este ejercicio»</div></div>
+</div>
+<div class="bd"><div class="lbl">Qué hicimos</div><div class="txt">El proceso se congeló en dos skills: `business-central-er` (la mecánica y los controles, con el script que audita automáticamente) y `contabilidad-chile-niif` (la norma y su vigencia). Un skill es un procedimiento que otro puede ejecutar sin vos.</div><div class="lbl ap">Aprendizaje</div><div class="ap"><b>→</b> Un informe se lee una vez. Una skill se ejecuta para siempre. Lo que se repite, se escribe como procedimiento; lo que pasó una vez, se documenta como caso.</div></div></div>
+
+<footer>
+Material del electivo de Auditoría con IA Agéntica — FAE USACH.<br><br>
+El procedimiento completo está en las skills <code>business-central-er</code> y <code>contabilidad-chile-niif</code> del repositorio:
+son el mismo proceso, escritos para que un agente los ejecute sin vos.<br><br>
+Para reproducirlo: <code>python3 skills/business-central-er/scripts/audita_movs.py "Movs. contabilidad.xlsx"</code>
+</footer>
+</div>
+<script>
+document.querySelectorAll('.etapa')[0].classList.add('open');
+</script>
+</body></html>
