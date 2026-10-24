@@ -111,6 +111,15 @@ def sec(i, num, title, lead, body, nav_label=""):
 {body}
 </section>'''
 
+
+def material(*decks):
+    links = " · ".join(f'<a href="{h}">{t}</a>' for t, h in decks)
+    return ('  <div class="card blue" style="padding:14px 18px">\n'
+            '    <h4 style="margin:0 0 6px">Material de la clase</h4>\n'
+            f'    <p style="margin-bottom:0;font-size:14.5px">Se lee <b>durante la clase</b>, mientras se hace la tarea: '
+            f'{links}. No hay que traerlo leído de antes — el deck es la referencia que se consulta al escribir cada parte.</p>\n'
+            '  </div>\n')
+
 p1 = '''  <div class="src" style="border-top:none;padding-top:0;margin:0 0 18px">Lo que se construyó en las <b>clases 1 a 4</b>: el job con sus tres dimensiones, la curva de valor con EREC, el Canvas de 9 cajas con las dos cajas más débiles, y los dos modelos alternativos generados con patrones. <a href="tarea-innovacion-clases-1-4.html">Ver esa tarea</a>.</div>
   <div class="card acc">
     <h4>Qué entregar</h4>
@@ -141,7 +150,7 @@ p1 = '''  <div class="src" style="border-top:none;padding-top:0;margin:0 0 18px"
     </ul>
   </div>'''
 
-p2 = '''  <div class="card acc">
+p2 = material(("Clase 5 · Propuesta de valor + Customer Development", "innovacion-05.html")) + '''  <div class="card acc">
     <h4>Qué entregar</h4>
     <p style="margin-bottom:0">El <b>Value Proposition Canvas</b> completo —los dos lados en orden— y un <b>guión de entrevista con mínimo 5 preguntas</b> de comportamiento pasado, probado en <b>al menos 1 entrevista real</b>.</p>
   </div>
@@ -168,7 +177,7 @@ p2 = '''  <div class="card acc">
     </ul>
   </div>'''
 
-p3 = '''  <div class="card acc">
+p3 = material(("Clase 5 · Propuesta de valor + Customer Development", "innovacion-05.html")) + '''  <div class="card acc">
     <h4>Qué entregar</h4>
     <p style="margin-bottom:0">El <b>supuesto más riesgoso</b> de su Canvas, su <b>hipótesis</b> en una frase, el <b>MVP más chico</b> que la testea, y un <b>experimento</b> con métrica, umbral y plazo <b>escritos antes de correrlo</b>.</p>
   </div>
@@ -201,7 +210,8 @@ p3 = '''  <div class="card acc">
     </ul>
   </div>'''
 
-p4 = '''  <table>
+p4_material = material(("Clase 6 · Lean Startup + MVP", "innovacion-06.html"))
+p4 = p4_material + '''  <table>
     <thead><tr><th>Parte</th><th>Qué debe mostrar</th><th>Clase</th></tr></thead>
     <tbody>
       <tr><td>1 · El modelo que se testea</td><td>Las 4 piezas en limpio del modelo elegido, las 2 cajas más débiles y el mapa de supuestos con daño y evidencia</td><td>1–4</td></tr>
@@ -255,7 +265,7 @@ head = '''<section id="top">
   <div class="grid3">
     <div class="card"><h4>Grupos</h4><p style="margin-bottom:0">Hasta 2 personas. Cualquier integrante explica cualquier parte: se pregunta al azar en el testeo.</p></div>
     <div class="card"><h4>Base</h4><p style="margin-bottom:0">El mismo modelo de las clases 1 a 4. No se cambia de idea: se testea la que ya trabajaron.</p></div>
-    <div class="card"><h4>Dónde</h4><p style="margin-bottom:0">En clase, con avance revisado cada semana. Lo que no se avanza en clase se termina fuera.</p></div>
+    <div class="card"><h4>Cómo</h4><p style="margin-bottom:0">En clase y en autonomía: cada parte trae el material de la clase para consultarlo ahí mismo. El avance se revisa cada semana; lo que no se avanza se termina fuera.</p></div>
   </div>
   <div class="card violet">
     <h4>La regla que ordena todo el bloque</h4>
@@ -281,7 +291,7 @@ html = f'''<!DOCTYPE html>
 {sec("p2","Parte 2 · Clase 5","El valor, desde el cliente","El cliente no compra tu producto: contrata una solución para un trabajo que tiene que hacer. Si no sabes cuál es ese trabajo, estás diseñando a ciegas.",p2,"")}
 {sec("p3","Parte 3 · Clase 5","El guión y la entrevista","Una entrevista que no puede contradecirte no es una entrevista, es una confirmación.",p3,"")}
 {sec("p4","Parte 4 · Clase 6","La hipótesis y el experimento","La idea no se defiende con argumentos, se testea. Y un experimento sin umbral de fracaso no es un experimento: es una esperanza con gráfico.",p4,"")}
-{sec("cierre","Cierre","Entregable final de las clases 5 y 6","Una sola pieza sobre la misma idea de las clases 1 a 4. Lo que se lee es la cadena: job → dolor confirmado → supuesto → experimento.",p4)}
+{sec("cierre","Cierre","Entregable final de las clases 5 y 6","Una sola pieza sobre la misma idea de las clases 1 a 4. Lo que se lee es la cadena: job → dolor confirmado → supuesto → experimento.",p4.replace(p4_material, ""))}
 {sec("testeo","Demostrar aprendizaje","Testeo: 8 preguntas","No es nota: es para saber si pueden defender cada decisión ante alguien más. Al responder, cada pregunta explica el por qué.", QUIZ_HTML)}
 <div class="src" style="margin-top:40px">Tarea de bloque · clases 5 y 6 · <a href="innovacion-disruptiva.html">ver el plan del electivo</a> · <a href="tarea-innovacion-clases-1-4.html">tarea de las clases 1 a 4</a></div>
 </main>
