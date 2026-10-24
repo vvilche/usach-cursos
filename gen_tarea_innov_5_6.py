@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 # Genera la tarea de bloque de las clases 5 y 6 del electivo Innovación: Ideas Disruptivas.
 # Base: mismas tareas de clase 5 y 6 ya publicadas (VP Canvas + Customer Development, Lean Startup + MVP),
-# reordenadas en un solo relato continuo, más los cierres de las clases 1-4 y el hito de la clase 7.
+# reordenadas en un solo relato continuo, apoyadas en los cierres de las clases 1-4.
 # Salida: tarea-innovacion-clases-5-6.html
 import json, html as H, pathlib
 
@@ -221,10 +221,6 @@ p4 = p4_material + '''  <table>
       <tr><td>Síntesis</td><td>Media página: el supuesto más riesgoso → lo que el cliente dijo → lo que el experimento mostró → qué cambian después</td><td>5–6</td></tr>
     </tbody>
   </table>
-  <div class="card blue">
-    <h4>Qué sigue: clase 7 es hito</h4>
-    <p style="margin-bottom:0">El sábado 21 de noviembre cada grupo presenta su modelo en <b>4 minutos</b> —Canvas, curva de valor e hipótesis— y recibe crítica estructurada. Este bloque es la munición de esa presentación: la evidencia de cliente y el resultado del experimento son lo que distingue una presentación de una idea.</p>
-  </div>
   <div class="card acc">
     <h4>Cómo se ve un trabajo bien hecho</h4>
     <p>El supuesto que testean es el que da menos evidencia y más daño, no el más cómodo de testear. La métrica es una acción del cliente que le costó algo. El umbral ya estaba escrito antes del resultado.</p>
