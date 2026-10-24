@@ -1,0 +1,333 @@
+#!/usr/bin/env python3
+# Genera la tarea de bloque de las clases 5 y 6 del electivo Innovación: Ideas Disruptivas.
+# Base: mismas tareas de clase 5 y 6 ya publicadas (VP Canvas + Customer Development, Lean Startup + MVP),
+# reordenadas en un solo relato continuo, más los cierres de las clases 1-4 y el hito de la clase 7.
+# Salida: tarea-innovacion-clases-5-6.html
+import json, html as H, pathlib
+
+OUT = pathlib.Path(__file__).parent / "tarea-innovacion-clases-5-6.html"
+CSS = pathlib.Path(__file__).parent / "tarea-innovacion-clase-6-lean-startup-mvp.html"
+css = CSS.read_text().split("<style>")[1].split("</style>")[0]
+
+QS = [
+ {
+  "q": "Su Canvas de la clase 5 dice «dolor: pierde 3 días al mes cuadrando proveedores». Para la clase 6 eligen el supuesto «el dueño pagaría $30.000 al mes por no hacerlo». ¿Cuál de estos es el experimento correcto?",
+  "opts": [
+   "Cobrarles de verdad $30.000 en preventa y contar cuántos pagan dentro del plazo",
+   "Encuesta a 20 personas preguntando si pagarían $30.000 al mes",
+   "Mandar la landing y medir cuántos entran",
+   "Consultar a un amigo que tiene un negocio parecido"
+  ],
+  "ok": 0,
+  "why": "El supuesto es de pago, y solo una acción que le cuesta plata al cliente lo refuta o lo valida. Encuestas de intención y «cuántos entran» miden curiosidad, no pago: un visitante no arriesga nada. La preventa es el experimento más barato en que el cliente sí pone algo."
+ },
+ {
+  "q": "Un equipo elige como supuesto más riesgoso «que el cliente tiene el problema» — ya lo confirmaron en 6 entrevistas de la clase 5. ¿Qué falla en esa elección?",
+  "opts": [
+   "Nada: mientras más entrevistas, mejor la hipótesis",
+   "Ya está testeado con comportamiento pasado; el riesgo real está en las otras piezas del modelo, sin testear",
+   "Debería ser el supuesto más fácil de testear, no el más riesgoso",
+   "Falta que la hipótesis incluya un umbral de venta"
+  ],
+  "ok": 1,
+  "why": "Si el dolor ya tiene evidencia de cliente, gastar el MVP en volver a preguntarlo no genera aprendizaje nuevo. El supuesto más riesgoso es el que sigue sin evidencia y, si es falso, se cae el modelo: casi siempre el pago, el canal o la disposición a pagar."
+ },
+ {
+  "q": "Escriben la hipótesis: «si lanzamos la app, entonces la gente la va a usar». ¿Por qué no sirve?",
+  "opts": [
+   "Es demasiado corta para un experimento",
+   "No define la métrica ni el umbral ni el plazo, así que ningún resultado la puede refutar",
+   "No menciona a la competencia",
+   "Porque «la gente» no es un segmento"
+  ],
+  "ok": 1,
+  "why": "La forma es «si [acción], entonces [métrica] cambia a [umbral] en [plazo]». Sin métrica y umbral no hay experimento, hay una esperanza con gráfico: cualquier resultado termina interpretado como «va bien»."
+ },
+ {
+  "q": "Antes de correr el experimento el equipo escribe: «éxito si 5 de 30 piden la demo; fracaso si 2 o menos». Al correr, 3 de 30 lo piden. ¿Qué corresponde?",
+  "opts": [
+   "Perseverar o pivotar, pero el resultado se declara «no concluyente» y se repite el experimento, no se reinterpreta el umbral",
+   "Perseverar: hay interés, solo falta ajustar el mensaje",
+   "Fijar un umbral nuevo más bajo, ahora que se conoce el resultado",
+   "Pivotar de segmento sin revisar la evidencia"
+  ],
+  "ok": 0,
+  "why": "El umbral se escribe antes, justamente para que no se pueda acomodar después. Tres sobre treinta cae en zona gris: no refuta ni valida. La salida honesta es decirlo así y volver a correr el experimento con más muestra o un incentivo distinto cuando corresponda, nunca mover la vara después."
+ },
+ {
+  "q": "El MVP que proponen es la app completa: catálogo, pagos, despacho en tiempo real y dashboard. Según la clase, el problema es:",
+  "opts": [
+   "Que no testea a tiempo: si tarda meses, el ciclo Construir-Medir-Aprender se vuelve tan lento que no se aprende",
+   "Que no tiene suficientes funcionalidades para ser creíble",
+   "Nada, siempre que el equipo tenga la capacidad de construirlo",
+   "Que un MVP nunca puede tener pagos"
+  ],
+  "ok": 0,
+  "why": "El MVP es lo más pequeño que todavía entrega aprendizaje sobre el supuesto elegido, y puede ser una hoja de cálculo o un servicio hecho a mano. Lo caro no es el MVP, es el ciclo: cuanto más grande la pieza construida, más tiempo pasa antes de saber si la hipótesis vive."
+ },
+ {
+  "q": "Después de un MVP que refutó su hipótesis de precio, el equipo cambia de segmento, de propuesta, de canal y de modelo de ingresos a la vez. ¿Es un pivote?",
+  "opts": [
+   "Sí: pivotar es cambiar el modelo cuando no funciona",
+   "No: eso es abandonar la idea y empezar de cero sin el aprendizaje, porque nadie sabe cuál de las cuatro piezas falló",
+   "Sí, mientras lo hagan rápido",
+   "No, pero sirve igual porque demuestra que están buscando"
+  ],
+  "ok": 1,
+  "why": "Pivotar es cambiar una pieza del modelo —preferentemente la que el experimento refutó— y volver a testear. Cambiar todo a la vez destruye la información: no se puede atribuir el resultado a nada, y se pierde el aprendizaje ya validado."
+ },
+ {
+  "q": "Un equipo reporta: «no alcanzamos el umbral de pago, pero 40 personas visitaron la landing». ¿Qué valor tiene ese dato?",
+  "opts": [
+   "Mucho: 40 visitas ya son evidencia de mercado",
+   "Ninguno: es una métrica de vanidad, y la tarea pide explicar el resultado real aunque sea malo",
+   "Sirve para subir el umbral de éxito",
+   "Sirve si las 40 vienen del mismo segmento"
+  ],
+  "ok": 1,
+  "why": "Visitas y likes no le cuestan nada al cliente: no dicen si hay disposición de pago. La reunión no es de notas, pero el testeo de esta tarea exige explicar qué métrica validaría o refutaría la hipótesis; «no llegamos y estos son los números» es una respuesta válida, «no llegamos pero hubo 40 visitas» es esquivar el resultado."
+ },
+ {
+  "q": "¿Cuál es la relación correcta entre la entrevista de la clase 5 y el experimento de la clase 6?",
+  "opts": [
+   "Son lo mismo: la entrevista es el experimento más barato",
+   "La entrevista genera y corrige hipótesis sobre el dolor; el experimento mide si esa hipótesis predice lo que el cliente hace con su plata o su tiempo",
+   "El experimento reemplaza las entrevistas porque es más objetivo",
+   "La entrevista valida y el experimento solo sirve para decidir el precio"
+  ],
+  "ok": 1,
+  "why": "La entrevista trabaja con comportamiento pasado y palabras del cliente: sirve para escribir bien el supuesto. El experimento mide un comportamiento nuevo frente a un umbral fijado antes. Pedirle a la entrevista que valide un pago es lo mismo que preguntar «¿pagarías?»."
+ }
+]
+
+def sec(i, num, title, lead, body, nav_label=""):
+    return f'''<section id="{i}">
+  <div class="sec-num">{num}</div>
+  <h2>{title}</h2>
+  <p class="lead">{lead}</p>
+{body}
+</section>'''
+
+p1 = '''  <div class="src" style="border-top:none;padding-top:0;margin:0 0 18px">Lo que se construyó en las <b>clases 1 a 4</b>: el job con sus tres dimensiones, la curva de valor con EREC, el Canvas de 9 cajas con las dos cajas más débiles, y los dos modelos alternativos generados con patrones. <a href="tarea-innovacion-clases-1-4.html">Ver esa tarea</a>.</div>
+  <div class="card acc">
+    <h4>Qué entregar</h4>
+    <p style="margin-bottom:0">El <b>Canvas de la idea que van a testear</b>, más su <b>hipótesis de valor en una frase</b>. Nada nuevo: es el Canvas de la clase 3, ya clasificado por riesgo.</p>
+  </div>
+  <h3>Paso a paso</h3>
+  <ol>
+    <li>Elijan <b>uno de los tres modelos</b> que quedaron en la clase 4 —el base o uno de los dos alternativos—. El que defienden por escrito. Si cambian de modelo acá, el trabajo de las clases 1 a 4 queda huérfano.</li>
+    <li>Pasen en limpio las <b>4 piezas mínimas</b>: segmento específico, propuesta de valor en el lenguaje del job, cómo entra la plata, de dónde salen los costos. El Canvas de 9 cajas completo vive en la tarea del bloque anterior.</li>
+    <li>Rescaten las <b>2 cajas más débiles</b> que marcaron en la clase 3. Si el modelo elegido es un alternativo, marquen las suyas.</li>
+    <li>Escriban la <b>hipótesis de valor</b> en lenguaje de negocio: qué creen que es cierto sobre el cliente y el pago, y en qué evidencia se apoya hoy (entrevistas de la clase 5, si ya las hicieron).</li>
+    <li>Cierren con un <b>mapa de supuestos</b>: una tabla de 5 a 7 supuestos, cada uno con dos notas de 1 a 5 — <i>cuánto daño hace si es falso</i> y <i>cuánta evidencia tengo hoy</i>. El cruce de las dos es el riesgo real.</li>
+  </ol>
+  <table>
+    <thead><tr><th>Supuesto</th><th>Si es falso, ¿qué se cae?</th><th>Daño 1–5</th><th>Evidencia hoy</th><th>¿Riesgoso?</th></tr></thead>
+    <tbody>
+      <tr><td>El dueño de negocio reconoce el problema y lo busca activamente</td><td>Toda la propuesta de valor</td><td>5</td><td>2 entrevistas propias</td><td>Sí</td></tr>
+      <tr><td>Pagaría $30.000 al mes por resolverlo</td><td>El modelo de ingresos entero</td><td>5</td><td>Ninguna</td><td>Sí — el peor</td></tr>
+      <tr><td>Coordinar proveedores le quita 3 días al mes</td><td>Solo el cálculo del tamaño del dolor</td><td>2</td><td>6 entrevistas</td><td>No</td></tr>
+    </tbody>
+  </table>
+  <div class="card warn">
+    <h4>Ojo con esto</h4>
+    <ul style="margin-bottom:0">
+      <li>Empezar por el experimento y buscarle un Canvas que lo justifique: el orden es modelo → supuestos → test.</li>
+      <li>Un Canvas nuevo, distinto del de la clase 3, «porque este está mejor». Es el mismo, puesto en limpio y con las cajas débiles priorizadas.</li>
+      <li>Marcar los 7 supuestos como riesgosos: si todos lo fueran, no habrían aprendido nada en las cuatro clases anteriores.</li>
+    </ul>
+  </div>'''
+
+p2 = '''  <div class="card acc">
+    <h4>Qué entregar</h4>
+    <p style="margin-bottom:0">El <b>Value Proposition Canvas</b> completo —los dos lados en orden— y un <b>guión de entrevista con mínimo 5 preguntas</b> de comportamiento pasado, probado en <b>al menos 1 entrevista real</b>.</p>
+  </div>
+  <h3>Paso a paso</h3>
+  <ol>
+    <li>Laden el <b>perfil del cliente</b> primero. Trabajos del cliente en una frase («cuando…, necesito…, para poder…»): es el job de la clase 1, en las palabras del cliente.</li>
+    <li><b>Dolores</b>: al menos 5 — qué le sale mal hoy, qué le cuesta tiempo o plata, qué le da miedo. Cada uno tiene que ser algo que el cliente diría, no que ustedes creen.</li>
+    <li><b>Alegrías</b>: al menos 3 — qué resultado lo dejaría contento, qué lo haría sentir bien.</li>
+    <li>Pasen al lado de la <b>propuesta</b>: <b>aliviadores</b> (cómo la idea elimina cada dolor) y <b>generadores</b> (cómo produce cada alegría). Cada uno apunta a un dolor o alegría numerado. Un aliviador sin dolor al que apuntar es un producto sin problema que resolver.</li>
+    <li>Escriban el <b>guión de 5+ preguntas</b>. Regla dura: comportamiento pasado, nunca intención futura. Cada pregunta debe estar apuntando a un dolor concreto de la lista.</li>
+    <li>Hagan <b>1 entrevista real</b> con alguien de su mercado — no un compañero de clase — y anoten qué respondió, qué dolores aparecieron y qué cambió en el Canvas.</li>
+  </ol>
+  <div class="card blue">
+    <h4>Lo que la entrevista tiene que mover</h4>
+    <p style="margin-bottom:0">Si la entrevista no cambió nada del Canvas, o el entrevistado no era del mercado o las preguntas fueron de adorno. El entregable incluye <b>el antes y el después</b>: qué dolor estaba escrito y cómo lo dijeron ellos.</p>
+  </div>
+  <div class="card warn">
+    <h4>Ojo con esto</h4>
+    <ul style="margin-bottom:0">
+      <li>«¿Le gustaría una app que le avise cuando…?»: se pregunta qué hace hoy, no qué haría con lo que no existe.</li>
+      <li>Dolores inventados: se notan en la primera entrevista.</li>
+      <li>Cinco preguntas que son la misma pregunta con distinto orden.</li>
+      <li>Entrevistar a un compañero: te responde lo que quieres oír y no arriesga nada.</li>
+    </ul>
+  </div>'''
+
+p3 = '''  <div class="card acc">
+    <h4>Qué entregar</h4>
+    <p style="margin-bottom:0">El <b>supuesto más riesgoso</b> de su Canvas, su <b>hipótesis</b> en una frase, el <b>MVP más chico</b> que la testea, y un <b>experimento</b> con métrica, umbral y plazo <b>escritos antes de correrlo</b>.</p>
+  </div>
+  <h3>Paso a paso</h3>
+  <ol>
+    <li>Tomen la tabla de la parte 2 y elijan el <b>supuesto más riesgoso</b>: daño alto y evidencia baja. Si el dolor ya está confirmado por entrevistas, no es el más riesgoso.</li>
+    <li>Escriban la <b>hipótesis</b> en una sola frase: <code>si [acción], entonces [métrica] cambia a [umbral] en [plazo]</code>. Sin adornos.</li>
+    <li>Definan el <b>MVP más chico</b> que todavía entrega aprendizaje sobre <i>ese</i> supuesto. Un video, una landing, una hoja de cálculo, un servicio hecho a mano: si necesita tres meses de desarrollo, no es mínimo.</li>
+    <li>Elijan la <b>métrica</b> que el cliente deja al actuar: cuántos pagan, cuántos piden el demo, cuántos vuelven. No lo que dice, no lo que mira.</li>
+    <li>Fijen <b>umbral de éxito, umbral de fracaso y plazo</b> por escrito <i>antes</i> de correr nada. Si no pueden escribir el umbral, no tienen experimento.</li>
+    <li>Corran el experimento y <b>reporten el resultado real</b>, aunque sea malo: número, plazo, y qué hacer con él.</li>
+    <li>Cierren con la decisión del ciclo: <b>pivotar o perseverar</b>. Si pivotan, digan <i>qué pieza</i> cambian —segmento, propuesta, canal o ingresos— y qué vuelven a testear. Una sola pieza.</li>
+  </ol>
+  <div class="grid2">
+    <div class="card"><h4>Bien escrito</h4><p style="margin-bottom:0">«Si ofrezco 30 preventas a $30.000/mes esta semana, entonces al menos 6 pagan dentro de 7 días». Métrica, umbral y plazo en la misma frase.</p></div>
+    <div class="card bad"><h4>Mal escrito</h4><p style="margin-bottom:0">«Si lanzo la app, la gente la va a usar». No hay número que pueda refutarla.</p></div>
+  </div>
+  <div class="card violet">
+    <h4>La regla del bloque: 4+5+6, una sola línea</h4>
+    <p style="margin-bottom:0">El job de la clase 1 es el que aparece en el perfil del cliente (parte 3). El dolor que el cliente confirmó en la entrevista es el que se convierte en supuesto (parte 2). El supuesto con menos evidencia es el único que el experimento tiene derecho a testear (parte 4). Si el experimento testea otra cosa que el supuesto, se rompió la cadena.</p>
+  </div>
+  <div class="card warn">
+    <h4>Ojo con esto</h4>
+    <ul style="margin-bottom:0">
+      <li>MVP que es el producto completo: no testea nada a tiempo.</li>
+      <li>Métrica de vanidad —visitas, likes, «me dijeron que estaba bueno»— en vez de una acción que le cuesta algo al cliente.</li>
+      <li>Fijar el umbral después de ver los resultados: así todo experimento «funciona».</li>
+      <li>Confundir pivotar con abandonar: cambiaron cuatro piezas y ya no saben qué falló.</li>
+      <li>Reportar el resultado que esperaban y no el que salió. La parte más débil del trabajo se nota más que un número malo.</li>
+    </ul>
+  </div>'''
+
+p4 = '''  <table>
+    <thead><tr><th>Parte</th><th>Qué debe mostrar</th><th>Clase</th></tr></thead>
+    <tbody>
+      <tr><td>1 · El modelo que se testea</td><td>Las 4 piezas en limpio del modelo elegido, las 2 cajas más débiles y el mapa de supuestos con daño y evidencia</td><td>1–4</td></tr>
+      <tr><td>2 · Valor</td><td>Value Prop Canvas con los dos lados, cada aliviador apuntando a un dolor numerado, y el antes/después de la entrevista</td><td>5</td></tr>
+      <tr><td>3 · Guión y evidencia</td><td>Guión de 5+ preguntas de comportamiento pasado y el registro de la entrevista real con lo que cambió</td><td>5</td></tr>
+      <tr><td>4 · Experimento</td><td>Hipótesis en la forma si–entonces–umbral–plazo, MVP, métrica, umbral de éxito y de fracaso fijados antes, resultado real y decisión pivotar/perseverar</td><td>6</td></tr>
+      <tr><td>Síntesis</td><td>Media página: el supuesto más riesgoso → lo que el cliente dijo → lo que el experimento mostró → qué cambian después</td><td>5–6</td></tr>
+    </tbody>
+  </table>
+  <div class="card blue">
+    <h4>Qué sigue: clase 7 es hito</h4>
+    <p style="margin-bottom:0">El sábado 21 de noviembre cada grupo presenta su modelo en <b>4 minutos</b> —Canvas, curva de valor e hipótesis— y recibe crítica estructurada. Este bloque es la munición de esa presentación: la evidencia de cliente y el resultado del experimento son lo que distingue una presentación de una idea.</p>
+  </div>
+  <div class="card acc">
+    <h4>Cómo se ve un trabajo bien hecho</h4>
+    <p>El supuesto que testean es el que da menos evidencia y más daño, no el más cómodo de testear. La métrica es una acción del cliente que le costó algo. El umbral ya estaba escrito antes del resultado.</p>
+    <p style="margin-bottom:0"><b>Señal de que todavía no está:</b> el experimento confirma lo que ya sabían desde la clase 5, o el número que reportan no habría cambiado ninguna decisión.</p>
+  </div>'''
+
+QUIZ_HTML = """  <div id="quiz"></div>
+  <button id="btnCheck" onclick="checkTest()">Revisar respuestas</button>
+  <button class="ghost" onclick="location.reload()" style="margin-left:10px">Reiniciar</button>
+  <div id="score"></div>"""
+
+nav = '''<nav>
+  <div class="brand">Innovación: Ideas Disruptivas</div>
+  <h1>Tarea · Clases 5 y 6</h1>
+  <div class="sub">Propuesta de valor, Customer Development, Lean Startup y MVP. Electivo VI · FAE USACH · grupos de hasta 2 personas.</div>
+  <div class="grp">Las cuatro partes</div>
+  <a href="#p1"><span class="n">1</span>El modelo que se testea</a>
+  <a href="#p2"><span class="n">2</span>El valor, desde el cliente</a>
+  <a href="#p3"><span class="n">3</span>El guión y la entrevista</a>
+  <a href="#p4"><span class="n">4</span>La hipótesis y el experimento</a>
+  <div class="grp">Cierre</div>
+  <a href="#cierre"><span class="n">·</span>Entregable final</a>
+  <a href="#testeo"><span class="n">·</span>Testeo: demostrar</a>
+  <a class="foot" href="innovacion-disruptiva.html">← Plan del electivo</a>
+</nav>'''
+
+head = '''<section id="top">
+  <div class="sec-num">Tarea de bloque · Sáb 24 oct y sáb 07 nov 2026</div>
+  <h2>Del valor que el cliente reconoce a un experimento que puede fallar</h2>
+  <p class="lead">Dos clases, una sola pieza: primero se confirma con el cliente que el dolor que su modelo resuelve es real y está bien descrito; después se apuesta a que ese dolor llega al pago, con un experimento que tenga umbral de fracaso escrito antes de correrlo.</p>
+  <div class="bloque-horas">
+    <div class="bh"><b>Clase 5</b> · Value Prop Canvas + entrevista</div>
+    <div class="bh"><b>Clase 6</b> · Hipótesis + MVP + experimento</div>
+    <div class="bh t">Trabajo en clase las dos semanas</div>
+    <div class="bh e">1 entrevista real obligatoria</div>
+  </div>
+  <h3>Cómo se trabaja</h3>
+  <div class="grid3">
+    <div class="card"><h4>Grupos</h4><p style="margin-bottom:0">Hasta 2 personas. Cualquier integrante explica cualquier parte: se pregunta al azar en el testeo.</p></div>
+    <div class="card"><h4>Base</h4><p style="margin-bottom:0">El mismo modelo de las clases 1 a 4. No se cambia de idea: se testea la que ya trabajaron.</p></div>
+    <div class="card"><h4>Dónde</h4><p style="margin-bottom:0">En clase, con avance revisado cada semana. Lo que no se avanza en clase se termina fuera.</p></div>
+  </div>
+  <div class="card violet">
+    <h4>La regla que ordena todo el bloque</h4>
+    <p style="margin-bottom:0">El supuesto que testean en la clase 6 tiene que ser uno de los dolores que el cliente confirmó en la clase 5, y el dolor que confirman tiene que ser uno del job de la clase 1. Si el experimento testea algo que ninguna entrevista tocó, la cadena se cortó en alguna parte — y esa parte es lo que hay que rehacer.</p>
+  </div>
+  <div class="src">Plan de clases: <a href="innovacion-disruptiva.html">Innovación: Ideas Disruptivas · 2S 2026</a> · Tarea base: <a href="tarea-innovacion-clases-1-4.html">clases 1 a 4</a></div>
+</section>'''
+
+html = f'''<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarea clases 5 y 6 · Innovación: Ideas Disruptivas</title>
+<style>{css}</style>
+</head>
+<body>
+<div class="layout">
+{nav}
+<main>
+{head}
+{sec("p1","Parte 1 · Clases 1 a 4","El modelo que se testea","Antes de testear hay que saber qué se está testeando. Es el mismo modelo del bloque anterior, ahora ordenado por riesgo.",p1,"")}
+{sec("p2","Parte 2 · Clase 5","El valor, desde el cliente","El cliente no compra tu producto: contrata una solución para un trabajo que tiene que hacer. Si no sabes cuál es ese trabajo, estás diseñando a ciegas.",p2,"")}
+{sec("p3","Parte 3 · Clase 5","El guión y la entrevista","Una entrevista que no puede contradecirte no es una entrevista, es una confirmación.",p3,"")}
+{sec("p4","Parte 4 · Clase 6","La hipótesis y el experimento","La idea no se defiende con argumentos, se testea. Y un experimento sin umbral de fracaso no es un experimento: es una esperanza con gráfico.",p4,"")}
+{sec("cierre","Cierre","Entregable final de las clases 5 y 6","Una sola pieza sobre la misma idea de las clases 1 a 4. Lo que se lee es la cadena: job → dolor confirmado → supuesto → experimento.",p4)}
+{sec("testeo","Demostrar aprendizaje","Testeo: 8 preguntas","No es nota: es para saber si pueden defender cada decisión ante alguien más. Al responder, cada pregunta explica el por qué.", QUIZ_HTML)}
+<div class="src" style="margin-top:40px">Tarea de bloque · clases 5 y 6 · <a href="innovacion-disruptiva.html">ver el plan del electivo</a> · <a href="tarea-innovacion-clases-1-4.html">tarea de las clases 1 a 4</a></div>
+</main>
+</div>
+<script>
+const QS = {json.dumps(QS, ensure_ascii=False, indent=2)};
+
+const quiz = document.getElementById('quiz');
+QS.forEach((q, i) => {{
+  const div = document.createElement('div');
+  div.className = 'q';
+  let h = '<div class="qh">' + (i+1) + '. ' + q.q + '</div>';
+  q.opts.forEach((o, j) => {{
+    h += '<label><input type="radio" name="q'+i+'" value="'+j+'">' + o + '</label>';
+  }});
+  h += '<div class="why" id="why'+i+'"></div>';
+  div.innerHTML = h;
+  quiz.appendChild(div);
+}});
+
+function checkTest(){{
+  let hits = 0, sinResponder = 0;
+  QS.forEach((q, i) => {{
+    const labels = document.querySelectorAll('input[name="q'+i+'"]');
+    let picked = -1;
+    labels.forEach((inp, j) => {{
+      const lab = inp.parentElement;
+      lab.classList.remove('correct','wrong');
+      if (inp.checked){{ picked = j; }}
+    }});
+    labels.forEach((inp, j) => {{
+      if (j === q.ok) inp.parentElement.classList.add('correct');
+      else if (j === picked) inp.parentElement.classList.add('wrong');
+    }});
+    const why = document.getElementById('why'+i);
+    if (picked === -1){{ sinResponder++; }}
+    else if (picked === q.ok){{ hits++; }}
+    why.textContent = 'Por qué: ' + q.why;
+    why.classList.add('show');
+  }});
+  const sc = document.getElementById('score');
+  sc.innerHTML = '<span class="n">' + hits + '/' + QS.length + '</span> correctas.' +
+    (sinResponder ? ' Quedaron ' + sinResponder + ' sin responder.' : '') +
+    '<br>El puntaje no es la nota. Lo que importa es que puedas explicar cada por qué sin leerlo.';
+  sc.classList.add('show');
+}}
+</script>
+</body>
+</html>
+'''
+OUT.write_text(html)
+print("escrito", OUT, len(html))
