@@ -8,6 +8,9 @@ import json, html as H, pathlib
 OUT = pathlib.Path(__file__).parent / "tarea-innovacion-clases-5-6.html"
 CSS = pathlib.Path(__file__).parent / "tarea-innovacion-clase-6-lean-startup-mvp.html"
 css = CSS.read_text().split("<style>")[1].split("</style>")[0]
+# El CSS se hereda del deck de la clase 6, que tambien es pagina de insumo: sus reglas
+# de .banner-insumo* no aplican a la tarea de bloque (y sin punto compilan basura al final).
+css = "\n".join(l for l in css.splitlines() if "banner-insumo" not in l) + "\n"
 
 QS = [
  {
