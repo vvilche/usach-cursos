@@ -182,6 +182,7 @@ def clase_html(n, titulo, objetivo, bloques, tarea, testeo):
   <div class="testeo"><p><b>Demostrar:</b> {testeo}</p></div>
   <div class="links"><b>Para profundizar:</b>
     <a href="ejecutivos-{n:02d}.html">Abrir presentación</a>
+    {('<a href="ejecutivos-guion-video.html">Guion del screencast de la clase 1</a>' if n == 1 else '')}
   </div>
 </div>'''
 
@@ -196,10 +197,13 @@ ACTOS_S0 = [
  ("c", "Acto 3 · El descubrimiento del harness", "2026",
   "El paper de 83 páginas que desarmó once agentes de producción: el modelo pesa 2,5–5 puntos, el harness pesa 13. La tesis del curso.",
   "10 diapositivas · 35 min"),
- ("d", "Acto 4 · Lo que aprendimos de nosotros mismos", "2026",
+ ("cb", "Acto 3b · Cómo se arma un agente (arquitectura agéntica)", "2026",
+  "Las siete piezas del harness, la forma mínima y máxima de cada una, la decisión de uno o varios agentes, y cómo auditar una propuesta técnica en siete preguntas.",
+  "10 diapositivas · 30 min"),
+ ("d", "Acto 5 · Lo que aprendimos de nosotros mismos", "2026",
   "1.464 sesiones auditadas, 39.752 mensajes, ~922 correcciones reales. El ranking de errores y las cuatro reglas que cambiaron el resultado.",
   "9 diapositivas · 30 min"),
- ("e", "Acto 5 · Hasta dónde podríamos llegar", "2026 en adelante",
+ ("e", "Acto 6 · Hasta dónde podríamos llegar", "2026 en adelante",
   "Qué está resuelto, qué no, y la región vacía del mercado: nadie combina despliegue local con seguridad empresarial. Cierre sin promesas.",
   "9 diapositivas · 25 min"),
 ]
@@ -214,12 +218,12 @@ def seccion0_html():
     <a href="ejecutivos-glosario.html">Glosario de datos</a>
   </div>
 </div>''' for k, t, f, o, d in ACTOS_S0)
-    return f'''<div class="nivel">Sección 0 · La historia <small>se dicta antes de la clase 1 · 5 actos · 145 min</small></div>
+    return f'''<div class="nivel">Sección 0 · La historia <small>se dicta antes de la clase 1 · 6 actos · 175 min</small></div>
 <p class="progtext"><b>Por qué existe:</b> un ejecutivo no necesita aprender a instalar un agente: necesita saber <b>por qué hoy se compra un harness y no un modelo</b>. Los cinco actos construyen esa historia con fuentes primarias, fechas y cifras — desde la promesa incumplida de 2022 hasta la región del mercado que todavía nadie llenó.</p>
 <p class="progtext"><b>Material de referencia de la sección:</b> <a href="ejecutivos-glosario.html">glosario de datos (14 conceptos, buscable)</a> · <a href="ejecutivos-timeline.html">línea de tiempo 2022–2026 (15 hitos con fuente)</a></p>
 {actos}
 <div class="clase">
-  <h3>0f · Instalar Hermes, paso a paso</h3>
+  <h3>0g · Instalar Hermes, paso a paso</h3>
   <div class="fecha">Taller de la sección 0 · se hace antes de la clase 4</div>
   <div class="bloques">
     <span class="bloque"><span class="min">10'</span> Qué vamos a instalar y dónde</span>

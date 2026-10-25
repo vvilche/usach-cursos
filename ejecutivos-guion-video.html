@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Guion del screencast — Clase 1 ejecutiva</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--soft:#fdf3ec;--ok:#0a7a3d;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15.5px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:880px;margin:0 auto;padding:34px 22px 90px;}
+header{border-bottom:2px solid var(--acc);padding-bottom:16px;margin-bottom:22px;}
+h1{font-size:26px;margin:0 0 6px;letter-spacing:-.02em;}
+.sub{color:var(--mut);font-size:14px;margin:0;}
+.aviso{background:var(--soft);border:1px solid #f0d9c8;border-left:5px solid var(--acc);border-radius:10px;padding:14px 18px;font-size:14.5px;margin:18px 0;}
+.toma{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:14px 0;border-left:4px solid var(--acc);}
+.toma h2{font-size:16px;margin:0 0 4px;color:var(--acc);}
+.tiempo{font-size:12.5px;color:var(--mut);margin:0 0 12px;text-transform:uppercase;letter-spacing:.06em;font-weight:600;}
+.paso{display:grid;grid-template-columns:28px 1fr;gap:12px;margin:10px 0;align-items:start;}
+.n{background:var(--acc);color:#fff;width:24px;height:24px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12.5px;font-weight:800;flex-shrink:0;margin-top:2px;}
+.dice{font-weight:600;color:var(--ink);}
+.ver{color:var(--mut);font-size:14px;margin-top:2px;}
+pre{background:#0f172a;color:#e2e8f0;border-radius:8px;padding:12px 14px;overflow-x:auto;font-size:13px;line-height:1.5;margin:8px 0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+code{background:#f1f5f9;border:1px solid var(--line);border-radius:4px;padding:1px 5px;font-size:13px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+.pie{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0;}
+.caja{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:14px 16px;font-size:14px;}
+.caja b{color:var(--acc);display:block;margin-bottom:4px;}
+.si{color:var(--ok);font-weight:700;} .no{color:#b45309;font-weight:700;}
+footer{margin-top:34px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:12.5px;}
+@media(max-width:700px){.pie{grid-template-columns:1fr;}}
+</style></head>
+<body><div class="wrap">
+<header>
+  <h1>Guion del screencast · «El mismo pedido, dos mundos»</h1>
+  <p class="sub">Clase 1 · IA Agéntica para Ejecutivos · destino: slide de demostración · duración objetivo 60–75 s</p>
+</header>
+
+<div class="aviso">
+  <b>Qué tiene que quedar demostrado:</b> que un agente <b>hace el trabajo</b> y deja la <b>fuente a la vista</b>, en oposición al chatbot que solo redacta. Ese es el único punto del video: si el espectador se distrae con la interfaz, el video falló.<br><br>
+  <b>Regla de oro del material:</b> datos de ejemplo o anonimizados. No debe aparecer ningún nombre de cliente, RUT, monto real ni nombre de archivo de un cliente.
+</div>
+
+<div class="toma">
+  <h2>Toma 1 · El pedido (0:00–0:12)</h2>
+  <p class="tiempo">12 segundos · pantalla completa sin zoom</p>
+  <div class="paso"><div class="n">1</div><div>
+    <div class="dice">Escribir el encargo completo en una sola línea, despacio, para que se lea.</div>
+    <div class="ver">Que se vean las cinco partes: objetivo, fuente, criterio, restricción y formato.</div>
+  </div></div>
+  <pre>Lee el archivo costos-linea3.csv y armame una tabla con el costo
+total por mes. Cruza con la producción del mismo archivo. Marca las
+variaciones sobre 10% respecto del mes anterior. Si falta un dato,
+decime cuál falta: no lo estimes. Devuelve la tabla y un resumen de
+3 líneas.</pre>
+  <div class="paso"><div class="n">2</div><div>
+    <div class="dice">Apretar Enter y NO tocar nada más.</div>
+    <div class="ver">El cursor se queda quieto. Aquí se demuestra que el trabajo lo hace el agente, no tú.</div>
+  </div></div>
+</div>
+
+<div class="toma">
+  <h2>Toma 2 · El agente trabajando (0:12–0:40)</h2>
+  <p class="tiempo">28 segundos · sin cortes, cámara lenta al final si hace falta</p>
+  <div class="paso"><div class="n">1</div><div>
+    <div class="dice">Dejar correr y que se vean las acciones encadenadas.</div>
+    <div class="ver">Lo que hay que ver: lee el archivo → calcula → compara → arma la tabla. Si el agente pide permiso en algún paso, <b>mejor</b>: es el momento de mostrar que pregunta antes de lo irreversible.</div>
+  </div></div>
+  <div class="paso"><div class="n">2</div><div>
+    <div class="dice">Si tarda, cortar el tiempo muerto (hacer un salto visible, no un corte seco).</div>
+    <div class="ver">El video debe sentirse rápido. Un agente lento no vende.</div>
+  </div></div>
+</div>
+
+<div class="toma">
+  <h2>Toma 3 · La entrega con fuente (0:40–1:00)</h2>
+  <p class="tiempo">20 segundos · zoom al resultado</p>
+  <div class="paso"><div class="n">1</div><div>
+    <div class="dice">Mostrar la tabla entregada, con el origen de cada cifra.</div>
+    <div class="ver">Este es el plano más importante del video: <b>la cifra y su fuente en el mismo cuadro</b>.</div>
+  </div></div>
+  <div class="paso"><div class="n">2</div><div>
+    <div class="dice">Señalar (con el cursor, sin hablar si va mudo) la línea donde el agente dice «falta el dato de marzo, no lo estimé».</div>
+    <div class="ver">Es la prueba de la regla de la clase 7: distingue «no lo resuelve» de «no lo revisé». Sin ese detalle, el video es un demo más.</div>
+  </div></div>
+</div>
+
+<div class="toma">
+  <h2>Toma 4 · El contraste (1:00–1:15)</h2>
+  <p class="tiempo">15 segundos · pantalla dividida o corte</p>
+  <div class="paso"><div class="n">1</div><div>
+    <div class="dice">El mismo pedido a un chatbot, en la misma pantalla.</div>
+    <div class="ver">El chatbot devuelve un texto: «para calcularlo necesitas…». Ese contraste es el argumento completo de la clase 1 en 4 segundos.</div>
+  </div></div>
+</div>
+
+<div class="pie">
+  <div class="caja"><b class="si">Sí, en el cuadro</b>
+    El encargo completo y legible · las acciones encadenándose · la tabla con el origen · la frase «no lo estimé» · el contraste con el chatbot.</div>
+  <div class="caja"><b class="no">No, fuera del cuadro</b>
+    Nombres de clientes o archivos reales · montos reales · rutas con tu usuario · pestañas del navegador con correo · notificaciones · la barra de marcadores.</div>
+</div>
+
+<div class="caja" style="margin-top:16px">
+  <b>Especificación técnica</b>
+  1920×1080 o 1280×720 · MP4 (H.264) o GIF si pesa menos de 8 MB · sin audio (va mudo en el deck y se explica hablando) · tipografía del sistema al 125% para que se lea proyectado · recortar a la ventana de la terminal, sin escritorio.
+</div>
+
+<footer>
+  Cuando esté el archivo: guárdalo como <code>ejecutivos-demo-clase1.mp4</code> en <code>~/usach-bajado/usach-cursos/</code> y avísame.
+  Lo conecto al slide de demostración de la clase 1 ejecutiva, con el respaldo de texto por si no carga.
+  Si el video no sale como se planeó, el mismo guion sirve como transcripción: el slide se puede publicar igual sin el archivo.
+</footer>
+</div></body></html>

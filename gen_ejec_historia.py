@@ -28,7 +28,9 @@ def huella():
 
 antes = huella()
 sys.path.insert(0, BASE)
-from gen_ppts import CSS, deck, render_slide  # noqa: E402
+import gen_ppts  # noqa: E402
+from gen_ppts import CSS, deck  # noqa: E402
+render_slide = gen_ppts.render_slide  # referencia al original, para el fallback
 from _curso_ejec_historia import HISTORIA  # noqa: E402
 
 despues = huella()
@@ -38,21 +40,71 @@ if tocados:
     subprocess.run("git checkout -- " + " ".join(tocados), shell=True)
     sys.exit(1)
 
+
+CSS_FIG = """
+.fig{background:#fff;border:1px solid #e8d5c8;border-radius:12px;padding:10px 14px;display:flex;justify-content:center;}
+.tw{overflow-x:auto;margin:0;}
+table{border-collapse:collapse;width:100%;font-size:14.5px;background:#fff;}
+th,td{border:1px solid #e2e8f0;padding:9px 12px;text-align:left;vertical-align:top;}
+th{background:#fdf3ec;color:#7a2e0e;font-size:13.5px;}
+tbody tr:nth-child(even){background:#fcfdfe;}
+"""
+
+
+# ── tipos de slide propios: svg crudo y tabla ────────────────────────────────
+# render_slide de gen_ppts escapa todo el contenido; para un diagrama y una tabla
+# necesitamos HTML crudo. No se toca gen_ppts: se envuelve.
+_render_base = render_slide
+
+
+def esc_(s):
+    import html as _h
+    return _h.escape(str(s), quote=True)
+
+
+def render_slide(s):
+    k, w = s[0], s[1]
+    if k == "svg":
+        kick = f'<div class="kicker">{esc_(w.get("kicker",""))}</div>' if w.get("kicker") else ""
+        h2 = f'<h2>{esc_(w["h2"])}</h2>' if w.get("h2") else ""
+        cap = f'<p class="meta">{esc_(w["cap"])}</p>' if w.get("cap") else ""
+        return f'<section class="slide">{kick}{h2}<div class="fig">{w["svg"]}</div>{cap}</section>'
+    if k == "tabla":
+        kick = f'<div class="kicker">{esc_(w.get("kicker",""))}</div>' if w.get("kicker") else ""
+        h2 = f'<h2>{esc_(w["h2"])}</h2>' if w.get("h2") else ""
+        head = "".join(f"<th>{esc_(c)}</th>" for c in w["cols"])
+        filas = "".join("<tr>" + "".join(f"<td>{c}</td>" for c in r) + "</tr>" for r in w["rows"])
+        cap = f'<p class="meta">{esc_(w["cap"])}</p>' if w.get("cap") else ""
+        return (f'<section class="slide">{kick}{h2}<div class="tw"><table><thead><tr>{head}</tr></thead>'
+                f'<tbody>{filas}</tbody></table></div>{cap}</section>')
+    return _render_base(s)
+
+
+# deck() llama a gen_ppts.render_slide (su global), no a la nuestra: se la reemplazamos.
+# Es un monkeypatch local al proceso de generacion; no toca gen_ppts.py en disco.
+gen_ppts.render_slide = render_slide
+
 EJ = {"nombre": "IA Agéntica para Ejecutivos",
       "short": "Sección 0 · La historia",
       "color": "#7a2e0e", "soft": "#fdf3ec",
       "level": "Sección 0 · Historia",
       "plan": "ejecutivos-ia-agentica.html"}
 
-ACTOS = ["La promesa", "La guerra de los agentes", "El harness", "Lo nuestro", "El horizonte"]
+# sufijo de archivo por acto: el 3b entra entre el 3 y el 4 sin renumerar los ya publicados
+SUFIJOS = {1: "a", 2: "b", 3: "c", 4: "cb", 5: "d", 6: "e"}
+ACTOS = ["La promesa", "La guerra de los agentes", "El harness", "La arquitectura agéntica",
+         "Lo nuestro", "El horizonte"]
 hechos = 0
 for n, titulo, lead, slides in HISTORIA:
-    fn = f"ejecutivos-00{chr(96+n)}.html"
+    suf = SUFIJOS[n]
+    etiqueta = "3b" if n == 4 else str(n)
+    fn = f"ejecutivos-00{suf}.html"
     with open(fn, "w", encoding="utf-8") as f:
-        f.write(deck(EJ, EJ, f"0.{n}", f"Sección 0 · Acto {n} de 5", titulo, lead, slides))
+        f.write(deck(EJ, EJ, f"0.{etiqueta}", f"Sección 0 · Acto {etiqueta} de 6", titulo, lead, slides)
+                  .replace("</style>", CSS_FIG + "</style>"))
     hechos += 1
-    print(f"  {fn}  Acto {n} · {ACTOS[n-1]}  ({len(slides)+1} slides)")
-assert hechos == 5, hechos
+    print(f"  {fn}  Acto {etiqueta} · {ACTOS[n-1]}  ({len(slides)+1} slides)")
+assert hechos == 6, hechos
 
 # ══════════════════════════════════════════════════ GLOSARIO
 GLOSARIO = [

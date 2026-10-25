@@ -27,13 +27,15 @@ VOCABULARIO: C-level no tecnico. Se permite "harness" SOLO despues de definirlo 
 RAG (se dice "memoria documental"), embedding, sandbox, MCP, CLI, Colab, Python.
 """
 
+from _ejec_svg import svg_ciclo, svg_brecha, svg_pesos, svg_siete
+
 HISTORIA = []
 
 # ══════════════════════════════════════════════════════ ACTO 1
 HISTORIA.append((1, "La promesa que no se cumplió",
   "2022-2024. La IA llegó a todas las empresas y a casi ninguna cuenta de resultados. Esta es la historia de por qué, y de por qué la explicación no es la que se dio en los directorios.",
   [
-   ("pregunta", dict(kicker="Acto 1 de 5 · La promesa", h2="Todos compraron. Casi nadie cobró.",
+   ("pregunta", dict(kicker="Acto 1 de 6 · La promesa", h2="Todos compraron. Casi nadie cobró.",
      big="Entre 2023 y 2025 las empresas del mundo adoptaron IA más rápido que cualquier tecnología anterior. Al cierre de 2025, <b>88% de las empresas la usaba</b> en al menos una función. Pero solo <b>6%</b> podía atribuirle un impacto significativo al resultado.",
      meta="Fuentes: McKinsey, gráfico oficial 'AI at work but not at scale' (dic 2025; 1.993 encuestados, jun-jul 2025) para el 88%; McKinsey Global Survey 2026 (ago 2026) para el 6%.")),
 
@@ -49,6 +51,10 @@ HISTORIA.append((1, "La promesa que no se cumplió",
            "1 de cada 5 pilotos no llegó a demostrar retorno (MIT, ago 2025)",
            "La productividad individual sube; el resultado de la empresa no"])),
 
+   ("svg", dict(kicker="La brecha, en un cuadro", h2="El 88% y el 6%, medidos con la misma vara",
+     svg=svg_brecha(),
+     cap="Las dos cifras vienen de encuestas distintas: no se restan entre sí. Sirven para mostrar la distancia entre usar y capturar valor.")),
+
    ("porque", dict(kicker="La explicación que se dio", h2="«Es que el modelo todavía no es suficientemente bueno»",
      big="Fue el diagnóstico de 2023 y 2024. Y era cómodo: no exigía cambiar nada de la empresa, solo esperar la próxima versión. <b>Era falso</b>, y el curso entero existe porque era falso.",
      meta="El dato que lo desmiente viene del Acto 3: el mismo modelo, en dos programas distintos, acierta 62% o 33%. El modelo no era el problema.")),
@@ -60,6 +66,10 @@ HISTORIA.append((1, "La promesa que no se cumplió",
    ("definicion", dict(kicker="Lo que este curso propone", h2="La pregunta correcta no es «¿qué modelo?»",
      defn="La pregunta que separa a la empresa que cobra de la que solo compró es: <b>¿qué rodea al modelo?</b> Qué datos ve, qué puede ejecutar, qué recuerda, qué límites tiene y quién revisa lo que hizo.",
      meta="Eso es lo que en 2026 se llamó 'harness' y lo que se explica en el Acto 3. Los tres primeros actos existen para que esa palabra no suene a jerga: es la respuesta a por qué el 6%.")),
+
+   ("svg", dict(kicker="El mecanismo", h2="El ciclo que repite todo agente",
+     svg=svg_ciclo(),
+     cap="Si el resultado no cumple el objetivo, vuelve a pensar con la información nueva. Es un ciclo, no una respuesta única.")),
 
    ("testeo", dict(kicker="El testeo del acto", h2="Nombra tu propia brecha",
      big="En una frase: ¿en qué proceso de tu empresa la IA ya mejoró la vida de las personas, y en cuál cambió el resultado del negocio? Si solo tienes la primera, ya sabes dónde estás.",
@@ -75,7 +85,7 @@ HISTORIA.append((1, "La promesa que no se cumplió",
 HISTORIA.append((2, "La guerra de los agentes",
   "Noviembre 2025 - marzo 2026. En cinco meses nació, se rebautizó tres veces, explotó en popularidad y mostró su talón de Aquiles. Es el episodio que enseñó al mercado que un agente sin límites es un riesgo.",
   [
-   ("pregunta", dict(kicker="Acto 2 de 5 · La guerra", h2="Un fin de semana de 2025 cambió la conversación",
+   ("pregunta", dict(kicker="Acto 2 de 6 · La guerra", h2="Un fin de semana de 2025 cambió la conversación",
      big="Un desarrollador austríaco retirado, Peter Steinberger, armó en un fin de semana un asistente que corría en el computador de la persona y trabajaba desde WhatsApp. Lo llamó <b>Clawdbot</b>. En dos meses llegó a <b>100.000 estrellas</b> — una de las explosiones más rápidas que ha visto el software libre.",
      meta="Fuente: TechCrunch, 30 de enero de 2026. Clawdbot lanzado en noviembre de 2025.")),
 
@@ -123,7 +133,7 @@ HISTORIA.append((2, "La guerra de los agentes",
 HISTORIA.append((3, "El descubrimiento del harness",
   "2026. Un paper de 83 páginas desarmó once agentes de producción y encontró lo que nadie estaba midiendo: el modelo pesa menos que el programa que lo envuelve. Esta es la tesis del curso.",
   [
-   ("pregunta", dict(kicker="Acto 3 de 5 · El hallazgo", h2="El experimento que ordena todo",
+   ("pregunta", dict(kicker="Acto 3 de 6 · El hallazgo", h2="El experimento que ordena todo",
      big="Mismos pesos del modelo, mismas preguntas, el mismo día. Solo cambia el programa que lo envuelve. Resultado: <b>62% de acierto en un programa y 33% en otro</b>. El mismo cerebro, la mitad del resultado.",
      meta="Medición sobre SWE-bench Verified, 2026. El programa que envuelve al modelo es lo que la industria bautizó 'harness'.")),
 
@@ -138,6 +148,10 @@ HISTORIA.append((3, "El descubrimiento del harness",
      good_t="Cambiar el harness",
      good=["El mismo modelo: mueve 13 puntos", "No requiere cambiar de proveedor",
            "Se puede mejorar sin gastar más", "Explica la mitad de la varianza del resultado"])),
+
+   ("svg", dict(kicker="Las dos palancas", h2="Cuánto mueve cada cosa, en la misma escala",
+     svg=svg_pesos(),
+     cap="La barra del harness es proporcional: 13 puntos contra 2,5 a 5. Cambiar el modelo dentro del mismo harness mueve una fracción de lo que mueve cambiar el harness.")),
 
    ("piezas", dict(kicker="La evidencia, tres veces", h2="Tres mediciones del mismo fenómeno",
      piezas=[("GLM-5.2", "23% en un harness y 52% en otro. Mismo modelo, mismos pesos, más del doble de acierto."),
@@ -171,11 +185,83 @@ HISTORIA.append((3, "El descubrimiento del harness",
             ("Clase 0 del curso de Auditoría — los 7 subsistemas y el glosario (este sitio)", "clase-harness-contabilidad.html")])),
   ]))
 
+# ══════════════════════════════════════════════════════ ACTO 3b
+HISTORIA.append((4, "Cómo se arma un agente",
+  "La arquitectura agéntica, en lenguaje de directorio. Siete piezas, dos decisiones de diseño y el error que se comete cuando se confunde el motor con el auto. Es el acto que permite mirar una propuesta técnica y saber qué le falta.",
+  [
+   ("pregunta", dict(kicker="Acto 3b de 6 · La arquitectura", h2="Ya sabemos que el harness pesa más. ¿Cómo se arma uno?",
+     big="El harness no es una caja negra: tiene <b>siete piezas</b> y todo sistema toma posición en las siete, incluso cuando la posición es <b>no tenerla</b>. Eso último es la clave para leer una propuesta: lo que no aparece, también es una decisión.",
+     meta="Las siete piezas salen de la tabla 1 del paper arXiv 2609.00006, que las mapeó en los once sistemas de producción.")),
+
+   ("svg", dict(kicker="La anatomía", h2="Los siete, con la decisión de negocio que abre cada uno",
+     svg=svg_siete(),
+     cap="Todo sistema toma posición en los siete, incluso cuando la posición es no tenerlo. Lo que una propuesta no menciona también es una decisión.")),
+
+   ("piezas", dict(kicker="Las siete piezas", h2="La anatomía, con la decisión de negocio que abre cada una",
+     piezas=[("1 · El bucle", "El agente alterna pensar y actuar, con condiciones de parada y recuperación de fallas. Es el procedimiento: cuándo sigue solo y cuándo se detiene."),
+             ("2 · El modelo conectado", "Hablar con el proveedor, armar la instrucción, manejar costo y caché. Aquí se decide cuánto cuesta cada tarea."),
+             ("3 · Las herramientas", "Lo que puede hacer: leer, consultar sistemas, calcular, buscar. Es el acceso que le das — y el que no le das."),
+             ("4 · La memoria", "Qué recuerda entre una sesión y otra. Son los papeles de trabajo del agente: si no quedan, no hay nada que revisar después."),
+             ("5 · La seguridad", "Qué corre solo, qué pregunta y qué se prohíbe; aislamiento de la ejecución. Es la segregación de funciones."),
+             ("6 · La orquestación", "Si puede crear y coordinar otros agentes. Nueve de los once sistemas lo soportan; uno decidió no tenerlo."),
+             ("7 · La extensibilidad", "Cómo se le agregan capacidades sin rehacer el núcleo: configuración, extensiones, plugins. Son las políticas que se suman después.")])),
+
+   ("tabla", dict(kicker="La tabla del paper", h2="La misma pieza, del mínimo al máximo real",
+     cols=["Pieza", "Forma mínima observada", "Forma máxima observada"],
+     rows=[
+       ["<b>Bucle</b>", "Un while lineal sobre una sola herramienta", "Cada acción queda como evento en un registro persistente, con acciones en paralelo"],
+       ["<b>Modelo conectado</b>", "Una llamada vía capa de traducción, una plantilla de texto", "Cinco transportes propios, 29 perfiles de proveedor, metadata de 3.800+ modelos"],
+       ["<b>Herramientas</b>", "Un solo comando de shell", "43 herramientas tipadas, con carga diferida"],
+       ["<b>Memoria</b>", "Historial lineal sin límite", "Pipeline de memoria entre sesiones, mantenido por un sub-agente en segundo plano"],
+       ["<b>Seguridad</b>", "Límites de costo y de número de pasos", "Reglas de política + revisor con modelo + aislamiento del sistema operativo en tres plataformas"],
+       ["<b>Orquestación</b>", "Ninguna, por diseño explícito (un solo agente)", "Composición recursiva; coordinación entre proveedores distintos"],
+       ["<b>Extensibilidad</b>", "Tipado estructural, sin registro ni manifiesto", "Un runtime donde todo es extensión y el núcleo es mínimo"],
+     ],
+     cap="Tabla 1 de arXiv 2609.00006 (15 jul 2026): forma mínima y máxima observada de cada subsistema en los once sistemas de producción.")),
+
+   ("porque", dict(kicker="Por qué esta tabla cambia una reunión", h2="La forma mínima y la forma máxima de cada pieza",
+     big="El paper midió el rango real de cada pieza. En herramientas, un sistema tiene <b>un solo comando de shell</b> y otro <b>43 herramientas tipadas</b>. En memoria, uno acumula historial sin límite y otro tiene un <b>sub-agente dedicado a mantenerla</b> entre sesiones. La diferencia no es de versión: es de arquitectura.",
+     meta="Tabla 1 de arXiv 2609.00006: forma mínima y máxima observada de cada subsistema en los once sistemas.")),
+
+   ("vs", dict(kicker="La lectura para el directorio", h2="Las siete piezas, traducidas a control interno",
+     bad_t="Si la propuesta no menciona",
+     bad=["<b>Memoria:</b> no hay papeles de trabajo del agente",
+          "<b>Seguridad:</b> no hay segregación de funciones ni autorizaciones",
+          "<b>Herramientas:</b> no dicen a qué sistemas llega ni en qué modo",
+          "<b>Extensibilidad:</b> cada cambio futuro pasa por el proveedor"],
+     good_t="Entonces pregunta por",
+     good=["<b>Dónde queda el registro</b> de cada acción, y por cuánto tiempo",
+           "<b>Qué acción irreversible</b> puede ejecutar sin aprobación humana",
+           "<b>Qué lee y qué escribe</b>, sistema por sistema, en una lista",
+           "<b>Cómo se le agrega una capacidad</b> sin cambiar de plataforma"])),
+
+   ("definicion", dict(kicker="La decisión de diseño más importante", h2="Un agente o varios",
+     defn="Nueve de los once sistemas permiten varios agentes; dos no, y uno de ellos <b>deliberadamente</b>. La regla práctica: una tarea con partes independientes se reparte en paralelo; una cadena donde cada paso alimenta al siguiente exige verificación en cada eslabón, porque un error se propaga.",
+     meta="El reparto tiene seis patrones documentados (uno solo, delegación secuencial, sesiones hijas en paralelo, árbol con reparto, composición recursiva, registro con agentes remotos). Un ejecutivo no necesita los seis: necesita saber cuál le están vendiendo.")),
+
+   ("error", dict(kicker="El error de arquitectura", h2="Comprar la plataforma que «resuelve todo»",
+     warn="Recuerda las dos ausencias del Acto 3: en cuatro millones de líneas de código, <b>ningún sistema de producción importa un framework de agentes</b> y <b>ninguno busca documentos con vectores</b>. Los que lo hacen bien, lo construyen.<br><br>Consecuencia para una empresa: no existe el producto que se compra y ya está. Existe la capacidad de armarlo, y esa capacidad se queda contigo.")),
+
+   ("lista", dict(kicker="Dónde se rompe en la práctica", h2="Los dos puntos de falla más caros",
+     items=["<b>Memoria mezclada:</b> meter todo el manual de la empresa en lo que el agente recuerda siempre lo vuelve lento, caro y confuso. Lo estable (convenciones, nombres, formatos) va aparte de lo que se consulta cuando la tarea lo pide.",
+            "<b>Herramientas sin límite de modo:</b> un agente que puede leer y escribir en el sistema donde además toma decisiones operativas. La separación lectura / escritura es la primera control de la arquitectura, no un detalle de implementación.",
+            "<b>Orquestación sin verificador:</b> varios agentes que se juntan sin cruzar los números producen un resultado limpio y falso. Donde dos ramas se unen, se cruzan las cifras."])),
+
+   ("testeo", dict(kicker="El testeo del acto", h2="Audita una arquitectura en siete preguntas",
+     big="Toma cualquier herramienta de IA que tu empresa ya tenga y responde: ¿cuál es el bucle?, ¿qué modelo y a qué costo?, ¿qué herramientas tiene?, ¿qué memoria?, ¿qué seguridad?, ¿orquesta otros agentes?, ¿cómo se extiende?",
+     meta="Cada pregunta sin respuesta es una pieza que alguien decidió no tener, o nunca pensó. Las dos son información útil antes de firmar.")),
+
+   ("links", dict(kicker="Fuentes del acto", h2="La fuente y el material técnico",
+     links=[("arXiv 2609.00006 — tabla 1: los siete subsistemas en once sistemas (15 jul 2026)", "https://arxiv.org/abs/2609.00006"),
+            ("Clase 0 del curso de Auditoría — los 7 subsistemas con la lectura contable (este sitio)", "clase-harness-contabilidad.html"),
+            ("Clase 0b del curso de Auditoría — el mismo modelo, otra herramienta (este sitio)", "clase-harness-multientorno.html")])),
+  ]))
+
 # ══════════════════════════════════════════════════════ ACTO 4
-HISTORIA.append((4, "Lo que aprendimos de nosotros mismos",
+HISTORIA.append((5, "Lo que aprendimos de nosotros mismos",
   "2026. Mientras el mercado discutía modelos, acá se hizo algo que casi nadie hace: auditar el propio trabajo. Miles de sesiones minadas, errores contados, y las reglas que salieron de ahí. Este es el capítulo que ningún proveedor puede contar.",
   [
-   ("pregunta", dict(kicker="Acto 4 de 5 · La evidencia propia", h2="¿Y cómo se usa esto sin que salga mal?",
+   ("pregunta", dict(kicker="Acto 5 de 6 · La evidencia propia", h2="¿Y cómo se usa esto sin que salga mal?",
      big="Todo lo anterior explica por qué un agente puede trabajar. No explica por qué <b>no va a inventar una cifra</b>. Para eso no alcanza con doctrina: hay que mirar los errores reales. Y los nuestros están medidos, contados y escritos.",
      meta="Este acto usa datos propios de CONECTA sobre trabajo con agentes durante 2026. Van con su metodología, incluida la parte incómoda.")),
 
@@ -222,10 +308,10 @@ HISTORIA.append((4, "Lo que aprendimos de nosotros mismos",
   ]))
 
 # ══════════════════════════════════════════════════════ ACTO 5
-HISTORIA.append((5, "Hasta dónde podríamos llegar",
+HISTORIA.append((6, "Hasta dónde podríamos llegar",
   "2026 en adelante. Qué está resuelto, qué no, y dónde está el espacio vacío que el mercado todavía no llenó. Cierre de la sección 0, sin promesas.",
   [
-   ("pregunta", dict(kicker="Acto 5 de 5 · El horizonte", h2="Lo que ya no es una promesa",
+   ("pregunta", dict(kicker="Acto 6 de 6 · El horizonte", h2="Lo que ya no es una promesa",
      big="Un agente personal que corre en tu computador, lee tus archivos, recuerda tus reglas y deja registro de lo que hizo <b>ya existe y ya se usa</b>. No es una demo de laboratorio: once sistemas de producción fueron estudiados por código.",
      meta="Es el punto de partida del curso, no el final. La pregunta ya no es '¿se puede?', es '¿qué le ponemos adentro?'.")),
 
