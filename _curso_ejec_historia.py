@@ -48,7 +48,7 @@ HISTORIA.append((1, "La promesa que no se cumplió",
      good_t="Lo que se quedó plano",
      good=["37% atribuye algún impacto al resultado operativo — igual que el año anterior",
            "Solo 6% puede atribuirle 5% o más y llamarlo significativo",
-           "1 de cada 5 pilotos no llegó a demostrar retorno (MIT, ago 2025)",
+           "95% de los pilotos no llegó a demostrar retorno (MIT/NANDA, ago 2025)",
            "La productividad individual sube; el resultado de la empresa no"])),
 
    ("svg", dict(kicker="La brecha, en un cuadro", h2="El 88% y el 6%, medidos con la misma vara",
@@ -117,7 +117,7 @@ HISTORIA.append((2, "La guerra de los agentes",
 
    ("porque", dict(kicker="Lo que pasó después", h2="El mercado se separó en dos",
      big="Por un lado, los agentes virales y gratuitos que corren donde el usuario quiera. Por el otro, los que se pueden poner en una empresa: con registro, permisos y reglas. <b>Hermes pertenece al segundo grupo</b>, y por eso aparece en el estudio académico junto a los grandes.",
-     meta="En el Acto 3: el paper de harness engineering analizó once sistemas de producción, y Hermes es uno de ellos.")),
+     meta="En el Acto 3: el paper de harness engineering analizó once sistemas de producción, y Hermes es uno de ellos. Conviene decirlo con precisión: Hermes aparece dos veces en este curso, en dos papeles distintos — como evidencia externa (uno de los once sistemas que un paper independiente desarmó) y como la herramienta que vas a instalar en la clase 4. Son la misma cosa mirada desde dos lados; si el segundo papel te parece sospechoso, el primero lo respalda.")),
 
    ("testeo", dict(kicker="El testeo del acto", h2="La pregunta que salva un proyecto",
      big="Antes de conectar un agente a un sistema de la empresa, pregúntate: ¿si esto se equivoca, quién responde y qué queda registrado? Si no hay respuesta, no es un agente listo para producción.",
