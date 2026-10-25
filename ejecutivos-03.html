@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 3 · Hermes: el agente que usas tú</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 3 · Clase 3 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Hermes: el agente que usas tú</h1><p class="lead">No es un chatbot más: es un trabajador con memoria, herramientas y reglas. Qué es Hermes, de quién es, y por qué un ejecutivo puede tener el suyo sin depender de TI.</p></section><section class="slide"><div class="kicker">La pregunta honesta</div><h2>¿Otro ChatGPT? ¿Por qué no usar lo que ya pagamos?</h2><p class="big">Porque ChatGPT te responde y se olvida. Hermes <b>trabaja sobre tus archivos, recuerda tus reglas y ejecuta</b>. La diferencia no es el modelo —que también puede ser el mismo— sino todo lo que hay alrededor.</p></section><section class="slide"><div class="kicker">La definición</div><h2>Qué es Hermes</h2><p class="def">Hermes es un <b>agente abierto</b> creado por Nous Research que corre en tu propio computador (o en un servidor), usa el modelo de IA que tú elijas, y trabaja con <b>memoria persistente</b>, herramientas reales y reglas que tú escribes.</p><p class="meta">Abierto = el código se puede auditar, y no quedas amarrado a un proveedor ni a un precio. Es la condición que un comité de riesgo pide antes de decir sí.</p></section><section class="slide"><div class="kicker">Con qué está armado</div><h2>Las cinco piezas que un ejecutivo debe saber nombrar</h2><div class="piezas"><div class="pieza"><div class="t">Memoria</div><p>Recuerda entre sesiones: tus datos, tus convenciones, lo decidido. No hay que reexplicarle el contexto cada mañana.</p></div><div class="pieza"><div class="t">Herramientas</div><p>Lee y escribe archivos, busca en internet, corre cálculos, consulta sistemas, opera el navegador.</p></div><div class="pieza"><div class="t">Reglas</div><p>Un archivo de instrucciones propias: qué verificar, qué no afirmar, cuándo pedir permiso antes de actuar.</p></div><div class="pieza"><div class="t">Perfil</div><p>Una carpeta con lo que sabe de ti y de tu área, separable del resto: información delicada en un perfil, trabajo general en otro.</p></div><div class="pieza"><div class="t">Registro</div><p>Todo lo que hizo queda escrito y revisable. Es la pieza que permite auditarlo después.</p></div></div></section><section class="slide"><div class="kicker">Cómo trabaja</div><h2>De la orden al resultado, en cuatro pasos</h2><p class="lead" style="margin-bottom:20px">Le das un objetivo en lenguaje normal. Esto es lo que pasa después:</p><div class="loop"><div class="node"><div class="n">Tú escribes</div><div class="d">«arma el resumen de costos»</div></div><span class="arrow">→</span><div class="node"><div class="n">Busca</div><div class="d">lee tus archivos y sistemas</div></div><span class="arrow">→</span><div class="node"><div class="n">Calcula y verifica</div><div class="d">no inventa la cifra</div></div><span class="arrow">→</span><div class="node"><div class="n">Entrega</div><div class="d">resultado + fuente de cada dato</div></div></div><p class="meta">En el medio puede corregirse solo: si un archivo no está o un dato no cuadra, vuelve atrás y lo busca, en vez de rellenar el hueco con algo plausible.</p></section><section class="slide"><div class="kicker">Comparación honesta</div><h2>Hermes frente a las alternativas</h2><div class="grid2"><div class="col bad"><div class="t">Herramientas cerradas</div><ul><li>Tus datos salen a la nube del proveedor</li><li>No puedes ver ni limitar lo que hace por dentro</li><li>Precio y reglas cambian cuando el proveedor quiere</li><li>Si el proveedor se cae, se cae tu proceso</li></ul></div><div class="col good"><div class="t">Hermes (abierto y propio)</div><ul><li>Corre donde tú decidas; el dato no sale si no lo autorizas</li><li>Código auditable y reglas editables por ti</li><li>Cambia de modelo sin rehacer el trabajo</li><li>Queda el registro de todo lo que hizo</li></ul></div></div></section><section class="slide"><div class="kicker">Por qué esto le importa a un directorio</div><h2>Riesgo de proveedor</h2><p class="big">Con un agente propio, la inteligencia es un insumo sustituible. Con una plataforma cerrada, la inteligencia es un proveedor del que dependes — con contratos, aumentos de precio y salida difícil.</p><p class="meta">Es la misma pregunta que su comité hace por la nube o por el ERP: ¿qué pasa si mañana el proveedor sube el precio, cambia las condiciones o se retira del país?</p></section><section class="slide"><div class="kicker">Error típico</div><h2>Evaluar Hermes como si fuera un buscador</h2><div class="warn"><b>Mal:</b> sentarse a probarlo con preguntas de trivia. «¿Quién ganó el mundial?» — eso lo hace cualquier buscador.<br><br><b>Bien:</b> darle una tarea real y completa de tu trabajo: un archivo de verdad, un criterio de negocio, un formato de entrega. La prueba de un agente no es lo que sabe, es <b>lo que logra con lo que le das</b>.</div></section><section class="slide"><div class="kicker">Qué NO es Hermes</div><h2>Para que la expectativa quede clara</h2><ul class="plain"><li><b>No es un reemplazo de tu ERP ni de tu equipo:</b> es un ejecutor de tareas al que hay que dirigir y supervisar.</li><li><b>No es infalible:</b> puede equivocarse; el curso dedica tres clases a controlarlo. Lo que sí hace es dejar rastro de lo que hizo.</li><li><b>No se instala solo:</b> requiere instalar software en un computador y conseguir una llave de acceso a un modelo. Es la única parte técnica del curso, y se ve en la próxima clase.</li><li><b>No decide por ti:</b> investiga, calcula, redacta y alerta. La decisión —y la firma— siguen siendo humanas.</li></ul></section><section class="slide"><div class="kicker">Ejemplo de esta misma semana</div><h2>Lo que Hermes hizo para un ejecutivo, en una sesión</h2><div class="cajon"><div class="q">Un caso real de uso, con las herramientas que tiene</div><ol><li>Recibió una instrucción amplia: «rehacer este curso para otro público».</li><li>Buscó el material existente en el disco antes de escribir nada: encontró el programa, el repositorio y el curso largo de referencia.</li><li>Verificó los datos que iba a citar en fuentes primarias y descartó los titulares sin respaldo.</li><li>Detectó que un requisito no definido cambiaba el resultado, y en vez de adivinar, preguntó.</li></ol></div><p class="meta">La última línea es la que decide si un agente sirve en una empresa: la diferencia entre «no sé» y una respuesta inventada con seguridad.</p></section><section class="slide"><div class="kicker">El testeo</div><h2>Nombra las cinco piezas</h2><p class="big">Un agente hace tres cosas distintas y tú debes poder decir cuál es cuál: recuerda, ejecuta, y pide permiso.</p><p class="meta">Si confundes las tres, cualquier vendedor de IA te vende las que le convengan.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Para leer la fuente, no el resumen</h2><ul class="links"><li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/overview" target="_blank">Hermes Agent — características (documentación oficial)</a></li><li><a href="https://github.com/NousResearch/hermes-agent" target="_blank">Hermes Agent — repositorio del proyecto</a></li><li><a href="https://nousresearch.com" target="_blank">Nous Research — proyectos y modelos</a></li><li><a href="directrices-hermes.html" target="_blank">Directrices del agente — cómo hacer que trabaje bien (este sitio)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 12</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

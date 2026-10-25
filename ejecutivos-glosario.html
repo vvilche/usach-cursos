@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Glosario de datos — IA Agéntica para Ejecutivos</title>
+<style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--soft:#fdf3ec;}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;}
+.wrap{max-width:900px;margin:0 auto;padding:32px 22px 90px;}
+header{border-bottom:2px solid var(--acc);padding-bottom:18px;margin-bottom:8px;}
+h1{font-size:28px;margin:0 0 6px;letter-spacing:-.02em;}
+.sub{color:var(--mut);font-size:14px;margin:0;}
+.aviso{background:var(--soft);border:1px solid #f0d9c8;border-left:5px solid var(--acc);border-radius:10px;padding:14px 18px;font-size:14.5px;color:#5b2b14;margin:20px 0 8px;}
+.buscador{margin:22px 0 6px;}
+.buscador input{width:100%;padding:12px 14px;font-size:16px;border:1px solid var(--line);border-radius:10px;background:#fff;}
+.g{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 22px;margin:12px 0;border-left:4px solid var(--acc);}
+.gt{font-weight:800;font-size:18px;color:var(--acc);margin-bottom:6px;}
+.gd{font-size:15.5px;color:var(--ink);}
+.gn{font-size:14px;color:var(--mut);margin-top:10px;padding-top:10px;border-top:1px dashed var(--line);}
+.gn b{color:var(--acc);}
+a{color:#2563eb;}
+footer{margin-top:40px;padding-top:14px;border-top:1px solid var(--line);color:var(--mut);font-size:13px;}
+</style></head>
+<body><div class="wrap">
+<header>
+  <h1>Glosario de datos</h1>
+  <p class="sub">Los 14 conceptos que un ejecutivo necesita para autorizar, comprar o frenar un proyecto de IA agéntica · Sección 0 del curso</p>
+</header>
+<div class="aviso"><b>Por qué existe:</b> el mismo concepto tiene tres nombres —el de la industria en inglés, el del proveedor y el de la jerga interna— y esas diferencias se cobran en las reuniones. Acá va cada uno con su definición operativa y con la razón por la que le importa a quien decide.</div>
+<div class="buscador"><input id="q" type="search" placeholder="Buscar un concepto (por ejemplo: trazabilidad, permiso, memoria)…" aria-label="Buscar concepto"></div>
+  <div class="g" id="g1">
+    <div class="gt">Agente</div>
+    <div class="gd">Un programa que recibe un objetivo, decide por sí mismo qué hacer, usa herramientas y ejecuta hasta cumplirlo. La diferencia con un chatbot es quién hace el trabajo: con el chatbot eres tú; con el agente, es la máquina y tú revisas.</div>
+    <div class="gn"><b>Por qué importa:</b> No es 'una IA más inteligente'. Es una IA conectada a herramientas y con permiso para actuar.</div>
+  </div>
+  <div class="g" id="g2">
+    <div class="gt">Modelo</div>
+    <div class="gd">El motor: la red entrenada que produce texto, cálculos y decisiones. Es una pieza, no el sistema completo. Se cambia sin rehacer el trabajo.</div>
+    <div class="gn"><b>Por qué importa:</b> Cuando alguien dice 'usamos GPT' o 'usamos Claude', está hablando del motor, no del auto.</div>
+  </div>
+  <div class="g" id="g3">
+    <div class="gt">Harness</div>
+    <div class="gd">El auto completo alrededor del motor: el ciclo de trabajo, las herramientas que le da, la memoria que le entrega, los límites que le pone y cómo se extiende. Pesa más que el modelo: cambiar de harness mueve 13 puntos el resultado; cambiar de modelo, 2,5 a 5.</div>
+    <div class="gn"><b>Por qué importa:</b> Palabra en inglés, sin traducción de uso. En el curso se explica con la analogía motor / auto.</div>
+  </div>
+  <div class="g" id="g4">
+    <div class="gt">Herramienta</div>
+    <div class="gd">Lo que el agente puede hacer en el mundo: leer un archivo, consultar un sistema, buscar en internet, hacer un cálculo. Sin herramientas, un agente es solo un chat.</div>
+    <div class="gn"><b>Por qué importa:</b> La pregunta de compra correcta: ¿a qué sistemas de la empresa puede llegar y en qué modo (leer o escribir)?</div>
+  </div>
+  <div class="g" id="g5">
+    <div class="gt">Memoria</div>
+    <div class="gd">Lo que el agente conserva entre una sesión y otra: quién eres, cómo se llaman las cosas en tu empresa, qué se decidió. Es lo que separa una consulta suelta de un colaborador.</div>
+    <div class="gn"><b>Por qué importa:</b> La regla sana: en memoria, los hechos estables; los procedimientos complejos van aparte.</div>
+  </div>
+  <div class="g" id="g6">
+    <div class="gt">Regla de comportamiento</div>
+    <div class="gd">Un archivo de instrucciones propias que el agente lee en cada sesión: qué verificar, qué no afirmar, cuándo pedir permiso. Es lo que convierte un agente en uno auditable.</div>
+    <div class="gn"><b>Por qué importa:</b> En Hermes vive en un archivo llamado SOUL. Sin reglas, el agente inventa — es exactamente lo contrario de lo que pide un comité de riesgo.</div>
+  </div>
+  <div class="g" id="g7">
+    <div class="gt">Trazabilidad</div>
+    <div class="gd">Poder responder, para cada cifra de un entregable, de qué archivo salió, en qué línea está y qué cálculo se aplicó. Si la cadena se corta, el número no es un dato: es una afirmación.</div>
+    <div class="gn"><b>Por qué importa:</b> Es el mismo principio de la contabilidad y de la auditoría, aplicado a una herramienta nueva.</div>
+  </div>
+  <div class="g" id="g8">
+    <div class="gt">Alucinación</div>
+    <div class="gd">Un dato inventado que el sistema entrega con seguridad total, porque su trabajo es producir la continuación más plausible y no decir 'no sé'.</div>
+    <div class="gn"><b>Por qué importa:</b> No se elimina: se controla. Con fuente obligatoria, extractor determinista, verificación cruzada y muestra humana.</div>
+  </div>
+  <div class="g" id="g9">
+    <div class="gt">Memoria documental de la empresa</div>
+    <div class="gd">El conocimiento disperso en carpetas, actas, contratos y correos, puesto a disposición del agente para que consulte cuando la tarea lo pide, en vez de tenerlo todo cargado siempre.</div>
+    <div class="gn"><b>Por qué importa:</b> El proveedor probablemente lo llame 'solución de conocimiento empresarial'. Da igual el nombre: el concepto es éste, y el ejecutivo necesita el concepto, no la sigla.</div>
+  </div>
+  <div class="g" id="g10">
+    <div class="gt">Puente, no copia</div>
+    <div class="gd">El agente consulta la fuente original (el ERP, el sistema, el archivo oficial) en vez de trabajar sobre una copia propia. Si existe una copia, al día siguiente dos números compiten y nadie sabe cuál gana.</div>
+    <div class="gn"><b>Por qué importa:</b> Es la regla que evita el clásico 'la planilla dice una cosa y el sistema otra'.</div>
+  </div>
+  <div class="g" id="g11">
+    <div class="gt">Irreversible</div>
+    <div class="gd">El criterio que ordena los permisos de un agente. Reversible: leer, calcular, preparar un borrador — lo hace solo. Irreversible: enviar un correo, modificar un registro, publicar, pagar — pide aprobación.</div>
+    <div class="gn"><b>Por qué importa:</b> No es un criterio de tamaño, es de si se puede deshacer. Ahí se decide qué puede hacer el agente sin que nadie mire.</div>
+  </div>
+  <div class="g" id="g12">
+    <div class="gt">Registro</div>
+    <div class="gd">Queda escrito lo que el agente hizo, con qué fuente y cuándo. Sin registro no hay auditoría posible: solo confianza.</div>
+    <div class="gn"><b>Por qué importa:</b> La pregunta que hay que responder antes de conectar un agente: ¿dónde queda el registro y quién lo revisa?</div>
+  </div>
+  <div class="g" id="g13">
+    <div class="gt">Perfil</div>
+    <div class="gd">Una separación del agente y su información: el perfil de una persona o de un área, aislado del resto. Se usa para que lo delicado no comparta espacio con el trabajo general.</div>
+    <div class="gn"><b>Por qué importa:</b> Resuelve el 80% de las conversaciones de seguridad sin comprar nada nuevo.</div>
+  </div>
+  <div class="g" id="g14">
+    <div class="gt">Evaluación</div>
+    <div class="gd">Medir si el agente cumple: contra casos conocidos, no contra una impresión. Es la diferencia entre 'funciona' y 'funciona en este caso'.</div>
+    <div class="gn"><b>Por qué importa:</b> En el curso se hace con la muestra humana: una cifra al azar contra el original, en cada entrega.</div>
+  </div>
+<footer>
+  <a href="ejecutivos-ia-agentica.html">← Volver al plan de clases</a> ·
+  <a href="ejecutivos-timeline.html">La línea de tiempo 2022–2026 →</a> ·
+  Fuente de las definiciones: el material del curso y las fuentes citadas en cada acto de la sección 0.
+</footer>
+</div>
+<script>
+const q=document.getElementById('q');
+const gs=[...document.querySelectorAll('.g')];
+const norm=s=>s.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+q.addEventListener('input',()=>{
+  const v=norm(q.value.trim());
+  gs.forEach(g=>{g.style.display = !v || norm(g.textContent).includes(v) ? '' : 'none';});
+  const vis=gs.filter(g=>g.style.display!=='none').length;
+  q.setAttribute('aria-label','Buscar concepto — '+vis+' de '+gs.length+' visibles');
+});
+</script>
+</body></html>

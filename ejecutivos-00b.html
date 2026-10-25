@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 0.2 · La guerra de los agentes</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 0.2 · Sección 0 · Acto 2 de 5</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Sección 0 · Historia · Sección 0 · La historia</div><h1>La guerra de los agentes</h1><p class="lead">Noviembre 2025 - marzo 2026. En cinco meses nació, se rebautizó tres veces, explotó en popularidad y mostró su talón de Aquiles. Es el episodio que enseñó al mercado que un agente sin límites es un riesgo.</p></section><section class="slide"><div class="kicker">Acto 2 de 5 · La guerra</div><h2>Un fin de semana de 2025 cambió la conversación</h2><p class="big">Un desarrollador austríaco retirado, Peter Steinberger, armó en un fin de semana un asistente que corría en el computador de la persona y trabajaba desde WhatsApp. Lo llamó <b>Clawdbot</b>. En dos meses llegó a <b>100.000 estrellas</b> — una de las explosiones más rápidas que ha visto el software libre.</p></section><section class="slide"><div class="kicker">La cronología, con fechas</div><h2>Tres nombres en cinco días</h2><div class="steps"><div class="step"><p><b>Noviembre 2025:</b> nace como Clawdbot. Un asistente personal que vive en tu computador y obedece desde el chat que ya usas.</p></div><div class="step"><p><b>27 de enero de 2026:</b> Anthropic —la empresa de Claude— envía un correo pidiendo el cambio de nombre por marca. La comunidad vota en Discord: gana 'Moltbot'.</p></div><div class="step"><p><b>30 de enero de 2026:</b> tercer y definitivo nombre: OpenClaw. 'La langosta mudó de caparazón por última vez'.</p></div><div class="step"><p><b>La misma semana:</b> bots automáticos roban el usuario @openclaw en X y el usuario personal de GitHub del creador. Hubo que llamar a los directivos de ambas plataformas.</p></div></div></section><section class="slide"><div class="kicker">Por qué esto no es una anécdota de frikis</div><h2>Lo que se demostró en 90 días</h2><p class="big">Que <b>un agente personal, corriendo en el computador de alguien y conectado a sus chats, es lo que la gente quería</b>. No un chat en una pestaña: algo que actúa. Esa demanda existía y estaba insatisfecha.</p><p class="meta">En marzo de 2026 ya se hablaba de 'claws' como categoría de producto: agentes personales que corren en tu máquina y ejecutan tareas por ti.</p></section><section class="slide"><div class="kicker">El talón de Aquiles</div><h2>«Seguridad confiando en una langosta»</h2><div class="warn">Su propia documentación cita, con humor, la frase del creador: <b>«security by trusting a lobster»</b>. Y registra un incidente real: el agente ejecutando una orden que listaba todo el directorio del usuario y lo compartía en un chat de grupo.<br><br>TechCrunch fue explícito en enero de 2026: mientras no madurara la seguridad, <b>no era aconsejable darle acceso a tu Slack o WhatsApp principal</b>.</div></section><section class="slide"><div class="kicker">El paper que lo estudió</div><h2>50 derivados y una región vacía</h2><p class="def">Un paper de agosto de 2026 (ASTELD) clasificó <b>ocho plataformas de agentes</b> y más de <b>50 derivados de OpenClaw</b>. Conclusión incómoda para el mercado: <b>ninguno de los sistemas evaluados combina despliegue local con seguridad de nivel empresarial</b>.</p><p class="meta">arXiv 2608.05201 (5 ago 2026). Esa 'región vacía' es exactamente el espacio donde una empresa seria puede jugar: local, pero con gobierno.</p></section><section class="slide"><div class="kicker">La lección para un directorio</div><h2>Popularidad y confiabilidad son ejes distintos</h2><div class="grid2"><div class="col bad"><div class="t">Lo que la adopción viral premia</div><ul><li>Que sea fácil de instalar y usar</li><li>Que se conecte a todo el chat y el correo</li><li>Que ejecute sin pedir permiso</li><li>Que la comunidad crezca rápido</li></ul></div><div class="col good"><div class="t">Lo que una empresa necesita</div><ul><li>Que se pueda auditar qué hizo y cuándo</li><li>Que se le pueda limitar el acceso por área</li><li>Que pida aprobación en lo irreversible</li><li>Que si sube el precio o se va, el trabajo quede</li></ul></div></div></section><section class="slide"><div class="kicker">Lo que pasó después</div><h2>El mercado se separó en dos</h2><p class="big">Por un lado, los agentes virales y gratuitos que corren donde el usuario quiera. Por el otro, los que se pueden poner en una empresa: con registro, permisos y reglas. <b>Hermes pertenece al segundo grupo</b>, y por eso aparece en el estudio académico junto a los grandes.</p><p class="meta">En el Acto 3: el paper de harness engineering analizó once sistemas de producción, y Hermes es uno de ellos.</p></section><section class="slide"><div class="kicker">El testeo del acto</div><h2>La pregunta que salva un proyecto</h2><p class="big">Antes de conectar un agente a un sistema de la empresa, pregúntate: ¿si esto se equivoca, quién responde y qué queda registrado? Si no hay respuesta, no es un agente listo para producción.</p><p class="meta">Es la misma pregunta que el paper ASTELD respondió con datos: la seguridad y la facilidad se mueven en direcciones opuestas.</p></section><section class="slide"><div class="kicker">Fuentes del acto</div><h2>Para verificar</h2><ul class="links"><li><a href="https://techcrunch.com/2026/01/30/openclaws-ai-assistants-are-now-building-their-own-social-network" target="_blank">TechCrunch — el tercer nombre y las 100.000 estrellas (30 ene 2026)</a></li><li><a href="https://docs.openclaw.ai/start/lore" target="_blank">OpenClaw — la historia oficial del proyecto (docs.openclaw.ai)</a></li><li><a href="https://arxiv.org/abs/2608.05201" target="_blank">arXiv 2608.05201 — ASTELD: ocho plataformas y la región vacía (5 ago 2026)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 10</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

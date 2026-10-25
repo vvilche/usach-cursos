@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 2 · Quién ya lo está usando en Chile</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 2 · Clase 2 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Quién ya lo está usando en Chile</h1><p class="lead">No es una promesa de Silicon Valley: empresas chilenas de este tamaño ya tienen agentes trabajando en operaciones críticas. Qué hacen, qué ganaron y qué les costó.</p></section><section class="slide"><div class="kicker">La pregunta del directorio</div><h2>¿Esto ya funciona en empresas como la nuestra?</h2><p class="big">Sí, y no en un piloto de laboratorio: en faenas, plantas y equipos legales. Lo que sigue son casos chilenos con nombre, cifra y fuente — para que el comité no discuta una idea, sino una realidad medida.</p></section><section class="slide"><div class="kicker">Caso 1 · ARAUCO</div><h2>Una gerencia dedicada a la IA, no un proyecto suelto</h2><p class="def">ARAUCO creó una <b>gerencia de AI y Advanced Analytics</b> para pasar de esfuerzos aislados a adopción con escala. Su argumento: la IA es <b>sinérgica</b>; sin una visión común se pierden las economías de escala.</p><p class="meta">Fuente: Revista Empresas Copec, abril 2026. Declaración de Juan Pablo Barros, gerente de AI y Advanced Analytics de ARAUCO.</p></section><section class="slide"><div class="kicker">Caso 2 · Calidad de Cosecha</div><h2>Del muestreo visual a medir el 100% de la faena</h2><div class="cajon"><div class="q">Cómo un dron cambió una decisión de operación</div><ol><li>Drones capturan imágenes de alta resolución sobre la faena forestal.</li><li>Modelos de visión identifican, dimensionan y clasifican <b>cada trozo de madera individual</b>.</li><li>Se estima su volumen y se clasifica por valor comercial.</li><li>El cruce con el inventario forestal identifica madera no aprovechada y estima la pérdida.</li></ol></div><p class="meta">Resultado publicado: 37% de mejora en la calidad promedio de las faenas. Pasó a operar automatizado en el primer trimestre de 2024. Ganó el Premio Nacional de Inteligencia Artificial Chile, PotencIA. Fuente: Revista Empresas Copec, abril 2026.</p></section><section class="slide"><div class="kicker">Por qué ese caso es el interesante</div><h2>No reemplazó al experto: le cambió la pregunta</h2><p class="big">Antes, un jefe de faena discutía <b>una muestra</b> y una impresión visual. Ahora discute <b>todo el volumen cosechado</b>, con indicador objetivo. Lo que cambia no es el modelo: es que la conversación de margen ahora tiene evidencia completa.</p><p class="meta">Declaración de José Miguel Echeverría, jefe de Procesamiento, Teledetección y Geomática de ARAUCO, en la misma fuente.</p></section><section class="slide"><div class="kicker">Caso 3 · Celulosa</div><h2>El agente que diagnostica fallas en minutos, no en semanas</h2><ul class="plain"><li><b>El problema:</b> una falla operacional compleja exige semanas de trabajo altamente especializado para encontrar la causa raíz.</li><li><b>Lo que hicieron:</b> un sistema de IA <b>multiagente</b> que integra manuales, bitácoras y datos de proceso.</li><li><b>Lo que entrega:</b> hipótesis de causa raíz y recomendaciones para acelerar la resolución.</li><li><b>Por qué importa:</b> en una planta, el tiempo de diagnóstico es directamente continuidad operacional y costo.</li><li><b>El otro salto:</b> gemelos digitales que replican el comportamiento de sistemas críticos con datos en tiempo real, para estabilizar procesos.</li></ul></section><section class="slide"><div class="kicker">Caso 4 · Lo transversal</div><h2>Donde un ejecutivo lo ve primero: el trabajo de oficina</h2><div class="piezas"><div class="pieza"><div class="t">⚖️ Legal</div><p>Agentes para procesos y análisis complejos: abogados con hasta 8 agentes armados según su propia necesidad, para optimizar flujos y ahorrar tiempo.</p></div><div class="pieza"><div class="t">💰 Compras y Finanzas</div><p>Sistemas de agentes orientados a agilizar procesos y abrir nuevas eficiencias.</p></div><div class="pieza"><div class="t">🌲 Incendios</div><p>165 cámaras robotizadas propias, visión artificial, apoyo satelital y simuladores de propagación en tiempo real.</p></div></div></section><section class="slide"><div class="kicker">El resto del mercado chileno</div><h2>Lo que otras empresas del país ya pusieron a andar</h2><div class="grid2"><div class="col bad"><div class="t">Chat para adentro (productividad)</div><ul><li>Copec: más de la mitad de sus 1.600 colaboradores usa IA en su rutina; 20.000 interacciones mensuales.</li><li>Caja Los Andes: IA integrada para la productividad de sus más de 2.000 colaboradores.</li></ul></div><div class="col good"><div class="t">Agentes en el proceso (resultado)</div><ul><li>Vida Cámara: agente experto en pólizas con arquitectura de agentes y subagentes — 15% de mejora en tiempos de atención.</li><li>Entel Connect: 500.000 interacciones al mes, +30% de ventas promedio y propuestas duplicadas.</li><li>diio: -80% de tiempo en tareas manuales de venta, con más de 20% de tasa de cierre.</li></ul></div></div></section><section class="slide"><div class="kicker">Lo que la fuente dice que cuesta</div><h2>El cuello de botella no fue la tecnología</h2><div class="warn">ARAUCO declara que su principal desafío fue <b>la gestión del cambio y la adopción de las personas</b>: habilidades técnicas y una cultura que integre estas capacidades en el trabajo diario.<br><br>Si tu comité cree que el problema será elegir el modelo, el proyecto ya partió mirando el lugar equivocado.</div></section><section class="slide"><div class="kicker">La lectura para tu empresa</div><h2>El patrón que se repite en todos los casos</h2><p class="big">Ninguno de estos casos partió por «adoptar IA». Todos partieron por un <b>problema que dolía</b> —una pérdida de madera, un diagnóstico tardío, un tiempo de atención— y la IA fue el instrumento. El que parte por la herramienta, termina con una licencia y un curso.</p><p class="meta">Patrón observado en las cuatro fuentes de esta clase; es lectura propia, no una cita de las empresas.</p></section><section class="slide"><div class="kicker">El testeo</div><h2>Traduce un caso ajeno a tu propia operación</h2><p class="big">Toma uno de estos cuatro casos y nombra en tu empresa el proceso equivalente: qué se mide hoy por muestreo o por impresión, y cuánto valdría medirlo completo.</p><p class="meta">Se evalúa que el caso elegido y el proceso propio sean comparables, y que el valor esté en una cifra o en una decisión concreta — no en «eficiencia».</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Las fuentes, para que TI y Auditoría las revisen</h2><ul class="links"><li><a href="https://revista.empresascopec.cl/desde-adentro/arauco-del-futuro-al-presente-la-ia-en-el-negocio-forestal/" target="_blank">ARAUCO — Del futuro al presente: la IA en el negocio forestal (Empresas Copec, abr 2026)</a></li><li><a href="https://forbes.cl/ia/2025-10-09/como-estan-usando-las-empresas-chilenas-la-inteligencia-artificial" target="_blank">Forbes Chile — Cómo están usando las empresas chilenas la IA (oct 2025)</a></li><li><a href="https://www.cualestuhuella.cl/noticia/noticias/2026/08/arauco-inteligencia-artificial-madera-cosecha-forestal" target="_blank">Cómo usa Arauco la IA para optimizar el uso de la madera (ago 2026)</a></li><li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">McKinsey — The state of AI (informe vigente 2026)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 12</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

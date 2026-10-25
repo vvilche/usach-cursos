@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 7 · Cuando la IA inventa: el riesgo de las cifras</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 7 · Clase 7 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Cuando la IA inventa: el riesgo de las cifras</h1><p class="lead">El riesgo que mata proyectos en un directorio no es que el agente sea lento: es que entregue un número falso con seguridad total. Cómo se detecta y cómo se bloquea.</p></section><section class="slide"><div class="kicker">El riesgo real</div><h2>La IA no miente: completa</h2><p class="big">Un modelo de lenguaje no tiene una tabla de verdades: tiene una habilidad entrenada para <b>producir la continuación más plausible</b>. Cuando no sabe un dato, la continuación plausible es un dato inventado que parece correcto.</p></section><section class="slide"><div class="kicker">Dónde es más peligroso</div><h2>Los dos tipos de respuesta</h2><div class="grid2"><div class="col bad"><div class="t">Respuesta de opinión (riesgo bajo)</div><ul><li>«¿Qué deberíamos priorizar este trimestre?»</li><li>«¿Cómo se estructura un comité de riesgo?»</li><li>No hay una única respuesta correcta</li><li>El error se detecta discutiendo</li></ul></div><div class="col good"><div class="t">Respuesta de hecho (riesgo alto)</div><ul><li>«¿Cuánto gastamos en mantención en 2025?»</li><li>«¿Qué dice la cláusula 12 del contrato?»</li><li>Hay UNA respuesta correcta y es verificable</li><li>El error se descubre en el comité, o no se descubre</li></ul></div></div></section><section class="slide"><div class="kicker">Cómo se ve el invento</div><h2>Tres formas en que un dato falso entra a un informe</h2><div class="cajon"><div class="q">Las tres se ven igual de creíbles</div><ol><li><b>El dato desplazado:</b> la cifra existe en el archivo, pero es de otro mes o de otra faena.</li><li><b>El dato completado:</b> falta un valor, y el agente pone el promedio «para que el cuadro cierre».</li><li><b>La fuente fantasma:</b> cita un informe, una norma o un estudio que no existe, con nombre y año verosímiles.</li></ol></div><p class="meta">Los tres pasan cualquier revisión de forma. Solo se detectan yendo al archivo original, y por eso el control tiene que ser de proceso.</p></section><section class="slide"><div class="kicker">Los cuatro controles</div><h2>Cómo se bloquea, en orden de eficacia</h2><div class="piezas"><div class="pieza"><div class="t">Fuente obligatoria</div><p>Regla escrita: toda cifra sin archivo de origen se marca «por confirmar», nunca se completa.</p></div><div class="pieza"><div class="t">Extractor, no memoria</div><p>Que la cifra la lea un programa del archivo, y el agente solo la ordene y la explique.</p></div><div class="pieza"><div class="t">Verificación cruzada</div><p>Dos caminos independientes para el mismo número: si no coinciden, no se publica.</p></div><div class="pieza"><div class="t">Muestra humana</div><p>Una cifra al azar contra el original, en cada entrega. Barato y detecta casi todo.</p></div></div></section><section class="slide"><div class="kicker">Error típico en la organización</div><h2>Confiar en la revisión de forma</h2><div class="warn"><b>Mal:</b> el informe se revisa por ortografía, formato y coherencia interna. Un dato inventado es perfectamente coherente consigo mismo.<br><br><b>Bien:</b> la revisión es <b>contra la fuente</b>, en puntos muestreados. Es la misma lógica que la auditoría de toda la vida: no se revisa todo, se revisa bien elegido.</div></section><section class="slide"><div class="kicker">Por qué esto es un tema de directorio</div><h2>Un dato falso en un informe firmado tiene dueño</h2><p class="big">Si un gerente firma un informe construido con un agente y una cifra es falsa, la responsabilidad no es del modelo. <b>La cadena de responsabilidad es la misma de siempre</b>: la firma es humana, y por eso el proceso de verificación también.</p><p class="meta">Es la razón por la que la clase 9 (gobernanza) existe en este curso: sin reglas escritas, el agente es un pasivo, no un activo.</p></section><section class="slide"><div class="kicker">Qué exigirle al proveedor</div><h2>Las cinco preguntas del comité de riesgo</h2><ul class="plain"><li><b>¿De dónde saca cada cifra?</b> Que muestre el archivo y la línea, no solo el número.</li><li><b>¿Qué hace cuando falta un dato?</b> La respuesta correcta es «lo dice», nunca «lo estima».</li><li><b>¿Se puede repetir la misma consulta y obtener lo mismo?</b> Si no, no es un proceso: es una anécdota.</li><li><b>¿Queda registro de lo que hizo?</b> Sin registro no hay auditabilidad.</li><li><b>¿Quién responde si un dato es falso?</b> Si la respuesta es el proveedor, mal: la responsabilidad es de la empresa.</li></ul></section><section class="slide"><div class="kicker">La regla que ordena todo</div><h2>«No lo resuelve» no es lo mismo que «no lo revisé»</h2><p class="def">En toda entrega de un agente hay tres estados posibles de un dato: <b>verificado con fuente</b>, <b>marcado como faltante</b>, o <b>no revisado</b>. El único inaceptable es el tercero presentado como el primero.</p><p class="meta">Es también el criterio con que se evalúa a las personas en este trabajo: distinguir lo que no se pudo resolver de lo que no se revisó.</p></section><section class="slide"><div class="kicker">El testeo</div><h2>Encuentra el invento</h2><p class="big">Se entrega un informe con un dato falso plantado. El grupo debe encontrarlo en menos de diez minutos, usando solo el archivo original.</p><p class="meta">Si no lo encuentran, el problema no es el ejercicio: es que la organización no tiene proceso de verificación, y un agente sin ese proceso es un riesgo, no una herramienta.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Material de esta clase</h2><ul class="links"><li><a href="directrices-hermes.html" target="_blank">Directrices del agente — las reglas que evitan el invento (este sitio)</a></li><li><a href="https://www.salesforce.com/news/stories/why-ai-pilots-fail/" target="_blank">MIT — por qué el 70% de los usuarios dice que la herramienta no aprende de sus correcciones</a></li><li><a href="caso-estado-resultados.html" target="_blank">Caso del curso de Auditoría — cómo se construyó un Estado de Resultados, con los dos errores cometidos (este sitio)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 11</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

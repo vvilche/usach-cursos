@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 0.4 · Lo que aprendimos de nosotros mismos</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 0.4 · Sección 0 · Acto 4 de 5</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Sección 0 · Historia · Sección 0 · La historia</div><h1>Lo que aprendimos de nosotros mismos</h1><p class="lead">2026. Mientras el mercado discutía modelos, acá se hizo algo que casi nadie hace: auditar el propio trabajo. Miles de sesiones minadas, errores contados, y las reglas que salieron de ahí. Este es el capítulo que ningún proveedor puede contar.</p></section><section class="slide"><div class="kicker">Acto 4 de 5 · La evidencia propia</div><h2>¿Y cómo se usa esto sin que salga mal?</h2><p class="big">Todo lo anterior explica por qué un agente puede trabajar. No explica por qué <b>no va a inventar una cifra</b>. Para eso no alcanza con doctrina: hay que mirar los errores reales. Y los nuestros están medidos, contados y escritos.</p></section><section class="slide"><div class="kicker">El corpus</div><h2>Qué se auditó</h2><div class="grid2"><div class="col bad"><div class="t">La escala del trabajo</div><ul><li>1.464 sesiones de trabajo real</li><li>39.752 mensajes</li><li>18.196 errores de herramienta</li><li>9 entornos: Mac, servidor y siete perfiles de área</li></ul></div><div class="col good"><div class="t">Lo que se encontró (después de deduplicar)</div><ul><li>4.012 correcciones directas del usuario</li><li>Solo el 18% de esos textos era único: la misma corrección se repetía hasta 20 veces</li><li>Correcciones distintas reales: ~922</li><li>Y al minar aparecieron credenciales en el texto: se construyó un filtro que las enmascara</li></ul></div></div></section><section class="slide"><div class="kicker">La nota metodológica honesta</div><h2>Por qué publicamos el número chico</h2><p class="big">El primer conteo daba 4.012 correcciones. Al revisar, <b>la misma frase aparecía hasta veinte veces</b> por sesiones duplicadas. Decidimos publicar las <b>~922 reales</b>: un número grande y falso no sirve para decidir nada.</p><p class="meta">Es la primera lección del material y se aplica a todo lo demás: si un número no se puede reproducir, no es un número. Fuente: LIBRO_ERRORES.md de CONECTA (2026).</p></section><section class="slide"><div class="kicker">El ranking de errores</div><h2>Dónde falla un agente, medido</h2><ul class="plain"><li><b>32,5% respondió otra cosa / se fue por las ramas.</b> Hizo algo distinto de lo pedido.</li><li><b>24,4% no pidió permiso / se apuró.</b> Se adelantó en algo que no le correspondía.</li><li><b>14,8% no usó la herramienta que tenía.</b> Improvisó teniendo el recurso.</li><li><b>14,6% no verificó / reportó sin ejecutar.</b> Dijo que estaba hecho y no estaba.</li><li><b>7,9% formato equivocado · 2,3% pérdida de datos · 0,9% inventó datos.</b> La invención existe, pero no es el error más frecuente.</li></ul></section><section class="slide"><div class="kicker">Las reglas que salieron</div><h2>Las cuatro que cambiaron el resultado</h2><div class="piezas"><div class="pieza"><div class="t">El entregable es la salida real</div><p>No la descripción de lo que hizo. Si no se ejecutó, no está hecho. Ataca el 14,6%.</p></div><div class="pieza"><div class="t">Releer la pregunta textual</div><p>Responder exactamente lo preguntado; lo agregado va marcado aparte. Ataca el 32,5%.</p></div><div class="pieza"><div class="t">Actuar en lo reversible, pedir permiso en lo irreversible</div><p>Ataca el 24,4%, el error que más caro sale en una empresa.</p></div><div class="pieza"><div class="t">Ninguna cifra sin fuente</div><p>Se marca el origen de cada número o no se dice. Es el 0,9%, pero es el que termina en un directorio.</p></div></div></section><section class="slide"><div class="kicker">Por qué esto es un activo y no un paper</div><h2>La diferencia entre teoría y operación</h2><p class="big">Cualquier empresa puede leer el paper del harness. Muy pocas pueden mostrar <b>1.464 sesiones auditadas de su propio trabajo</b>, con el ranking de sus errores y las reglas que cambiaron. Eso es lo que separa a un adoptante de un operador.</p><p class="meta">Y es transferible: las reglas no dependen del modelo ni del proveedor. Sobreviven al cambio de versión.</p></section><section class="slide"><div class="kicker">El testeo del acto</div><h2>Elige tu error más caro</h2><p class="big">De los cinco patrones del ranking, ¿cuál le costaría más a tu área si lo cometiera un agente todos los días? Y ¿qué regla escrita lo bloquearía?</p><p class="meta">Se evalúa que elija por costo real, no por frecuencia: el más frecuente (irse por las ramas) y el más caro (actuar sin permiso) no son el mismo.</p></section><section class="slide"><div class="kicker">Fuentes del acto</div><h2>Para profundizar</h2><ul class="links"><li><a href="https://vvilche.github.io/usach-cursos/" target="_blank">LIBRO_ERRORES — manual de errores medido (material de CONECTA, 2026)</a></li><li><a href="directrices-hermes.html" target="_blank">Directrices del agente — las reglas y las pruebas para saber si funcionan (este sitio)</a></li><li><a href="caso-estado-resultados.html" target="_blank">Caso: cómo se construyó un Estado de Resultados, con los dos errores cometidos (este sitio)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 9</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

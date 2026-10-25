@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 12 · El plan de 90 días</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 12 · Clase 12 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>El plan de 90 días</h1><p class="lead">Cierre: cada participante se va con un plan escrito y aprobado por su propia área — no con una idea. Qué se hace en 30, 60 y 90 días, y cómo se sabe si funcionó.</p></section><section class="slide"><div class="kicker">La pregunta de cierre</div><h2>¿Qué cambia el lunes en tu empresa?</h2><p class="big">Un curso que termina en «fue muy interesante» es un gasto. Este termina con <b>un plan escrito, con dueño, fecha y número</b> — y la primera tarea ejecutada hoy, no la próxima semana.</p></section><section class="slide"><div class="kicker">El plan</div><h2>30, 60 y 90 días</h2><div class="steps"><div class="step"><p><b>Días 1-30 — el experimento:</b> un agente, una tarea, una persona. Elige el proceso que hoy quita tres horas y no exige decidir. Sin integración, sin proveedor, sin comité.</p></div><div class="step"><p><b>Días 31-60 — el control:</b> aplica las reglas de fuente (clase 8) y la matriz de permisos (clase 9) a ese experimento. Mide cuántas cifras tenían origen y cuántas no.</p></div><div class="step"><p><b>Días 61-90 — la decisión:</b> con los números del experimento, decide escalar, rediseñar o cerrar. Documenta la decisión y su porqué.</p></div></div></section><section class="slide"><div class="kicker">Cómo se mide</div><h2>Indicador de esfuerzo vs. indicador de resultado</h2><div class="grid2"><div class="col bad"><div class="t">Esfuerzo (no sirve para decidir)</div><ul><li>Cuántas personas lo usan</li><li>Cuántas consultas se hicieron</li><li>Cuántas horas de capacitación</li><li>Cuántos agentes se construyeron</li></ul></div><div class="col good"><div class="t">Resultado (sí sirve)</div><ul><li>Horas liberadas en un proceso concreto</li><li>Cifras verificadas contra la fuente, y su tasa de error</li><li>Días entre el cierre y el informe disponible</li><li>Observaciones del comité que bajan porque el dato estaba bien</li></ul></div></div></section><section class="slide"><div class="kicker">Error típico del cierre</div><h2>Presentar el piloto como transformación</h2><div class="warn"><b>Mal:</b> «implementamos IA en la compañía». Nadie sabe qué significa, nadie puede medirlo, y a los seis meses el presupuesto se corta.<br><br><b>Bien:</b> «redujimos el informe de desviación de 3 días a 4 horas en la línea 3, con 100% de las cifras verificadas contra el ERP, en 90 días». Eso se defiende en cualquier comité.</div></section><section class="slide"><div class="kicker">Lo que se llevan</div><h2>Tres activos, no una idea</h2><p class="big">Al terminar, cada participante tiene: <b>un agente funcionando</b> en una tarea real, <b>un encargo escrito</b> reutilizable cada mes, y <b>un acta de gobernanza</b> con dueño y métrica. Eso es lo que queda cuando el entusiasmo se va.</p><p class="meta">Y son activos de la empresa, no del asistente al curso: se pueden entregar, auditar y heredar.</p></section><section class="slide"><div class="kicker">Los cinco errores que se repiten</div><h2>Lo que las empresas ya aprendieron</h2><ul class="plain"><li><b>Partir por la herramienta.</b> Todos los casos de la clase 2 partieron por un problema que dolía.</li><li><b>No medir antes.</b> Sin la línea base, ningún resultado es demostrable al final.</li><li><b>Dejar el cambio para TI.</b> La adopción la hace el gerente del proceso, no el área de sistemas.</li><li><b>Confundir piloto con capacidad.</b> Un piloto que se apaga no deja nada; una capacidad queda.</li><li><b>Ignorar a las personas.</b> ARAUCO declaró que su principal desafío fue la gestión del cambio, no la tecnología.</li></ul></section><section class="slide"><div class="kicker">El testeo final</div><h2>Presenta y defiende el plan</h2><p class="big">Cada grupo presenta su plan de 90 días: el proceso elegido, el indicador de resultado, quién responde y cómo se apaga. Con la primera tarea ya ejecutada.</p><p class="meta">Se evalúa que el plan sea defendible frente al área que lo va a recibir — no la calidad de la presentación. Lo que importa: que mañana alguien pueda empezar.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Para seguir solo</h2><ul class="links"><li><a href="https://hermes-agent.nousresearch.com/docs" target="_blank">Hermes Agent — documentación oficial</a></li><li><a href="guia-instalar-hermes.html" target="_blank">Instalar Hermes — guía de este sitio</a></li><li><a href="directrices-hermes.html" target="_blank">Directrices del agente — reglas para que trabaje bien (este sitio)</a></li><li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">McKinsey — The state of AI 2025</a></li><li><a href="https://revista.empresascopec.cl/desde-adentro/arauco-del-futuro-al-presente-la-ia-en-el-negocio-forestal/" target="_blank">Revista Empresas Copec — ARAUCO y la IA</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 9</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

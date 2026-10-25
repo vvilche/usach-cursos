@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 6 · Ponerlo a producir</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 6 · Clase 6 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Ponerlo a producir</h1><p class="lead">De la consulta suelta al trabajo delegado: cómo se le encarga un producto completo —un informe, un análisis, una comparación— y cómo se revisa lo que entrega.</p></section><section class="slide"><div class="kicker">El salto de nivel</div><h2>«Ya me responde» no es «ya me sirve»</h2><p class="big">Responder preguntas es la mitad del camino. El valor real aparece cuando el agente <b>produce el entregable entero</b>: el informe de comité, la comparación de tres proveedores, el análisis de la desviación.</p></section><section class="slide"><div class="kicker">Concepto</div><h2>Encargo de trabajo, no instrucción de chat</h2><p class="def">Un <b>encargo</b> tiene cinco partes: resultado esperado, fuentes que puede usar, reglas de calidad, qué hacer cuando falta información, y formato de entrega. Sin las cinco, el agente improvisa — y una improvisación en un informe de comité se paga caro.</p><p class="meta">La diferencia práctica: con instrucción de chat obtienes un borrador; con encargo obtienes un producto que puedes firmar o rechazar con criterio.</p></section><section class="slide"><div class="kicker">Dos formas de pedir</div><h2>Instrucción vs. encargo</h2><div class="grid2"><div class="col bad"><div class="t">Instrucción de chat</div><ul><li>«Hazme un análisis de las desviaciones del trimestre»</li><li>El agente elige qué mirar y cómo</li><li>Resultado distinto cada vez que lo pides</li><li>No puedes defenderlo frente a nadie</li></ul></div><div class="col good"><div class="t">Encargo</div><ul><li>Qué entregable, para quién, con qué fuentes</li><li>Qué se considera bien hecho, escrito de antemano</li><li>Mismo encargo, mismo procedimiento, resultado comparable</li><li>Cada cifra con su origen: se puede auditar</li></ul></div></div></section><section class="slide"><div class="kicker">Ejemplo real</div><h2>El informe de desviación, encargado bien</h2><div class="cajon"><div class="q">Encargo típico de un gerente de operaciones</div><ol><li><b>Entregable:</b> informe de desviación del trimestre, máximo 2 páginas, para el comité.</li><li><b>Fuentes:</b> el reporte de producción del trimestre y el presupuesto aprobado. Nada más.</li><li><b>Regla de calidad:</b> toda variación sobre 5% explicada con su causa; si no hay causa en la fuente, se marca «por confirmar».</li><li><b>Si falta información:</b> preguntar antes de escribir, no rellenar con supuestos.</li><li><b>Formato:</b> tabla de cifras + tres conclusiones + un anexo con el cálculo de cada número.</li></ol></div><p class="meta">Compara con el informe que hoy se arma a mano: el contenido es el mismo trabajo, pero las reglas quedaron escritas antes de empezar.</p></section><section class="slide"><div class="kicker">Error típico</div><h2>Aceptar el resultado porque está bien escrito</h2><div class="warn"><b>Mal:</b> una respuesta impecable en la forma se aprueba sin abrir la fuente. El estilo fluido no es evidencia de haber leído los datos.<br><br><b>Bien:</b> revisar <b>una cifra al azar contra el archivo original</b>. Si esa cuadra y el anexo explica cómo se calculó, el resto es revisable. Si no cuadra, el informe entero está en duda.</div></section><section class="slide"><div class="kicker">Dónde está tu valor</div><h2>Tu trabajo se mueve, no desaparece</h2><p class="big">Antes: <b>producir</b> el informe. Después: <b>definir</b> qué significa «bien hecho» y <b>revisar</b> lo que llegó. Es un trabajo más chico en horas y más grande en criterio — y es exactamente el que un directorio espera de un gerente.</p><p class="meta">Y es lo que un agente no puede hacer: definir el estándar es una decisión de negocio, no de software.</p></section><section class="slide"><div class="kicker">Qué se puede delegar hoy</div><h2>Tareas de oficina que rinden de inmediato</h2><ul class="plain"><li><b>Consolidaciones:</b> un número único a partir de cinco planillas que nadie mantiene igual.</li><li><b>Comparaciones:</b> tres propuestas de proveedor contra los mismos criterios, con la diferencia señalada.</li><li><b>Resúmenes de comité:</b> minutas de 40 páginas convertidas en decisiones, responsables y fechas.</li><li><b>Barridos de riesgo:</b> contratos revisados contra una cláusula que siempre debe estar.</li><li><b>Investigación de mercado:</b> prensa, licitaciones y competencia sobre un tema puntual — con las reglas de la clase 8.</li></ul></section><section class="slide"><div class="kicker">La tarea de esta clase</div><h2>Encargar un producto completo</h2><div class="steps"><div class="step"><p><b>Elige un entregable recurrente:</b> uno que ya produzcas cada mes y que puedas mostrar (con datos de ejemplo si es sensible).</p></div><div class="step"><p><b>Escribe las cinco partes:</b> resultado, fuentes, regla de calidad, qué hacer ante faltantes, formato.</p></div><div class="step"><p><b>Ejecútalo con el agente:</b> y guarda el encargo escrito: lo vas a reutilizar todos los meses.</p></div><div class="step"><p><b>Verifica una cifra al azar:</b> contra el archivo original, y revisa que el anexo explique el cálculo.</p></div><div class="step"><p><b>Ajusta el encargo, no el resultado:</b> si algo sale mal, el arreglo va en la instrucción, no en corregir a mano cada vez.</p></div></div></section><section class="slide"><div class="kicker">El testeo</div><h2>Entrega el producto y su encargo</h2><p class="big">Presenta el informe terminado junto al encargo escrito con que se pidió, y verifica una cifra contra la fuente en vivo.</p><p class="meta">Se evalúa que el producto sirva para tomar la decisión, y que el encargo se pueda reutilizar. Un buen resultado sin encargo reutilizable no escala.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Material de esta clase</h2><ul class="links"><li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank">Anthropic — Building effective agents (el patrón de encargo y verificación)</a></li><li><a href="directrices-hermes.html" target="_blank">Directrices del agente — reglas para que no invente (este sitio)</a></li><li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">McKinsey — The state of AI, informe 2026 (qué separa a los que capturan valor)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 11</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

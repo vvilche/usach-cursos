@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 10 · Varios agentes, un proceso</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 10 · Clase 10 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Varios agentes, un proceso</h1><p class="lead">Cuando una tarea es demasiado grande para un solo agente: cómo se divide el trabajo entre varios, qué gana la empresa y qué se vuelve más difícil de controlar.</p></section><section class="slide"><div class="kicker">El caso</div><h2>El cierre de mes no cabe en un solo encargo</h2><p class="big">Un cierre exige conciliar bancos, revisar provisiones, calcular variaciones, redactar el informe y contestar las observaciones del comité. Un agente puede hacer cada parte; <b>varios agentes pueden hacer el proceso completo</b>, en paralelo.</p></section><section class="slide"><div class="kicker">Concepto</div><h2>Qué es un proceso de varios agentes</h2><p class="def">Es un <b>reparto de trabajo</b> entre agentes especializados, cada uno con su tarea y su fuente, más un agente que coordina, junta los resultados y verifica que no se contradigan entre sí.</p><p class="meta">No es más inteligencia: es división del trabajo. Lo que se gana es paralelismo; lo que se pierde es simplicidad.</p></section><section class="slide"><div class="kicker">Cómo se reparte</div><h2>Tres formas de dividir, según el problema</h2><div class="piezas"><div class="pieza"><div class="t">En paralelo</div><p>Tareas independientes al mismo tiempo: conciliación, provisiones y variaciones. El más rápido y el más fácil de controlar.</p></div><div class="pieza"><div class="t">En cadena</div><p>Una tarea alimenta la siguiente: extraer, calcular, redactar, revisar. Aquí un error se propaga: hay que verificar en cada eslabón.</p></div><div class="pieza"><div class="t">Coordinador</div><p>Un agente reparte, junta y detecta contradicciones. Obligatorio cuando hay más de tres piezas o cuando el resultado se firma.</p></div></div></section><section class="slide"><div class="kicker">La comparación honesta</div><h2>Uno o varios</h2><div class="grid2"><div class="col bad"><div class="t">Un agente solo</div><ul><li>Simple de entender y de auditar</li><li>Un solo punto de falla, fácil de ubicar</li><li>Se satura con tareas largas: pierde el hilo</li><li>Barato y rápido de montar</li></ul></div><div class="col good"><div class="t">Varios agentes</div><ul><li>Procesa en paralelo: el cierre en horas, no en semanas</li><li>Cada parte con su fuente y su responsable</li><li>Necesita coordinador o los resultados se contradicen</li><li>Más caro, más complejo, más difícil de auditar</li></ul></div></div></section><section class="slide"><div class="kicker">Ejemplo real de la fuente</div><h2>El caso de celulosa: por qué multiagente</h2><div class="cajon"><div class="q">Cómo se explica que un sistema así resuelva en minutos lo que tomaba semanas</div><ol><li>El diagnóstico de una falla exige leer manuales, bitácoras y datos de proceso: tres fuentes distintas, con lenguajes distintos.</li><li>Un solo agente tendría que cargar todo junto y se perdería; el sistema <b>integra</b> las fuentes con agentes especializados.</li><li>El resultado es una hipótesis de causa raíz con recomendaciones, no un volcado de información.</li><li>Beneficio medido por la empresa: lo que requería semanas de trabajo especializado se resuelve en minutos.</li></ol></div><p class="meta">Fuente: Revista Empresas Copec, abril 2026. Es el argumento más claro de por qué la arquitectura importa: no es más IA, es mejor reparto.</p></section><section class="slide"><div class="kicker">Error típico</div><h2>Multiplicar agentes sin multiplicar control</h2><div class="warn"><b>Mal:</b> cinco agentes trabajando y un solo control al final. Si dos se contradicen, nadie sabe cuál tiene razón y hay que rehacer todo.<br><br><b>Bien:</b> verificación en cada unión — cuando dos ramas se juntan, se cruzan los números. La regla: <b>el que coordina no produce, verifica</b>.</div></section><section class="slide"><div class="kicker">Cuándo NO vale la pena</div><h2>La decisión de arquitectura, en simple</h2><p class="big">Si la tarea cabe en un encargo y se ejecuta en minutos, un agente alcanza. Varios agentes se justifican cuando el trabajo tiene <b>partes independientes, volumen alto o fuentes muy distintas</b>. Lo demás es complicarse por moda.</p><p class="meta">La pregunta correcta no es «¿cuántos agentes puedo tener?» sino «¿cuál es el cuello de botella real?».</p></section><section class="slide"><div class="kicker">El diseño del proceso</div><h2>Qué se define antes de repartir trabajo</h2><ul class="plain"><li><b>Qué partes son independientes:</b> esas van en paralelo, y son la ganancia real de tiempo.</li><li><b>Qué partes dependen de otras:</b> ahí va verificación al final de cada eslabón, sin excepción.</li><li><b>Quién junta:</b> un solo responsable del resultado final, con nombre. El resto son proveedores internos.</li><li><b>Dónde se cruzan los números:</b> en cada unión, dos fuentes distintas para la misma cifra crítica.</li><li><b>Qué se registra:</b> qué hizo cada agente y con qué fuente, para poder reconstruir cualquier conclusión.</li></ul></section><section class="slide"><div class="kicker">El testeo</div><h2>El proceso completo, en vivo</h2><p class="big">Mostrar el proceso de tres partes corriendo: qué hizo cada agente, dónde se cruzaron los números y qué se detectó al juntar.</p><p class="meta">Se evalúa que las contradicciones se hayan detectado &lt;b&gt;antes&lt;/b&gt; del resultado final. Un proceso que entrega limpio porque nadie cruzó nada no es un proceso: es una suma de opiniones.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Material de esta clase</h2><ul class="links"><li><a href="https://revista.empresascopec.cl/desde-adentro/arauco-del-futuro-al-presente-la-ia-en-el-negocio-forestal/" target="_blank">ARAÚCO — sistema multiagente en celulosa (Empresas Copec, abr 2026)</a></li><li><a href="https://www.anthropic.com/research/building-effective-agents" target="_blank">Anthropic — patrones de trabajo con varios agentes</a></li><li><a href="clase-harness-contabilidad.html" target="_blank">Clase 0 del curso de Auditoría — cómo se construye un agente (este sitio)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 11</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 1 · Qué es un agente (y qué no)</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 1 · Clase 1 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Qué es un agente (y qué no)</h1><p class="lead">El 88% de las empresas ya usa IA, pero solo un 6% puede atribuirle un impacto significativo al resultado. La diferencia entre esas dos cifras es el tema completo del curso.</p></section><section class="slide"><div class="kicker">Dónde estamos hoy</div><h2>Todos tienen IA. Casi nadie tiene resultados.</h2><p class="big">El 88% de las empresas usa IA en al menos una función del negocio. Pero solo <b>6%</b> puede atribuirle al menos un 5% de su resultado operativo y calificar el impacto de significativo. <b>Tener herramientas no es tener resultados.</b></p></section><section class="slide"><div class="kicker">Y el dato que incomoda</div><h2>95% de los pilotos de IA no entrega retorno</h2><p class="big">Un estudio del MIT (agosto 2025) revisó pilotos de IA generativa en empresas y encontró que <b>95% no llegó a demostrar retorno</b>. No falló el modelo: falló la forma en que la empresa lo puso a trabajar.</p></section><section class="slide"><div class="kicker">Dónde está la brecha</div><h2>Uso individual alto, escala empresarial baja</h2><div class="grid2"><div class="col bad"><div class="t">Lo que crece</div><ul><li>80% de las personas dice que la IA mejoró su productividad individual</li><li>50% dice que le ayuda a tomar mejores decisiones</li><li>40% de las empresas grandes ya está escalando agentes (era 27% el año anterior)</li></ul></div><div class="col good"><div class="t">Lo que no crece</div><ul><li>37% atribuye algún impacto en el resultado operativo (igual que el año anterior)</li><li>Solo 6% puede atribuirle 5% o más y llamarlo significativo</li><li>39% espera reducir dotación por IA; las reducciones reales van muy por detrás</li></ul></div></div></section><section class="slide"><div class="kicker">Por qué fallan</div><h2>Nadie le dio a la IA acceso a lo que la empresa sabe</h2><p class="big">Un chatbot no conoce tu planta, tus contratos, tu planilla de costos ni lo que decidiste el martes pasado en el comité. <b>Sin acceso a los datos y sin memoria de lo decidido, la IA solo puede opinar.</b></p><p class="meta">Ese es exactamente el hueco que llena un agente: no es una IA más inteligente, es una IA conectada a tu realidad.</p></section><section class="slide"><div class="kicker">La definición</div><h2>Qué es un agente</h2><p class="def">Un agente es un programa que recibe un <b>objetivo</b>, <b>decide por sí mismo</b> qué hacer, usa <b>herramientas</b> (leer archivos, consultar sistemas, buscar en internet, correr cálculos) y <b>ejecuta</b> hasta cumplirlo.</p><p class="meta">La diferencia con ChatGPT no es de inteligencia: es de quién hace el trabajo. Con un chatbot, el ejecutor eres tú.</p></section><section class="slide"><div class="kicker">El mecanismo</div><h2>El ciclo que repite un agente</h2><p class="lead" style="margin-bottom:20px">Todo agente, sin excepción, repite este ciclo hasta cumplir el objetivo:</p><div class="loop"><div class="node"><div class="n">🎯 Objetivo</div><div class="d">qué hay que lograr</div></div><span class="arrow">→</span><div class="node"><div class="n">PENSAR</div><div class="d">¿qué hago ahora?</div></div><span class="arrow">→</span><div class="node"><div class="n">ACTUAR</div><div class="d">usar una herramienta</div></div><span class="arrow">→</span><div class="node"><div class="n">OBSERVAR</div><div class="d">leer el resultado</div></div></div><p class="meta">Si el resultado no cumple el objetivo, vuelve a PENSAR con la información nueva. Es un ciclo, no una respuesta única.</p></section><section class="slide"><div class="kicker">La diferencia que importa</div><h2>Chatbot vs. agente</h2><div class="grid2"><div class="col bad"><div class="t">ChatGPT / Gemini (conversacional)</div><ul><li>Responde texto cuando le preguntas</li><li>No toca tus archivos ni tus sistemas</li><li>Olvida todo al cerrar la ventana</li><li>El trabajo lo sigues haciendo tú</li></ul></div><div class="col good"><div class="t">Agente (Hermes y equivalentes)</div><ul><li>Recibe un objetivo y lo persigue hasta cumplirlo</li><li>Lee tus archivos, consulta tus sistemas, busca datos</li><li>Recuerda lo hecho y lo decidido entre sesiones</li><li>El trabajo lo hace la máquina; tú revisas</li></ul></div></div></section><section class="slide"><div class="kicker">Anatomía</div><h2>Las 3 piezas de un agente</h2><div class="piezas"><div class="pieza"><div class="t">🧠 Modelo</div><p>El cerebro que decide. Es lo de menos: hay decenas disponibles y se cambian sin reconstruir nada.</p></div><div class="pieza"><div class="t">✋ Herramientas</div><p>Las manos: leer archivos, entrar a un sistema, buscar en internet, hacer cálculos. Sin ellas no hay agente.</p></div><div class="pieza"><div class="t">💾 Memoria</div><p>Lo que recuerda entre una sesión y otra: tus datos, tus reglas, lo que ya se hizo. Es lo que convierte una consulta en un colaborador.</p></div></div></section><section class="slide"><div class="kicker">Ejemplo a nivel directorio</div><h2>La misma orden, dos mundos</h2><div class="cajon"><div class="q">«Necesito saber cuánto nos costó el paro de la línea 3 el mes pasado.»</div><ol><li><b>Chatbot:</b> explica cómo podría calcularse, redacta una metodología, pide los datos. Vuelves al lunes siguiente.</li><li><b>Agente:</b> abre los registros de producción, cruza las horas detenidas con el costo por hora de cada línea, revisa los contratos con el cliente para ver si hay penalidad, y devuelve una cifra con su fuente.</li><li><b>Agente, parte 2:</b> deja el resultado en un archivo y un resumen de 5 líneas para el comité, con la fecha y el origen de cada dato.</li></ol></div><p class="meta">Lo que cambió no es la calidad de la redacción: es que alguien (algo) hizo el trabajo completo.</p></section><section class="slide"><div class="kicker">Error típico de la primera semana</div><h2>Pedir un texto cuando lo que se necesita es una tarea</h2><div class="warn"><b>Mal:</b> «Hazme un análisis del costo del paro.» → devuelve un texto genérico y elegante, sin haber mirado un solo dato tuyo.<br><br><b>Bien:</b> dar <b>objetivo + dónde están los datos + qué restricciones respetar + cómo quieres la salida</b>: «Lee los registros de producción de septiembre, cruza con el costo por hora de la línea 3, revisa si el contrato con el cliente tiene penalidad, y devuélveme una tabla con la cifra, el cálculo y la fuente de cada dato.»</div></section><section class="slide"><div class="kicker">La buena noticia</div><h2>Un ejecutivo puede tener su propio agente</h2><p class="big">No hace falta un proyecto de transformación digital para empezar. Un agente personal corre en tu computador, con tu cuenta, y trabaja sobre <b>los archivos que tú le das</b>.</p><p class="meta">Ese es el experimento de este curso: cada participante termina con un agente propio, usándolo en su trabajo real, sin depender del área de tecnología.</p></section><section class="slide"><div class="kicker">El mapa del curso</div><h2>Las 4 etapas</h2><ul class="plain"><li><b>Etapas 1-3:</b> entender qué es un agente, quién lo está usando en Chile y qué es Hermes. Instalarlo y darle tu primera tarea real.</li><li><b>Etapas 4-6:</b> darle lo que sabe tu empresa (datos, documentos, reglas) y ponerlo a producir: informes, análisis y comparaciones.</li><li><b>Etapas 7-9:</b> volverlo confiable: que no invente cifras, que sepa decir «no lo sé», que todo dato tenga fuente.</li><li><b>Etapas 10-12:</b> escalar y gobernar: varios agentes a la vez, permisos, riesgo, y qué exigirle a TI o a un proveedor.</li></ul></section><section class="slide"><div class="kicker">El testeo</div><h2>Distingue la conversación de la ejecución</h2><p class="big">Frente a dos pantallas —una de un chatbot y una de un agente trabajando— señala qué hace cada una, quién ejecuta y dónde está el trabajo humano de control.</p><p class="meta">Si no puedes nombrar qué está haciendo el agente y qué estás haciendo tú, todavía no tienes un criterio para comprar, autorizar o frenar un proyecto de IA.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Verificar lo que no te creas</h2><ul class="links"><li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">McKinsey — The state of AI: Global Survey 2026 (informe vigente, ago 2026)</a></li><li><a href="https://www.mckinsey.com/featured-insights/charts/ai-at-work-but-not-at-scale" target="_blank">McKinsey — AI at work but not at scale (el gráfico del 88%, dic 2025)</a></li><li><a href="https://hermes-agent.nousresearch.com/docs/user-guide/features/overview" target="_blank">Hermes Agent — características (documentación oficial)</a></li><li><a href="guia-instalar-hermes.html" target="_blank">Instalar Hermes — guía paso a paso de este sitio</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 15</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>

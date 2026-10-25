@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Clase 11 · Gobernar la IA sin frenar la empresa</title><style>
+:root{--bg:#f8fafc;--card:#fff;--ink:#0f172a;--mut:#475569;--line:#e2e8f0;--acc:#7a2e0e;--acc2:#2563eb;--warn:#b45309;--soft:#fdf3ec;}
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:var(--bg);color:var(--ink);}
+.deck{max-width:960px;margin:0 auto;height:100vh;display:flex;flex-direction:column;padding:0 24px;}
+header{display:flex;justify-content:space-between;align-items:center;padding:14px 0;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line);}
+header .curso{font-weight:700;color:var(--acc);}
+main{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;}
+.slide{display:none;width:100%;max-width:840px;animation:in .3s ease;}.slide.active{display:block;}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.kicker{color:var(--acc);font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px;}
+h1{font-size:44px;margin:0 0 10px;letter-spacing:-.02em;line-height:1.12;}
+h2{font-size:30px;margin:0 0 18px;letter-spacing:-.015em;line-height:1.2;}
+.lead{font-size:22px;line-height:1.5;color:var(--mut);margin:0;}
+.big{font-size:26px;line-height:1.45;color:var(--ink);margin:0;}
+.meta{color:var(--mut);font-size:16px;margin-top:14px;}
+.def{background:var(--soft);border:1px solid #c8ecd4;border-left:5px solid var(--acc);border-radius:12px;padding:22px 26px;font-size:21px;line-height:1.55;margin:0;}
+.def b{color:var(--acc);}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+.col{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:18px 20px;}
+.col .t{font-weight:800;font-size:18px;margin-bottom:10px;}.col.bad .t{color:var(--warn);}.col.good .t{color:var(--acc);}
+.col ul{padding-left:18px;margin:0;}.col li{font-size:16.5px;margin:7px 0;color:var(--mut);}
+.loop{display:flex;align-items:center;justify-content:space-between;gap:6px;flex-wrap:wrap;}
+.node{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:16px 12px;text-align:center;flex:1;min-width:105px;}
+.node .n{font-weight:800;font-size:16px;color:var(--acc);}.node .d{font-size:12.5px;color:var(--mut);margin-top:4px;}
+.arrow{font-size:24px;color:var(--acc);font-weight:700;}
+.cajon{background:var(--soft);border:1px solid #c8ecd4;border-radius:12px;padding:20px 24px;font-size:18px;line-height:1.55;margin:0;}
+.cajon .q{font-weight:700;color:var(--ink);font-size:20px;margin-bottom:8px;}
+.cajon ol{padding-left:20px;margin:8px 0 0;}.cajon li{margin:6px 0;color:var(--mut);}
+.piezas{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+.pieza{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--acc);border-radius:12px;padding:16px 18px;}
+.pieza .t{font-weight:800;font-size:16px;margin-bottom:6px;}.pieza p{font-size:14.5px;color:var(--mut);margin:0;}
+.warn{background:#fff7ed;border:1px solid #fed7aa;border-left:5px solid var(--warn);border-radius:12px;padding:18px 22px;font-size:18px;line-height:1.55;margin:0;}
+.steps{counter-reset:s;}.steps .step{display:flex;gap:14px;align-items:flex-start;margin:12px 0;}
+.steps .step::before{counter-increment:s;content:counter(s);background:var(--acc);color:#fff;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:800;flex-shrink:0;}
+.steps .step p{margin:0;font-size:18px;color:var(--mut);}.steps .step p b{color:var(--ink);}
+.links li{font-size:19px;margin:10px 0;}.links a{color:var(--acc2);}
+ul.plain{padding-left:22px;margin:0;}ul.plain li{font-size:19px;margin:9px 0;color:var(--mut);}ul.plain li b{color:var(--ink);}
+footer{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-top:1px solid var(--line);}
+footer button{background:var(--acc);color:#fff;border:0;border-radius:8px;width:44px;height:44px;font-size:20px;cursor:pointer;}footer button:disabled{opacity:.3;}
+.counter{color:var(--mut);font-size:13px;}
+.code{background:#0f172a;color:#e2e8f0;border-radius:12px;padding:18px 20px;font:13.5px/1.6 "SF Mono",Menlo,Consolas,monospace;overflow:auto;max-height:62vh;white-space:pre;}
+.code .c{color:#64748b}
+.code .k{color:#7dd3fc}
+.code .s{color:#86efac}
+.code .n{color:#fca5a5}
+#fs{background:none;border:1px solid var(--line);border-radius:8px;color:var(--mut);font-size:15px;width:34px;height:34px;cursor:pointer;line-height:1;}
+#fs:hover{border-color:var(--acc);color:var(--acc);}
+.hdr-right{display:flex;align-items:center;gap:12px;}
+.hdr-left{display:flex;align-items:center;gap:14px;}
+.volver{color:var(--mut);text-decoration:none;font-size:13px;font-weight:600;white-space:nowrap;}
+.volver:hover{color:var(--acc);}
+html.fs .deck{max-width:none;padding:0 5vw;}
+html.fs .slide{max-width:1240px;}
+html.fs h1{font-size:64px;}
+html.fs h2{font-size:44px;}
+html.fs .lead{font-size:30px;}
+html.fs .big{font-size:36px;}
+html.fs .def{font-size:28px;}
+html.fs .meta{font-size:20px;}
+html.fs .cajon{font-size:24px;}
+html.fs .cajon .q{font-size:26px;}
+html.fs ul.plain li{font-size:26px;}
+html.fs .col li{font-size:22px;}
+html.fs .col .t{font-size:24px;}
+html.fs .steps .step p{font-size:24px;}
+html.fs .node .n{font-size:20px;}
+html.fs .node .d{font-size:16px;}
+html.fs .pieza .t{font-size:20px;}
+html.fs .pieza p{font-size:18px;}
+html.fs .links li{font-size:24px;}
+html.fs .warn{font-size:24px;}
+html.fs .code{font-size:15px;}
+html.fs .kicker{font-size:16px;}
+</style></head>
+<body><div class="deck">
+<header><span class="hdr-left"><a class="volver" href="ejecutivos-ia-agentica.html" title="Volver al plan de clases">← Plan de clases</a><span class="curso">IA Agéntica para Ejecutivos</span></span><span class="hdr-right"><span class="counter">Clase 11 · Clase 11 de 12</span><button id="fs" title="Pantalla completa (tecla F / Esc)">⛶</button></span></header>
+<main><section class="slide active"><div class="kicker">Curso ejecutivo · IA Agéntica Ejecutivos</div><h1>Gobernar la IA sin frenar la empresa</h1><p class="lead">El comité no necesita entender de modelos: necesita cuatro decisiones escritas. Qué rol tiene la empresa, qué exige a un proveedor y cómo se mide si esto sirve.</p></section><section class="slide"><div class="kicker">La pregunta del directorio</div><h2>¿Quién responde cuando un agente se equivoca?</h2><p class="big">La empresa, siempre. Ningún contrato traslada la responsabilidad de una decisión de negocio a un proveedor de software. Por eso <b>el gobierno de la IA es gobierno de la empresa</b>, no del área de tecnología.</p></section><section class="slide"><div class="kicker">Las cuatro decisiones</div><h2>Lo mínimo que debe estar escrito</h2><div class="piezas"><div class="pieza"><div class="t">Rol</div><p>Quién es el dueño de cada agente en producción. Un nombre por proceso, no un área. Y quién puede apagarlo.</p></div><div class="pieza"><div class="t">Límites</div><p>Qué datos ve, qué acciones ejecuta solo y qué exige aprobación. La matriz de la clase 9, firmada.</p></div><div class="pieza"><div class="t">Registro</div><p>Qué queda de lo que hizo, dónde, por cuánto tiempo y quién lo revisa. Sin esto no hay auditoría posible.</p></div><div class="pieza"><div class="t">Métrica</div><p>Qué número tiene que mover para seguir pagándolo. Si no está definido antes, se defiende con anécdotas.</p></div></div></section><section class="slide"><div class="kicker">Cómo se compra esto</div><h2>Plataforma cerrada vs. agente propio</h2><div class="grid2"><div class="col bad"><div class="t">Plataforma cerrada</div><ul><li>Rápido de implementar y sin instalar nada</li><li>Tus datos y tu contexto viven en el proveedor</li><li>Cambia el precio y la política cuando él decide</li><li>Salir es caro: el conocimiento quedó adentro</li></ul></div><div class="col good"><div class="t">Agente propio (abierto)</div><ul><li>Corre donde la empresa decida</li><li>El conocimiento queda en casa y es reutilizable</li><li>Se cambia de modelo sin rehacer el trabajo</li><li>Exige capacidades internas: alguien que lo mantenga</li></ul></div></div></section><section class="slide"><div class="kicker">El error de gobernanza más común</div><h2>Comprar pilotos en vez de construir capacidades</h2><div class="warn"><b>Mal:</b> un piloto por área, cada uno con su proveedor, sin registro común ni criterio compartido. A los seis meses hay doce pilotos y ninguna capacidad.<br><br><b>Bien:</b> pocas iniciativas, todas con el mismo estándar de fuente, registro y permisos, y una capacidad interna que queda cuando el proveedor se va.</div></section><section class="slide"><div class="kicker">Lo que dicen los números</div><h2>El valor no llega solo</h2><p class="big">El 88% de las empresas usa IA, pero solo 6% puede atribuirle un impacto significativo al resultado. Y el 95% de los pilotos del MIT no demostró retorno. <b>La diferencia entre esas cifras no es el modelo: es el gobierno.</b></p><p class="meta">Cifras: McKinsey (uso 88%, dic 2025; 6% de alto desempeño, informe 2026) y el informe del MIT (NANDA, ago 2025). Las dos están en el slide de fuentes.</p></section><section class="slide"><div class="kicker">El checklist del directorio</div><h2>Seis preguntas, una vez al año</h2><ul class="plain"><li><b>1.</b> ¿Tenemos una lista de los agentes que hoy están en producción, con dueño y función?</li><li><b>2.</b> ¿Cada uno tiene definido qué datos ve y qué puede ejecutar sin aprobación?</li><li><b>3.</b> ¿Queda registro de lo que hicieron y alguien lo revisa con cadencia?</li><li><b>4.</b> ¿Sabemos cuánto costó y qué número movió?</li><li><b>5.</b> ¿Podemos apagar cualquiera de ellos en minutos?</li><li><b>6.</b> ¿Si el proveedor de IA sube el precio o se va, el trabajo sigue? (Capacidad interna, no contrato.)</li></ul></section><section class="slide"><div class="kicker">La regla que evita el desastre</div><h2>La firma sigue siendo humana</h2><p class="def">Ningún entregable que salga de la empresa —un informe, una cotización, un pago, una comunicación a un cliente— se emite sin <b>un responsable humano con nombre</b> que lo haya revisado. El agente prepara; la persona responde.</p><p class="meta">Es la misma regla de siempre, aplicada a una herramienta nueva. Y es lo que permite usar agentes en procesos críticos sin que el directorio asuma un riesgo que no entiende.</p></section><section class="slide"><div class="kicker">El testeo</div><h2>El acta de gobernanza</h2><p class="big">Cada grupo redacta el acta de una página: qué agente, de quién depende, qué datos ve, qué requiere aprobación, cómo se mide y cómo se apaga.</p><p class="meta">Se evalúa que se pueda firmar hoy. Un acta con «por definir» no es gobernanza: es una intención.</p></section><section class="slide"><div class="kicker">Fuentes y para profundizar</div><h2>Material de esta clase</h2><ul class="links"><li><a href="https://www.mckinsey.com/capabilities/quantumblack/our-insights/the-state-of-ai" target="_blank">McKinsey — The state of AI, informe 2026 (dónde está la brecha de valor)</a></li><li><a href="https://www.salesforce.com/news/stories/why-ai-pilots-fail/" target="_blank">MIT / NANDA — por qué fallan los pilotos (resumen con las cifras)</a></li><li><a href="https://www.bcn.cl/leychile/navegar?idNorma=1209272" target="_blank">Ley 21.719 — protección de datos personales (BCN)</a></li></ul></section></main>
+<footer><button id="prev">←</button><span class="counter" id="cnt">1 / 10</span><button id="next">→</button></footer>
+</div>
+<script>
+var s=document.querySelectorAll('.slide'),i=0,n=s.length,cnt=document.getElementById('cnt');
+function go(x){s[i].classList.remove('active');i=(x+n)%n;s[i].classList.add('active');cnt.textContent=(i+1)+' / '+n;document.getElementById('prev').disabled=i===0;document.getElementById('next').disabled=i===n-1;}
+document.getElementById('prev').onclick=function(){go(i-1)};document.getElementById('next').onclick=function(){go(i+1)};
+var fsBtn=document.getElementById('fs');
+function toggleFs(){var el=document.documentElement;if(!document.fullscreenElement&&!document.webkitFullscreenElement){if(el.requestFullscreen)el.requestFullscreen();else if(el.webkitRequestFullscreen)el.webkitRequestFullscreen();}else{if(document.exitFullscreen)document.exitFullscreen();else if(document.webkitExitFullscreen)document.webkitExitFullscreen();}}
+if(fsBtn)fsBtn.onclick=toggleFs;
+function onFsChange(){document.documentElement.classList.toggle('fs',!!(document.fullscreenElement||document.webkitFullscreenElement));}
+document.addEventListener('fullscreenchange',onFsChange);
+document.addEventListener('webkitfullscreenchange',onFsChange);
+document.addEventListener('keydown',function(e){if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(i+1)}else if(e.key==='ArrowLeft'){go(i-1)}else if(e.key==='f'||e.key==='F'){toggleFs()}});
+go(0);
+</script></body></html>
